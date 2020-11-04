@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AFDD272E-2DA0-4EB3-9B87-CE09DC0EE361}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gestor_OC_Gerdau</RootNamespace>
+    <AssemblyName>Gestor_OC_Gerdau</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Windows.Forms, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="FlashControlV71, Version=1.0.3187.32366, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\Shared\Visual Studio Tools for Office\PIA\Office15\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Calidad\Dts_Informes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dts_Informes.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_CertificacionViaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_CertificacionViaje.Designer.cs">
+      <DependentUpon>Frm_CertificacionViaje.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_RevisaColadas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_RevisaColadas.Designer.cs">
+      <DependentUpon>Frm_RevisaColadas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_SqlMysql.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_SqlMysql.Designer.cs">
+      <DependentUpon>Frm_SqlMysql.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_Visualizador.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_Visualizador.Designer.cs">
+      <DependentUpon>Frm_Visualizador.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB.Designer.cs">
+      <DependentUpon>Frm_WB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB_Php.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB_Php.Designer.cs">
+      <DependentUpon>Frm_WB_Php.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Rep_CertificadoMan.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_CertificadoMan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Calidad\Rep_TrazabilidadColada.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Clases\Cls_EnvioDoc.cs" />
+    <Compile Include="Clases\Cls_Lotes.cs" />
+    <Compile Include="EnviosAutomaticos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnviosAutomaticos.Designer.cs">
+      <DependentUpon>EnviosAutomaticos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Facturacion\Cls_RevisaBloqueos_LC.cs" />
+    <Compile Include="Facturacion\Frm_VinculaGuiaFactura.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturacion\Frm_VinculaGuiaFactura.Designer.cs">
+      <DependentUpon>Frm_VinculaGuiaFactura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCambioPrecios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCambioPrecios.Designer.cs">
+      <DependentUpon>FrmCambioPrecios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_Detalle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_Detalle.Designer.cs">
+      <DependentUpon>Frm_Detalle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_WB_EnvAut.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_WB_EnvAut.Designer.cs">
+      <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LineaCredito.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\WS_Gerdau\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WS_TO\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Frm_CreaMP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Frm_CreaMP.Designer.cs">
+      <DependentUpon>Frm_CreaMP.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Calidad\Frm_CertificacionViaje.resx">
+      <DependentUpon>Frm_CertificacionViaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_RevisaColadas.resx">
+      <DependentUpon>Frm_RevisaColadas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_SqlMysql.resx">
+      <DependentUpon>Frm_SqlMysql.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_Visualizador.resx">
+      <DependentUpon>Frm_Visualizador.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_WB.resx">
+      <DependentUpon>Frm_WB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_WB_Php.resx">
+      <DependentUpon>Frm_WB_Php.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_CertificadoMan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_CertificadoMan.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_TrazabilidadColada.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_TrazabilidadColada.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnviosAutomaticos.resx">
+      <DependentUpon>EnviosAutomaticos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\Frm_VinculaGuiaFactura.resx">
+      <DependentUpon>Frm_VinculaGuiaFactura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCambioPrecios.resx">
+      <DependentUpon>FrmCambioPrecios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_Detalle.resx">
+      <DependentUpon>Frm_Detalle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_WB_EnvAut.resx">
+      <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Tools\Frm_CreaMP.resx">
+      <DependentUpon>Frm_CreaMP.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Calidad\Dts_Informes.xsc">
+      <DependentUpon>Dts_Informes.xsd</DependentUpon>
+    </None>
+    <None Include="Calidad\Dts_Informes.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Dts_Informes.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Calidad\Dts_Informes.xss">
+      <DependentUpon>Dts_Informes.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Service References\WS_Gerdau\Gestor_OC_Gerdau.WS_Gerdau.Detalle.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_Gerdau\Gestor_OC_Gerdau.WS_Gerdau.TipoObjGerdau.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_Gerdau\WS_IntegracionGerdau.wsdl" />
+    <None Include="Service References\WS_TO\Dts_PL1.xsd" />
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Dts_PL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.GrabaImagenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.GrabarImagenesLayoutResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.GrabarImagenFormaOriginalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.GrabarImagenFormaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Objeto_WsINET.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImagenOriginalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImgResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImg_PorIdPiezaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.PiezaTipoB.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoActaEntrega.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoColada.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoDetalleCotas.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoDetalleFormaConHilos.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoDetallePaquetesPieza.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoEntregas_OC.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoForma.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoMov.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.TipoOC.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_Hd.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_Obra.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_Pieza.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Ws_To1.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WS_Gerdau\" />
+    <WCFMetadataStorage Include="Service References\WS_TO\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WS_Gerdau\WS_IntegracionGerdau.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WS_Gerdau\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WS_Gerdau\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\WS_Gerdau\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WS_TO\Ws_To1.disco" />
+    <None Include="Service References\WS_TO\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WS_TO\configuration.svcinfo" />
+    <None Include="Service References\WS_TO\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

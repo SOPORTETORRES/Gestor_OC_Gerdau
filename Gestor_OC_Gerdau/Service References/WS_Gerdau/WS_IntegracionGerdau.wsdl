@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://TorresOcaranza.cl/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://TorresOcaranza.cl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://TorresOcaranza.cl/">
+      <s:element name="ObtenerDatosPorEnviar">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerDatosPorEnviarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDatosPorEnviarResult" type="tns:ArrayOfTipoObjGerdau" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfTipoObjGerdau">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TipoObjGerdau" nillable="true" type="tns:TipoObjGerdau" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TipoObjGerdau">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RutEmisor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OC" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ClasePedido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Moneda" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Contrato" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaPedido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Usuario" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Vendedor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cliente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DireccionEntrega" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Comuna" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ciudad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Incoterms" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Correlativo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodigoDireccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Errors" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Detalle" type="tns:ArrayOfDetalle" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDetalle">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Detalle" nillable="true" type="tns:Detalle" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Detalle">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RutEmisor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="OC" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Posicion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Material" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Almacen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FamiliaProducto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Cantidad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnidadMedida" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Precio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Monto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descuento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaEstimadaEntrega" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerDatosDetalle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iCorrelativo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatosDetalleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDatosDetalleResult" type="tns:ArrayOfDetalle" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GrabarArchivo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iObjArchivo" type="tns:ArchivosGerdau" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArchivosGerdau">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Obs" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Path" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdqOdNuRe" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="AdqOdNum" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GrabarArchivoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GrabarArchivoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GrabarArchivoFTP">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iObjArchivo" type="tns:ArchivosGerdau" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GrabarArchivoFTPResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GrabarArchivoFTPResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GrabarArchivoEnvioMail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iObjArchivo" type="tns:ArchivosGerdau" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GrabarArchivoEnvioMailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GrabarArchivoEnvioMailResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArchivoPorSubir">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerArchivoPorSubirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArchivoPorSubirResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerViajesCerificar_PorSucursal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iSucursal" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerViajesCerificar_PorSucursalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerViajesCerificar_PorSucursalResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerArchivosParaEnviarCorreoPorOC">
+        <s:complexType />
+      </s:element>
+      <s:element name="ObtenerArchivosParaEnviarCorreoPorOCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerArchivosParaEnviarCorreoPorOCResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarCorreoNotificacion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iOrigen" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iMsg" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iObra" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="iTitulo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviarCorreoNotificacionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnviarCorreoNotificacionResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ObtenerDatosPorEnviarSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosPorEnviar" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosPorEnviarSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosPorEnviarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosDetalleSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosDetalle" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosDetalleSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosDetalleResponse" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoSoapIn">
+    <wsdl:part name="parameters" element="tns:GrabarArchivo" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoSoapOut">
+    <wsdl:part name="parameters" element="tns:GrabarArchivoResponse" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoFTPSoapIn">
+    <wsdl:part name="parameters" element="tns:GrabarArchivoFTP" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoFTPSoapOut">
+    <wsdl:part name="parameters" element="tns:GrabarArchivoFTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoEnvioMailSoapIn">
+    <wsdl:part name="parameters" element="tns:GrabarArchivoEnvioMail" />
+  </wsdl:message>
+  <wsdl:message name="GrabarArchivoEnvioMailSoapOut">
+    <wsdl:part name="parameters" element="tns:GrabarArchivoEnvioMailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArchivoPorSubirSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivoPorSubir" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArchivoPorSubirSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivoPorSubirResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerViajesCerificar_PorSucursalSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerViajesCerificar_PorSucursal" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerViajesCerificar_PorSucursalSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerViajesCerificar_PorSucursalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArchivosParaEnviarCorreoPorOCSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivosParaEnviarCorreoPorOC" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerArchivosParaEnviarCorreoPorOCSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerArchivosParaEnviarCorreoPorOCResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnviarCorreoNotificacionSoapIn">
+    <wsdl:part name="parameters" element="tns:EnviarCorreoNotificacion" />
+  </wsdl:message>
+  <wsdl:message name="EnviarCorreoNotificacionSoapOut">
+    <wsdl:part name="parameters" element="tns:EnviarCorreoNotificacionResponse" />
+  </wsdl:message>
+  <wsdl:portType name="WS_IntegracionGerdauSoap">
+    <wsdl:operation name="ObtenerDatosPorEnviar">
+      <wsdl:input message="tns:ObtenerDatosPorEnviarSoapIn" />
+      <wsdl:output message="tns:ObtenerDatosPorEnviarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosDetalle">
+      <wsdl:input message="tns:ObtenerDatosDetalleSoapIn" />
+      <wsdl:output message="tns:ObtenerDatosDetalleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivo">
+      <wsdl:input message="tns:GrabarArchivoSoapIn" />
+      <wsdl:output message="tns:GrabarArchivoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoFTP">
+      <wsdl:input message="tns:GrabarArchivoFTPSoapIn" />
+      <wsdl:output message="tns:GrabarArchivoFTPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoEnvioMail">
+      <wsdl:input message="tns:GrabarArchivoEnvioMailSoapIn" />
+      <wsdl:output message="tns:GrabarArchivoEnvioMailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivoPorSubir">
+      <wsdl:input message="tns:ObtenerArchivoPorSubirSoapIn" />
+      <wsdl:output message="tns:ObtenerArchivoPorSubirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerViajesCerificar_PorSucursal">
+      <wsdl:input message="tns:ObtenerViajesCerificar_PorSucursalSoapIn" />
+      <wsdl:output message="tns:ObtenerViajesCerificar_PorSucursalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivosParaEnviarCorreoPorOC">
+      <wsdl:input message="tns:ObtenerArchivosParaEnviarCorreoPorOCSoapIn" />
+      <wsdl:output message="tns:ObtenerArchivosParaEnviarCorreoPorOCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCorreoNotificacion">
+      <wsdl:input message="tns:EnviarCorreoNotificacionSoapIn" />
+      <wsdl:output message="tns:EnviarCorreoNotificacionSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WS_IntegracionGerdauSoap" type="tns:WS_IntegracionGerdauSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerDatosPorEnviar">
+      <soap:operation soapAction="http://TorresOcaranza.cl/ObtenerDatosPorEnviar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosDetalle">
+      <soap:operation soapAction="http://TorresOcaranza.cl/ObtenerDatosDetalle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivo">
+      <soap:operation soapAction="http://TorresOcaranza.cl/GrabarArchivo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoFTP">
+      <soap:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoFTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoEnvioMail">
+      <soap:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoEnvioMail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivoPorSubir">
+      <soap:operation soapAction="http://TorresOcaranza.cl/ObtenerArchivoPorSubir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerViajesCerificar_PorSucursal">
+      <soap:operation soapAction="http://TorresOcaranza.cl/ObtenerViajesCerificar_PorSucursal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivosParaEnviarCorreoPorOC">
+      <soap:operation soapAction="http://TorresOcaranza.cl/ObtenerArchivosParaEnviarCorreoPorOC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCorreoNotificacion">
+      <soap:operation soapAction="http://TorresOcaranza.cl/EnviarCorreoNotificacion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="WS_IntegracionGerdauSoap12" type="tns:WS_IntegracionGerdauSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerDatosPorEnviar">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/ObtenerDatosPorEnviar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosDetalle">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/ObtenerDatosDetalle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivo">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/GrabarArchivo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoFTP">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoFTP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GrabarArchivoEnvioMail">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoEnvioMail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivoPorSubir">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/ObtenerArchivoPorSubir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerViajesCerificar_PorSucursal">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/ObtenerViajesCerificar_PorSucursal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerArchivosParaEnviarCorreoPorOC">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/ObtenerArchivosParaEnviarCorreoPorOC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviarCorreoNotificacion">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/EnviarCorreoNotificacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="WS_IntegracionGerdau">
+    <wsdl:port name="WS_IntegracionGerdauSoap" binding="tns:WS_IntegracionGerdauSoap">
+      <soap:address location="http://localhost:55038/WS/WS_IntegracionGerdau.asmx" />
+    </wsdl:port>
+    <wsdl:port name="WS_IntegracionGerdauSoap12" binding="tns:WS_IntegracionGerdauSoap12">
+      <soap12:address location="http://localhost:55038/WS/WS_IntegracionGerdau.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

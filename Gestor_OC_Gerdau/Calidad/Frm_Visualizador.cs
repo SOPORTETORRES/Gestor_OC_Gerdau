@@ -1,0 +1,187 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Gestor_OC_Gerdau.Calidad
+{
+    public partial class Frm_Visualizador : Form
+    {
+        DataSet mDtsInforme = new DataSet();
+        string mInforme = "";
+        string mViaje = "";
+        Boolean mEliminaArchivo = false;
+        public Frm_Visualizador()
+        {
+            InitializeComponent();
+        }
+
+
+        public void InicializaInforme(String lTipoInf, DataSet iDts, string lVIaje, Boolean iEliminaArchivo)
+        {
+            mDtsInforme = iDts;
+            mInforme = lTipoInf;
+            mViaje = lVIaje;
+            mEliminaArchivo = iEliminaArchivo;
+        }
+
+        public void VerInforme()
+        {
+
+            if (mInforme.ToUpper().Equals("TC"))
+            {
+                Rep_TrazabilidadColada mReport = new Rep_TrazabilidadColada();
+                if (mDtsInforme.Tables.Count > 0)
+                {
+                    mReport.SetDataSource(mDtsInforme);
+                    this.crystalReportViewer1.ReportSource = mReport;
+                }
+            }
+            else
+            {
+                Rep_CertificadoMan mReport = new Rep_CertificadoMan();
+                if (mDtsInforme.Tables.Count > 0)
+                {
+                    mReport.SetDataSource(mDtsInforme);
+                    this.crystalReportViewer1.ReportSource = mReport;
+                }
+                //}
+
+            }
+        }
+        private void Frm_Visualizador_Load(object sender, EventArgs e)
+        {
+           
+
+        }
+
+        public void GeneraPdf_TrazabilidadColadas(string iPathDestino, string iViaje )
+        {
+       
+            if (mDtsInforme != null)
+            {
+                string lPathArchivo = string.Concat(iPathDestino, ""); 
+                //string lPathArchivo = "//192.168.1.191//Gerencia de Logistica//Guias de Despacho//Guías Santiago//IT//";
+                string lArchivo = "";
+                // CargarInforme(mDtsInforme, lInforme);
+                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    string[] separators = { "-" };
+                    string[] lPartes = iViaje.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    if (lPartes.Length > 1)
+                    {
+                        lPathArchivo = string.Concat(lPathArchivo, lPartes[0], "\\");
+                        if (Directory.Exists(lPathArchivo) == false)
+                        {
+                            Directory.CreateDirectory(lPathArchivo);
+                        }
+
+                        lPathArchivo = string.Concat(lPathArchivo, iViaje.Replace("/", "_"), "\\");
+                        // creamos el directorio de la IT EJEMPLO  AVA/AVA-1_1
+                        if (Directory.Exists(lPathArchivo) == false)
+                        {
+                            Directory.CreateDirectory(lPathArchivo);
+                        }
+
+                        lArchivo = string.Concat(lPathArchivo, "TrazabilidadColadas.pdf");
+                        if (mEliminaArchivo == true)
+                        {
+                            if (File.Exists(lArchivo) == true)
+                                File.Delete(lArchivo);
+                        }
+
+
+                        Calidad.Rep_TrazabilidadColada mReport = new Calidad.Rep_TrazabilidadColada();
+                        mReport.SetDataSource(mDtsInforme);
+                        this.crystalReportViewer1.ReportSource = mReport;
+                        mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                        //GrabaGeneracion_PL(mViaje, lPathArchivo, "P");
+                        this.crystalReportViewer1.Dispose();
+                        this.crystalReportViewer1 = null;
+                        mReport.Close();
+                        mReport.Dispose();
+
+                    }
+                   
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw exc;
+                    //Application.Restart();
+                }
+
+            }
+
+        }
+
+
+
+        public void GeneraPdf_CertificadoFabricacion(string iPathDestino, string iViaje)
+        {
+
+            if (mDtsInforme != null)
+            {
+                string lPathArchivo = string.Concat(iPathDestino, "");
+                //string lPathArchivo = "//192.168.1.191//Gerencia de Logistica//Guias de Despacho//Guías Santiago//IT//";
+                string lArchivo = "";
+                // CargarInforme(mDtsInforme, lInforme);
+                Cursor = Cursors.WaitCursor;
+                try
+                {
+                    string[] separators = { "-" };
+                    string[] lPartes = iViaje.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                    if (lPartes.Length > 1)
+                    {
+                        lPathArchivo = string.Concat(lPathArchivo, lPartes[0], "\\");
+                        if (Directory.Exists(lPathArchivo) == false)
+                        {
+                            Directory.CreateDirectory(lPathArchivo);
+                        }
+
+                        lPathArchivo = string.Concat(lPathArchivo, iViaje.Replace("/", "_"), "\\");
+                        // creamos el directorio de la IT EJEMPLO  AVA/AVA-1_1
+                        if (Directory.Exists(lPathArchivo) == false)
+                        {
+                            Directory.CreateDirectory(lPathArchivo);
+                        }
+
+                        lArchivo = string.Concat(lPathArchivo, "CertificadoFabricacion.pdf");
+                        if (mEliminaArchivo == true)
+                        {
+                            if (File.Exists(lArchivo) == true)
+                                File.Delete(lArchivo);
+                        }
+
+
+                        Calidad.Rep_CertificadoMan mReport = new Calidad.Rep_CertificadoMan();
+                        mReport.SetDataSource(mDtsInforme);
+                        this.crystalReportViewer1.ReportSource = mReport;
+                        mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                        //GrabaGeneracion_PL(mViaje, lPathArchivo, "P");
+                        this.crystalReportViewer1.Dispose();
+                        this.crystalReportViewer1 = null;
+                        mReport.Close();
+                        mReport.Dispose();
+                    }
+
+                }
+                catch (Exception exc)
+                {
+                    MessageBox.Show(exc.Message, this.Text, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw exc;
+                    //Application.Restart();
+                }
+
+            }
+
+        }
+    }
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/Dts_PL.xsd" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" xmlns:mstns="http://tempuri.org/Dts_PL.xsd" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://tempuri.org/Dts_PL.xsd" id="Dts_PL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element msdata:IsDataSet="true" msdata:UseCurrentLocale="true" name="Dts_PL">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ObsCuadroProgramacion">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" name="Id" type="xs:int" />
+              <xs:element name="Fecha">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodViaje">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="Obs">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element minOccurs="0" name="FechaObs" type="xs:dateTime" />
+              <xs:element minOccurs="0" name="UsuarioCrea" type="xs:int" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="ResumenDesp">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="CodigoIT" type="xs:string" />
+              <xs:element minOccurs="0" name="Obra" type="xs:string" />
+              <xs:element minOccurs="0" name="NroGD" type="xs:string" />
+              <xs:element minOccurs="0" name="PesoTotal" type="xs:string" />
+              <xs:element minOccurs="0" name="NroEtiquetasConectores" type="xs:string" />
+              <xs:element minOccurs="0" name="ValorTotal_ITCon" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DetalleDesp">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="CodigoIT" type="xs:string" />
+              <xs:element minOccurs="0" name="Ubicacion" type="xs:string" />
+              <xs:element minOccurs="0" name="Peso" type="xs:string" />
+              <xs:element minOccurs="0" name="Hoja" type="xs:string" />
+              <xs:element minOccurs="0" name="PesoDesp" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="DetallePL">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="IdCabecera" type="xs:string" />
+              <xs:element msprop:Generator_UserColumnName="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" minOccurs="0" name="Item" type="xs:string" />
+              <xs:element minOccurs="0" name="Pieza" type="xs:string" />
+              <xs:element minOccurs="0" name="Cantidad" type="xs:string" />
+              <xs:element minOccurs="0" name="Diametro" type="xs:string" />
+              <xs:element minOccurs="0" name="Largo" type="xs:string" />
+              <xs:element minOccurs="0" name="Marca" type="xs:string" />
+              <xs:element minOccurs="0" name="Peso" type="xs:string" />
+              <xs:element minOccurs="0" name="Imagen" type="xs:base64Binary" />
+              <xs:element minOccurs="0" name="IdPieza" type="xs:string" />
+              <xs:element minOccurs="0" name="Valores" type="xs:string" />
+              <xs:element minOccurs="0" name="Orden" type="xs:string" />
+              <xs:element minOccurs="0" name="Despacho" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Lamina">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Obra" type="xs:string" />
+              <xs:element minOccurs="0" name="Sector" type="xs:string" />
+              <xs:element minOccurs="0" name="Ubicacion" type="xs:string" />
+              <xs:element minOccurs="0" name="Plano" type="xs:string" />
+              <xs:element msprop:Generator_UserColumnName="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" minOccurs="0" name="Item" type="xs:string" />
+              <xs:element minOccurs="0" name="Kilos" type="xs:string" />
+              <xs:element minOccurs="0" name="Lamina" type="xs:string" />
+              <xs:element minOccurs="0" name="Cantidad" type="xs:string" />
+              <xs:element minOccurs="0" name="Diametro" type="xs:string" />
+              <xs:element minOccurs="0" name="Marca" type="xs:string" />
+              <xs:element minOccurs="0" name="Largo" type="xs:string" />
+              <xs:element minOccurs="0" name="Imagen" type="xs:base64Binary" />
+              <xs:element minOccurs="0" name="Valores" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="CabeceraDet">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Figura" type="xs:string" />
+              <xs:element minOccurs="0" name="Sector" type="xs:string" />
+              <xs:element minOccurs="0" name="Ubicacion" type="xs:string" />
+              <xs:element minOccurs="0" name="Plano" type="xs:string" />
+              <xs:element minOccurs="0" name="CodigoIT" type="xs:string" />
+              <xs:element minOccurs="0" name="NombreObra" type="xs:string" />
+              <xs:element minOccurs="0" name="IdCabecera" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="BECHTEL">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" name="Id" type="xs:string" />
+              <xs:element minOccurs="0" name="DescObra" type="xs:string" />
+              <xs:element minOccurs="0" name="Figura" type="xs:string" />
+              <xs:element minOccurs="0" name="Nivel" type="xs:string" />
+              <xs:element minOccurs="0" name="Elemento" type="xs:string" />
+              <xs:element minOccurs="0" name="Plano" type="xs:string" />
+              <xs:element minOccurs="0" name="Ubicacion" type="xs:string" />
+              <xs:element minOccurs="0" name="Peso" type="xs:string" />
+              <xs:element minOccurs="0" name="Cantidad" type="xs:string" />
+              <xs:element minOccurs="0" name="Diametro" type="xs:string" />
+              <xs:element minOccurs="0" name="Largo" type="xs:string" />
+              <xs:element minOccurs="0" name="Marca" type="xs:string" />
+              <xs:element minOccurs="0" name="Imagen" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique msdata:PrimaryKey="true" name="Constraint1">
+      <xs:selector xpath=".//mstns:ObsCuadroProgramacion" />
+      <xs:field xpath="mstns:Fecha" />
+      <xs:field xpath="mstns:CodViaje" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

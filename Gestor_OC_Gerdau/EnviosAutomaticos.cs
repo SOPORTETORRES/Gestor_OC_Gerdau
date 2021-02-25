@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO.Compression;
 
 namespace Gestor_OC_Gerdau
 {
@@ -16,7 +17,7 @@ namespace Gestor_OC_Gerdau
     {
         static string excelFile = "";
         private DataTable mTblEnvios = new DataTable();
-        private Boolean mGenerandoArchivo = false;
+        public  Boolean mGenerandoArchivo = false;
         public EnviosAutomaticos()
         {
             InitializeComponent();
@@ -25,6 +26,10 @@ namespace Gestor_OC_Gerdau
         private void Btn_EnviaPL_Click(object sender, EventArgs e)
         {
             EnviarPL("682", "220");
+            System.Threading.Thread.Sleep(1000);
+            EnviarPL( "807", "600");
+
+
             //ProcesaEnvioBOM();
         }
 
@@ -948,6 +953,44 @@ namespace Gestor_OC_Gerdau
 
         }
 
+        private Boolean ProcesaEnvioBOM_inmediato(string iDia, string iHora, string iIdObra, string iTipo)
+        {
+            Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+            string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
+            Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc(); string lPathArchivo = "";
+
+
+            lDia = iDia; // lTbl.Rows[0]["Par1"].ToString();
+            lHora = Val(iHora); // Val(lTbl.Rows[0]["Par2"].ToString());
+            lHoraActual = DateTime.Now.Hour;
+            lDiaActual = DateTime.Now.ToString("dddd");
+            switch (iIdObra)
+            {
+               
+                case "682": //QBF 2
+                case "803": //QBF 4
+                case "806": //QBF 470
+                case "807": //QBF 6
+                case "772": //QBF 5
+                   
+                            lPathArchivo = EnviarBOM(iIdObra, iTipo);
+                            
+             
+                    break;
+                default:
+
+                    break;
+            }
+
+
+
+            //}
+
+            return lRes;
+
+        }
+
         private void RevisaLC(string iTipo)
         {
             string lRes = "";
@@ -1091,7 +1134,11 @@ namespace Gestor_OC_Gerdau
             WS_Gerdau.WS_IntegracionGerdauSoapClient lDal = new WS_Gerdau.WS_IntegracionGerdauSoapClient();
             DataSet lDtsViajes = new DataSet();
 
-            lSql = String.Concat("  [SP_ConsultasGenerales]  155,'','','','',''  ");
+            //lSql = String.Concat("  [SP_ConsultasGenerales]  155,'','','','',''  ");
+
+            lSql = String.Concat("    SP_ConsultasInformes  30, ' ', ' ', '', '', '' ");
+
+
             try
             {
                 lDts = lPx.ObtenerDatos(lSql);
@@ -1106,56 +1153,25 @@ namespace Gestor_OC_Gerdau
                             lTx = String.Concat(" Hola Estimados: <br> A continuación les enviamos el detalle de los Lotes con problemas, puede ser por lote mal digitado o el certificado NO esta disponible en IDIEM <br>  ");
                             lTx = String.Concat(lTx, "   <br> <br> ");
                             lTx = String.Concat(lTx, "<table   border='1'>    <tr>  ");
-                            lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> I. T.</td> ");
-                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Etiqueta </td>");
-                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Diametro</td> ");
+                            lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Sucursal</td> ");
+                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>IT </td>");
                             lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Lote</td> ");
-                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Fecha Registro</td> ");
+                            //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Lote</td> ");
+                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Fecha Despacho</td> ");
                             lTx = String.Concat(lTx, "  </tr> ");
                             for (i = 0; i < lTbl.Rows.Count; i++)
                             {
                                 lTx = String.Concat(lTx, "  <tr> ");
-                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["it"].ToString(), "</td> ");
-                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Etiqueta"].ToString(), "</td> ");
-                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Diametro"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Sucursal"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Codigo"].ToString(), "</td> ");
+                                //lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Lote"].ToString(), "</td> ");
                                 lTx = String.Concat(lTx, "  <td> <a href=http://200.29.219.24/Certificados/RevisaColada.php?Lote=", lTbl.Rows[i]["Lote"].ToString(),">", lTbl.Rows[i]["Lote"].ToString(), "</td> ");
                                 // <a href=", lTbl.Rows[i]["UrlCertificado"].ToString(), ">
 
-                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["FechaRegistro"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["FechaDespacho"].ToString(), "</td> ");
                                 lTx = String.Concat(lTx, "  </tr> ");
                             }
                             lTx = String.Concat(lTx, " </table > <BR> <BR>  ");
-
-
-                            lDtsViajes = lDal.ObtenerViajesCerificar_PorSucursal("");
-                            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
-                            {
-                                lTbl = lDtsViajes.Tables[0].Copy();
-                                lTx = String.Concat(lTx, "    Viajes que estan Pendientes de certificación   <BR>  <table   border='1'>    <tr>  ");
-                                lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> I.T</td> ");
-                                lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Kilos I.T </td>");
-                                lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Kgs Cert </td> ");
-                                lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Fecha Despacho </td> ");
-                                lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Fecha Guía INET </td> ");
-                                lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Nro Guía INET </td> ");
-                                //
-
-                                lTx = String.Concat(lTx, "  </tr> ");
-                                for (i = 0; i < lTbl.Rows.Count; i++)
-                                {
-                                  //  http://cubigest.torresocaranza.cl/Test/Calidad/CertificacionPorViaje.aspx?Viaje=PEA-7/1
-                                    lTx = String.Concat(lTx, "  <tr> ");
-                                    lTx = String.Concat(lTx, "  <td> <a href=http://cubigest.torresocaranza.cl/Test/Calidad/CertificacionPorViaje.aspx?Viaje=", lTbl.Rows[i]["Codigo"].ToString(),">", lTbl.Rows[i]["Codigo"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["KgsIT"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["KgsCertificados"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  <td> " , lTbl.Rows[i]["fechadespacho"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["fechaGuiaINET"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["nroguiaInet"].ToString(), "</td> ");
-                                    lTx = String.Concat(lTx, "  </tr> ");
-                                }
-                                lTx = String.Concat(lTx, " </table > <BR> <BR> <BR> ");
-
-                            }
 
                                 lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR>");
                             // '  lTx = String.Concat(lTx, "  Los acentos y caracteres especiales han sido eliminado del correo <BR>")
@@ -1202,7 +1218,7 @@ namespace Gestor_OC_Gerdau
 
         }
 
-        private string VerificaLotePaquete(string iLote, string iIdEtiqueta)
+        public  string VerificaLotePaquete(string iLote, string iIdEtiqueta)
         {
             string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; 
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lLoteCP = "";
@@ -1242,34 +1258,6 @@ namespace Gestor_OC_Gerdau
                     {
                         lTx = String.Concat(" Hola Estimados: <br> A continuación les enviamos la información referente a los Certificados de Calidad <br>  ");
                         lTx = String.Concat(lTx, " Para la obra: ", lTblDetalle.Rows[0]["NombreObra"].ToString(), " <br> <br> ");
-                        //lTx = String.Concat(lTx, "<table   border='1'>    <tr>  ");
-                        //lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> I. T.</td> ");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Etiqueta </td>");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Peso (KG)</td> ");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Diámetro </td> ");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Url Certificado </td> ");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Url Informe </td>");
-                        //lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Lote </td>");
-                        //lTx = String.Concat(lTx, "  </tr> ");
-                        //for (i = 0; i < lTbl.Rows.Count; i++)
-                        //{
-                        //    lTx = String.Concat(lTx, "  <tr> ");
-                        //    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["codigo"].ToString(), "</td> ");
-                        //    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Etiqueta"].ToString(), "</td> ");
-                        //    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["KgsPaquete"].ToString(), "</td> ");
-                        //    lTx = String.Concat(lTx, "  <td>", lTbl.Rows[i]["Diametro"].ToString(), "</td> ");
-                        //    lTx = String.Concat(lTx, "  <td> <a href=", lTbl.Rows[i]["UrlCertificado"].ToString(), "> ", lTbl.Rows[i]["UrlCertificado"].ToString(), "</a> </td> ");
-                        //    lTx = String.Concat(lTx, " <td> <a href=", lTbl.Rows[i]["UrlInforme"].ToString(), "> ", lTbl.Rows[i]["UrlInforme"].ToString(), "</a> </td> ");
-
-                        //    if (lTbl.Rows[i]["LoteAza"].ToString().Trim ().Length >0)
-                        //        lLote = lTbl.Rows[i]["LoteAza"].ToString();
-                        //    else
-                        //        lLote = lTbl.Rows[i]["Lote"].ToString();
-
-                        //    lTx = String.Concat(lTx, "  <td>", lLote , "</td> ");
-                        //    lTx = String.Concat(lTx, "  </tr> ");
-                        //}
-                        //lTx = String.Concat(lTx, " </table > <BR> <BR> <BR> ");
                         lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR>");
                         // '  lTx = String.Concat(lTx, "  Los acentos y caracteres especiales han sido eliminado del correo <BR>")
 
@@ -1392,6 +1380,255 @@ namespace Gestor_OC_Gerdau
             }
 
         }
+
+        public Boolean EsLoteAza(string iLote)
+        {
+            Boolean lRes = true; string lTmp = "";
+
+            if (iLote.Trim().Length < 10 )  // si el lote es 5 caracteres 
+                lRes = false;
+
+            lTmp = string.Concat("00000", iLote);
+            if (iLote.IndexOf("00000") > -1)  // si el lote del tipo 0000054321
+                lRes = false;
+
+
+            return lRes;
+        }
+
+        private Boolean ExisteArchivo(string iPath, string lArchivo)
+        {
+            Boolean lRes = false;string directoryName = "";
+            directoryName = Path.GetDirectoryName(iPath);
+
+            try
+            {
+                if (Directory.Exists(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\SANTIAGO\HCI\HCI-110_1\"))
+                {
+                    DirectoryInfo di = new DirectoryInfo(directoryName);
+
+                    foreach (var fi in di.GetFiles())
+                    {
+                        //Console.WriteLine(fi.Name);
+                        if (fi.Name == lArchivo)
+                        {
+
+                        }
+                    }
+                }
+            }
+            catch (Exception iEx)
+            {
+                MessageBox.Show(iEx.Message.ToString());
+            }
+
+
+            return lRes;
+        }
+
+        public void EnviaMail_Doc_Calidad_ZIP(string iCodigo, string iObra)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = ""; DataTable lTblDetalle = new DataTable();
+            DataTable TblUC = new DataTable(); string lLote = ""; Boolean lPuedeSeguir = true; MailMessage MMessage = new MailMessage();
+            string lPathInfLote = ""; string lPathCertLote = ""; string lLotesEnviados = ""; string lPathZip = ""; string lPathArchs = "";
+            DataTable lTblLotes = new DataTable();string lPathCalidad = "";string lTmp = "";string lLog = "";
+            Clases.Cls_EnvioDoc lDoc = new Clases.Cls_EnvioDoc();
+            lSql = String.Concat("  SP_Consultas_WS  192,'", iCodigo, "','','','',',','',''");
+            try
+            {
+                lPathCalidad=string.Concat (ConfigurationManager.AppSettings["Path_Calidad"].ToString());
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTblDetalle = lDts.Tables[0].Copy();
+                    
+
+                    lTx = "";
+                    if (lTblDetalle.Rows.Count > 0)
+                    {
+                        for (i = 0; i < lTblDetalle.Rows.Count; i++)
+                        {
+                           // if (EsLoteAza ())
+                            if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
+                                lLote = lTblDetalle.Rows[i]["LoteAza"].ToString();
+                            else
+                                lLote = lTblDetalle.Rows[i]["Lote"].ToString();
+                            if (VerificaLotePaquete(lLote, lTblDetalle.Rows[i]["Id"].ToString()) == "N")
+                            {
+                                lPuedeSeguir = false;
+                                lLog = string.Concat("lEnv.VerificaLotePaquete=N - IdPaq=", lTblDetalle.Rows[i]["Id"].ToString(), Environment.NewLine);
+                                i = lTblDetalle.Rows.Count;
+                               
+                            }
+                        }
+
+                        if (lPuedeSeguir == true)
+                        {
+
+                          
+                            string lSuc = ""; string lPathCertificado = "";
+                            string[] separators = { "-" }; string lPathInforme = "";
+                            string[] lPartes = iCodigo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                            string lPathSigla = lPartes[0].ToString();
+
+                            lSql = "  select distinct    s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s   ";
+                            lSql = string.Concat(lSql, "    where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id   ");
+                            lSql = string.Concat(lSql, " and  codigo='", iCodigo, "'");
+                            lDts = lPx.ObtenerDatos(lSql);
+                            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                            {
+                                lTbl = lDts.Tables[0].Copy();  // tabla con los lotes del viaje 
+                                lSuc = string.Concat(lTbl.Rows[0]["Sucursal"].ToString(), "\\");
+                                lPathCertificado = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "CertificadoFabricacion.pdf");
+                                lPathInforme = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "TrazabilidadColadas.pdf");
+                               
+                                //lPathCertificado = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, iCodigo.Replace("/", "_"), "CertificadoFabricacion.pdf");
+                                //lPathInforme = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, iCodigo.Replace("/", "_"), "TrazabilidadColadas.pdf");
+
+                                //lPathCertificado = @"\\192.168.1.191\Gestion de Calidad\GeneracionDocumentosAutomatico\SANTIAGO\HCI\HCI-110_1\CertificadoFabricacion.pdf";
+                                //lPathInforme = @"\\192.168.1.191\Gestion de Calidad\GeneracionDocumentosAutomatico\SANTIAGO\HCI\HCI-110_1\TrazabilidadColadas.pdf";
+
+                                //ExisteArchivo(lPathInforme, "TrazabilidadColadas.pdf");
+
+                                if ((File.Exists(lPathCertificado) == true) && (File.Exists(lPathInforme) == true))
+                                {
+                                    // Siempre deben haber 2  archivos 
+                                    for (i = 0; i < lTblDetalle.Rows.Count; i++)
+                                    {
+                                        if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
+                                            lLote = string.Concat(lTblDetalle.Rows[i]["LoteAza"].ToString()); //, "_");
+                                        else
+                                            lLote = string.Concat(lTblDetalle.Rows[i]["Lote"].ToString());//, "_");
+
+
+                                        if (lLotesEnviados.IndexOf(lLote) == -1)
+                                        {
+
+                                            lTmp = lDoc.ExisteArchivoEnServer(lLote, lSuc, lPathSigla, iCodigo, lTblDetalle.Rows[i]["idcolada"].ToString(), lTblDetalle.Rows[i]["id"].ToString());
+                                            if (lTmp.Trim().Length == 0)
+                                                lPuedeSeguir = true;
+                                            else
+                                                lPuedeSeguir = false;
+
+                                            if (lPuedeSeguir == true)
+                                            {
+                                                lPuedeSeguir = true;
+                                            }
+                                            else
+                                            {
+                                                lPuedeSeguir = false;
+                                                i = lTblDetalle.Rows.Count;
+                                            }
+                                            
+
+                                            lLotesEnviados = string.Concat(lLotesEnviados, lLote, "-");
+                                        }
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    lPuedeSeguir = false;
+                                    PersisteLog_EnviosCalidad(iCodigo, "NO Estan los archivos CertificadoFabricacion.pdf - TrazabilidadColadas.pdf", "E");
+                                }
+
+
+
+                                if (lPuedeSeguir == true)
+                                {
+                                    // De momento  Se debe Crear el archivo .Zip. (Pendiente, enviarlo a la lista de destinatarios)
+                                    lPathZip = Path.Combine(lPathCalidad, lSuc, lPathSigla, string.Concat(iCodigo.Replace("/", "_"), ".zip"));
+                                    lPathArchs = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"));
+                                    //lPathZip = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, string.Concat (iCodigo.Replace("/", "_"),".zip") );
+                                    //lPathArchs = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, iCodigo.Replace("/", "_"));
+
+                                    if ((File.Exists(lPathZip) == true))
+                                        File.Delete(lPathZip);
+
+
+
+                                        ZipFile.CreateFromDirectory(lPathArchs, lPathZip);
+
+                                    MMessage = new MailMessage();
+
+                                    TblUC = ObtenerDestinatarios("-1700");
+                                    lTbl = ObtenerDestinatarios(iObra);
+                                    lTbl.Merge(TblUC);
+
+
+                                    for (i = 0; i < lTbl.Rows.Count; i++)
+                                        MMessage.To.Add(lTbl.Rows[i]["MailDest"].ToString());
+
+
+                                    lTx = String.Concat(" Hola Estimados: <br> A continuación les enviamos la información referente a los Certificados de Calidad <br>  ");
+                                    lTx = String.Concat(lTx, " Para la obra: ", lTblDetalle.Rows[0]["NombreObra"].ToString(), " <br> <br> ");
+                                    lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR>");
+
+                                    MMessage.From = new MailAddress("notificaciones@smtyo.cl", "Envio Certificados ", System.Text.Encoding.UTF8);
+                                    MMessage.Subject = " Envío de Certificados  electronicos T.O. ";
+                                    MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                                    MMessage.Body = lTx;
+
+                                    MMessage.Attachments.Add(new Attachment(lPathZip));
+
+                                    MMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                                    MMessage.IsBodyHtml = true; // 'Formato html;
+
+                                    // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
+                                    SmtpClient SClient = new SmtpClient();
+                                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                                    SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
+                                    SClient.Port = 587;  // 'Puerto del SMTP de Gmail
+                                    SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
+                                                              // ' //'Capturamos los errores en el envio
+                                    SClient.Send(MMessage);
+
+
+                                    //persistimo el envio para no enviarlo nuevamente
+                                    lSql = String.Concat("  Update viaje set mailCalidadEnviado='S' , FechaMailCalidad=getdate()  where Codigo='", iCodigo, "' ");
+                                    lDts = lPx.ObtenerDatos(lSql);
+                                }
+                                else
+                                {
+                                    lSql = String.Concat("  Update viaje set mailCalidadEnviado='E' , FechaMailCalidad=getdate()  where Codigo='", iCodigo, "' ");
+                                    lDts = lPx.ObtenerDatos(lSql);
+                                    if (lTmp.Trim().Length >0 )
+                                    PersisteLog_EnviosCalidad(iCodigo, lTmp, "E");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            lSql = String.Concat("  Update viaje set mailCalidadEnviado='E' , FechaMailCalidad=getdate()  where Codigo='", iCodigo, "' ");
+                            lDts = lPx.ObtenerDatos(lSql);
+                            PersisteLog_EnviosCalidad(iCodigo, lTmp, "E");
+                        }
+                    }
+                }
+            }
+            catch (Exception iex)
+            {
+                //persistimo el envio para no enviarlo nuevamente
+                MessageBox.Show(iex.Message.ToString(), " Error en el sistema");
+                lSql = String.Concat("  Update viaje set mailCalidadEnviado='E' , FechaMailCalidad=getdate()  where Codigo='", iCodigo, "' ");
+                lDts = lPx.ObtenerDatos(lSql);
+                PersisteLog_EnviosCalidad(iCodigo, string.Concat (iex .Message .ToString (), " Traza: ",iex .StackTrace .ToString ()), "E");
+            }
+
+        }
+
+        private void PersisteLog_EnviosCalidad(string iCodigo, string iMsg, string  iEstado)
+        {
+            string lSql = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+
+            lSql = " Insert into  Log_MailCalidadEnviado (Codigo, Mensaje,Estado,FechaEnvio) values ('";
+            lSql = string.Concat(lSql, iCodigo, "','", iMsg, "','", iEstado, "', getdate())");
+            lPx.ObtenerDatos(lSql);
+
+        }
+
         private Boolean ProcesaCierreTotems(string iDia, string iHora)
         {
             Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
@@ -1752,46 +1989,46 @@ namespace Gestor_OC_Gerdau
                     ProcesaEnvioPL(iDia, iHora, "682", "220");
                     mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioPL(iDia, iHora, "772", "500");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioPL(iDia, iHora, "772", "500");
+                    //mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioPL(iDia, iHora, "803", "400");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioPL(iDia, iHora, "803", "400");
+                    //mGenerandoArchivo = false;
 
 
                     mGenerandoArchivo = true;
                     ProcesaEnvioPL(iDia, iHora, "807", "600");
                     mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioPL(iDia, iHora, "806", "470");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioPL(iDia, iHora, "806", "470");
+                    //mGenerandoArchivo = false;
 
 
                     break;
 
                 case "BOM": //Todos los días 
                     mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora,"682","220");
+                    ProcesaEnvioBOM(iDia, iHora, "682", "220");
                     mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora, "772", "500");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioBOM(iDia, iHora, "772", "500");
+                    //mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora, "803", "400");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioBOM(iDia, iHora, "803", "400");
+                    //mGenerandoArchivo = false;
 
                     mGenerandoArchivo = true;
                     ProcesaEnvioBOM(iDia, iHora, "807", "600");
                     mGenerandoArchivo = false;
 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora, "806", "470");
-                    mGenerandoArchivo = false;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvioBOM(iDia, iHora, "806", "470");
+                    //mGenerandoArchivo = false;
 
                     break;
                 case "LC": //Todos los días 
@@ -1799,10 +2036,10 @@ namespace Gestor_OC_Gerdau
                     break;
 
                 case "PR_TOSOL": //Todos los días 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvio_ProduccionTOSOL(iDia, iHora);
-                    mGenerandoArchivo = false;
-                    break;
+                    //mGenerandoArchivo = true;
+                    //ProcesaEnvio_ProduccionTOSOL(iDia, iHora);
+                    //mGenerandoArchivo = false;
+                    //break;
 
                 case "BL_LC": //Todos los días 
                     mGenerandoArchivo = true;
@@ -1816,17 +2053,17 @@ namespace Gestor_OC_Gerdau
                     break;
 
                 case "Cierre_Maq": //Todos los días  Revision de las guias INET Cubigest
-                    mGenerandoArchivo = true;
-                    ProcesaCierreTotems(iDia, iHora);
-                    mGenerandoArchivo = false;
-                    break;
+                    //mGenerandoArchivo = true;
+                    //ProcesaCierreTotems(iDia, iHora);
+                    //mGenerandoArchivo = false;
+                    //break;
 
                 case "Doc_Cal": //Las certificaciones  que esten OK, se enviaran a clientes, que consta de:
                     //Certificado de Fabricacion y  certificado de trazabilidad.
-                    mGenerandoArchivo = true;
-                    Envia_DocumentosCalidad( );
-                    mGenerandoArchivo = false;
-                    break;
+                    //mGenerandoArchivo = true;
+                    //Envia_DocumentosCalidad( );
+                    //mGenerandoArchivo = false;
+                    //break;
 
                 //case "BOM_5": //Todos los días 
                 //    mGenerandoArchivo = true;
@@ -1871,6 +2108,72 @@ namespace Gestor_OC_Gerdau
                 //CargaEnvios();
             }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //mGenerandoArchivo = true;
+            //ProcesaEnvioBOM_inmediato("", "", "682", "220");
+            ////ProcesaEnvioBOM("", "", "807", "600");
+
+            //mGenerandoArchivo = false;
+
+            EnviaMail_Lotes_NO_Encontrados();
+
+        }
+
+        private void Btn_CorrigePreIT_Click(object sender, EventArgs e)
+        {
+            CorrigePreIT();
+        }
+
+
+        private void CorrigePreIT()
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+            string lIdMov = "0"; string lIdPieza = "0";  string lKgsOK = "0";
+         
+
+            lSql = String.Concat("  select p.TotalKgs KgsOK , p1.TotalKgs Kgs_Err, IdMov , p1.id idPieza , p.id IdPiezaTipoB ,  ");
+            lSql = String.Concat(lSql, "  (Select count(1) from DetallePaquetesPieza d where d.IdPieza=p1.id ) ");
+            lSql = String.Concat(lSql, "  from  PiezasTipoB p, hojadespiece hd  , piezas  p1  where hd.id=p.id_hd ");
+            lSql = String.Concat(lSql, " and hd.idobra=940 and  p1.IdPiezaTipoB =p.id     ");
+            lSql = String.Concat(lSql, " and (Select count(1) from DetallePaquetesPieza d where d.IdPieza=p1.id )=1  and p.TotalKgs<>p1.TotalKgs  ");
+    
+            try
+            {
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    if ((lTbl.Rows.Count > 0))
+                    {
+                        for (i = 0; i < lTbl.Rows.Count; i++)
+                        {
+                            lIdMov = lTbl.Rows[i]["IdMov"].ToString();
+                            lIdPieza = lTbl.Rows[i]["idPieza"].ToString();
+                            lKgsOK = lTbl.Rows[i]["KgsOK"].ToString();
+
+                            lSql = String.Concat("update movimientos set pesoasignado=", lKgsOK," where id=",lIdMov );
+                            lDts = lPx.ObtenerDatos(lSql);
+                            lSql = String.Concat("update piezas set  totalKgs=", lKgsOK, " where id=", lIdPieza);
+                            lDts = lPx.ObtenerDatos(lSql);
+                            lSql = String.Concat(" update  detallepaquetespieza set kgspaquete=", lKgsOK, " where idpieza=", lIdPieza);
+                            lDts = lPx.ObtenerDatos(lSql);
+
+                        }
+                           
+
+
+                       
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+
+            }
         }
     }
 }

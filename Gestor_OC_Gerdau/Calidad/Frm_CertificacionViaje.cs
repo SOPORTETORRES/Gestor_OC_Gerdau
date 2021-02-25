@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -14,6 +16,7 @@ namespace Gestor_OC_Gerdau.Calidad
     public partial class Frm_CertificacionViaje : Form
     {
         private string mViaje = "";
+        private string mSoloVer = "";
         private string mDiametro = "";
         private string mIdEtiqueta = "";
         private DataTable mTblEtViaje = new DataTable();
@@ -25,6 +28,43 @@ namespace Gestor_OC_Gerdau.Calidad
             InitializeComponent();
         }
 
+
+        public  void ActualizaRegistros()
+        {
+            int i = 0;
+
+            if (Dtg_Datos.RowCount>0)
+            { 
+            //1.-  Verificacamos la Actualizar Certificados Paquete
+            if (Dtg_Datos.Rows[0].Cells["Id"].Style.BackColor == Color.Yellow)
+            {
+                Btn_CP_Click(null, null);
+            }
+            // Fin 1.-
+            // 2.- Buscamos los  lotes que faltan
+            for (i = 0; i < Dtg_Datos.RowCount; i++)
+            {
+                if ((Dtg_Datos.Rows[i].Cells["EtiquetaVinc"].Value != null) && (Dtg_Datos.Rows[i].Cells["EtiquetaVinc"].Value.ToString().ToUpper().Equals("N")))
+                {
+                    if (Dtg_Datos.Rows[i].Cells["Lote"].Style.BackColor == Color.LightSalmon)
+                    {
+                        Lbl_Lote.Text = Dtg_Datos.Rows[i].Cells["Lote"].Value.ToString();
+                        Tx_lote.Text = Dtg_Datos.Rows[i].Cells["Lote"].Value.ToString();
+                        Btn_ActualizaLote_Click(null, null);
+                    }
+                }
+                else
+                {
+                    if (Dtg_Datos.Rows[i].Cells["LoteAza"].Style.BackColor == Color.LightSalmon)
+                    {
+                        Lbl_Lote.Text = Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString();
+                        Tx_lote.Text = Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString();
+                        Btn_ActualizaLote_Click(null, null);
+                    }
+                }
+            }
+            }
+        }
 
         private Boolean ExisteRegistro(string iDato, string iTipo)
         {
@@ -74,10 +114,10 @@ namespace Gestor_OC_Gerdau.Calidad
             return lRes;
         }
 
-        public void Inicialida(string iViaje)
+        public void Inicialida(string iViaje, string iSoloVer)
         {
             mViaje = iViaje;
-
+            mSoloVer = iSoloVer;
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();  
             lSql = String.Concat("  select  d.id  from viaje v , DetallePaquetesPieza d where d.IdViaje =v.id  and codigo='", iViaje,"' ");
@@ -113,11 +153,46 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
+        private string ObtenerUrl_CAP(string iLote )
+        {
+            string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0; string lIdDoc = "";
+            string lPathInf = ""; string lPathCert = "";
+
+            lSql = string.Concat(" select * from certificadoscoladasCap where lote='", iLote, "'  order  by IdDocumento  ");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                lTbl = lDts.Tables[0].Copy();
+                if (lTbl.Rows.Count > 1)
+                {
+                    if (lTbl.Rows[0]["TipoDocumento"].ToString().ToUpper().Equals("INFORME"))
+                        lPathInf = lTbl.Rows[0]["UrlDocumento"].ToString();
+
+                    lIdDoc = lTbl.Rows[0]["IdDocumento"].ToString();
+                    lSql = string.Concat(" select * from certificadoscoladasCap where lote='", iLote, "'   and IdDocumento like '%",lIdDoc, "%' and  TipoDocumento ='Certificado' ");
+                    lDts = lPx.ObtenerDatos(lSql);
+                    if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    {
+                        lTbl = lDts.Tables[0].Copy();
+                        lPathCert =lTbl.Rows[0]["UrlDocumento"].ToString();
+
+                    }
+        
+                }
+            }
+
+            lRes = string.Concat(lPathInf, "|", lPathCert);
+            return lRes;
+        }
+
         public void CargaDatos()
         {
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();            string lSql = "";
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
-            string lLotesPr = ""; string lLote = "";
+            string lLotesPr = ""; string lLote = "";string lColadasCap = ""; string lUltimoLote = "";
+            string[] separatingStrings = { "|" }; string[] lPartes = null;
+            EnviosAutomaticos lEnv = new EnviosAutomaticos();
             if (Tx_Codigo.Text.Trim().Length > 4)
                 mViaje = Tx_Codigo.Text;
 
@@ -129,7 +204,45 @@ namespace Gestor_OC_Gerdau.Calidad
             if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
             {
                 lTbl = lDts.Tables[0].Copy();
-                Dtg_Datos.DataSource = lTbl;
+                for (i = 0; i < lTbl.Rows .Count ; i++)
+                {
+                    if (lTbl.Rows[i]["LoteAza"].ToString().Length > 0)
+                        lLote = lTbl.Rows[i]["LoteAza"].ToString();
+                    else
+                        lLote = lTbl.Rows[i]["Lote"].ToString();
+
+
+                    if (lEnv.EsLoteAza(lLote) == false)
+                    {
+                        lLote = lLote.Replace("00000", "");
+                        if (lLote.ToString() != lUltimoLote)
+                        {
+                            lColadasCap = ObtenerUrl_CAP(lLote);
+                            lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                            if (lPartes.Length > 1)
+                            {
+                                lTbl.Rows[i]["UrlInforme"] = lPartes[0];
+                                lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
+                                lUltimoLote = lLote;
+                            }
+                        }
+                        else
+                        {
+                            if (lPartes != null)
+                            {
+                                lTbl.Rows[i]["UrlInforme"] = lPartes[0];
+                                lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
+                                lUltimoLote = lTbl.Rows[i]["Lote"].ToString();
+                            }
+                            
+                        }
+
+                    }
+
+                }
+
+
+                    Dtg_Datos.DataSource = lTbl;
 
                 for (i = 0; i < Dtg_Datos.RowCount - 1; i++)
                 {
@@ -207,7 +320,8 @@ namespace Gestor_OC_Gerdau.Calidad
                         url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Certificado"].ToString());
                         lLote = lTbl.Rows[i]["lote"].ToString();
                         lNombreArc = string.Concat(lLote, "_C.pdf");
-                        lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        //lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs", lNombreArc);
                         lLlave = lLot.ObtieneLlave(url);
                         url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
 
@@ -219,7 +333,8 @@ namespace Gestor_OC_Gerdau.Calidad
                         //2.- Informe
                         lNombreArc = string.Concat(lLote, "_I.pdf");
                         url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Informe"].ToString());
-                        lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        // lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs", lNombreArc);
                         lLlave = lLot.ObtieneLlave(url);
                         url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
                         cliente = new WebClient();
@@ -227,7 +342,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
                         //Persistimos los datos procesado 
                         lSql = string.Concat("  Update  CertificadosColadas   set  estado='OK' where lote='", lLote, "'");
-                        //lDts = lPx.ObtenerDatos(lSql);
+                        lDts = lPx.ObtenerDatos(lSql);
                         //if (PB.Value < PB.Maximum)
                         //    PB.Value = PB.Value + 1;
                         //else
@@ -254,11 +369,33 @@ namespace Gestor_OC_Gerdau.Calidad
             CargaDatos( );
         }
 
+
         private void Btn_ActualizaLote_Click(object sender, EventArgs e)
         {
-            ActualizaLote(Lbl_Lote .Text );
-            Lbl_Lote.Text = "";
-            CargaDatos();
+            string lLote = ""; EnviosAutomaticos lEnv = new EnviosAutomaticos();
+
+            if (Tx_lote.Text.Trim().Length > 0)
+                lLote = Tx_lote.Text;
+            else
+                lLote = Lbl_Lote.Text;
+
+            if (lEnv.EsLoteAza(lLote) == true)
+            {
+                if (lLote.Trim().Length > 0)
+                {
+                       ActualizaLote(lLote);
+                Lbl_Lote.Text = "";
+                CargaDatos();
+                }
+             
+            }
+            else
+            {
+                DescargaPdfs_WB_CAP(lLote );
+                Lbl_Lote.Text = "";
+                CargaDatos();
+            }
+           
         }
 
         private void ActualizaLote(string iLote)
@@ -283,13 +420,6 @@ namespace Gestor_OC_Gerdau.Calidad
                     lLot.ObtenerDatosCertificados_WB();
                     ActualizaCetificados(iLote);
                     DescargaPdfs_WB(iLote);
-                
-                //else
-                //{
-                //    ActualizaCetificados(iLote);
-                //    DescargaPdfs_WB(iLote);
-                //}
-
             }
             else
             {
@@ -297,6 +427,66 @@ namespace Gestor_OC_Gerdau.Calidad
                 DescargaPdfs_WB(iLote);
             }
 
+
+        }
+        private void DescargaPdfs_WB_CAP(string iLote)
+        {
+            DataTable lTbl = new DataTable(); int i = 0; string lPathFin = "";
+            string lRes = ""; string lLote = ""; string url = "";
+            Calidad.Frm_WB lFrm = new Frm_WB(); string lLlave = ""; string lNombreArc = "";
+
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); WebClient cliente = null;
+            Clases.Cls_Lotes lLot = new Clases.Cls_Lotes(); string lLoteFinal = "";
+
+            if (iLote.IndexOf("00000") > -1)
+                lLoteFinal = iLote.Replace("00000", "");
+            else
+                lLoteFinal = iLote;
+
+            string lSql = string.Concat("  select * from certificadoscoladasCap  where  lote='", lLoteFinal, "'");
+            //lSql = string.Concat(lSql, " publicacionInforme is not  null  and estado is null ");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                try
+                {
+                    lTbl = lDts.Tables[0].Copy();
+
+
+                    //PB.Maximum = lTbl.Rows.Count; PB.Minimum = 0; PB.Value = 0;
+                    for (i = 0; i < lTbl.Rows.Count; i++)
+                    {
+                        // 1.- Certificado Url_Certificado
+                        if (i == 1)
+                            i = lTbl.Rows.Count - 1;
+
+                          url = System.IO.Path.Combine(lTbl.Rows[i]["UrlDocumento"].ToString());
+                        lLote = string.Concat (lTbl.Rows[i]["lote"].ToString().Trim (),"_", lTbl.Rows[i]["IdDocumento"].ToString());
+                        if (lTbl.Rows[i]["TipoDocumento"].ToString().ToUpper().Equals("INFORME"))
+                                 lNombreArc = string.Concat(lLote.Trim (), "_I.pdf");
+
+                        if (lTbl.Rows[i]["TipoDocumento"].ToString().ToUpper().Equals("CERTIFICADO"))
+                            lNombreArc = string.Concat(lLote.Trim() , "_C.pdf");
+
+                        lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs\CAP\", lNombreArc);
+
+                        url = lTbl.Rows[i]["UrlDocumento"].ToString();
+                        cliente = new WebClient();
+                        cliente.DownloadFile(url, lPathFin);
+
+                        System.Threading.Thread.Sleep(300);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Problem: " + ex.Message);
+
+                }
+
+            }
+
+            //  MessageBox.Show("FIN");
 
         }
 
@@ -327,7 +517,7 @@ namespace Gestor_OC_Gerdau.Calidad
                         url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Certificado"].ToString());
                         lLote = lTbl.Rows[i]["lote"].ToString();
                         lNombreArc = string.Concat(lLote, "_C.pdf");
-                        lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs\", lNombreArc);
                         lLlave = lLot.ObtieneLlave(url);
                         url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
 
@@ -339,7 +529,7 @@ namespace Gestor_OC_Gerdau.Calidad
                         //2.- Informe
                         lNombreArc = string.Concat(lLote, "_I.pdf");
                         url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Informe"].ToString());
-                        lPathFin = System.IO.Path.Combine(@"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\", lNombreArc);
+                        lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs", lNombreArc);
                         lLlave = lLot.ObtieneLlave(url);
                         url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
                         cliente = new WebClient();
@@ -461,6 +651,13 @@ namespace Gestor_OC_Gerdau.Calidad
         private void Frm_CertificacionViaje_Load(object sender, EventArgs e)
         {
             CargaDatos();
+            if (mSoloVer == "N")
+            {
+                ActualizaRegistros();
+                System.Threading.Thread.Sleep(1000);
+                this.Close();
+            }
+                
         }
 
         private void Btn_lotesProblema_Click(object sender, EventArgs e)
@@ -490,6 +687,8 @@ namespace Gestor_OC_Gerdau.Calidad
         {
             DescargaPdfs_WB_PorViaje(Tx_Codigo.Text);
             new Clases.Cls_EnvioDoc().GeneraDocumentacionEnCarpeta(Tx_Codigo.Text);
+            Revisa_ArchivosEnServidor(Tx_Codigo.Text, "");
+            MessageBox.Show(" Proceso Finalizado ");
         }
 
         private void Btn_CP_Click(object sender, EventArgs e)
@@ -544,7 +743,7 @@ namespace Gestor_OC_Gerdau.Calidad
                 }
 
             }
-            Inicialida(mViaje );
+            Inicialida(mViaje,mSoloVer  );
             CargaDatos();
         }
 
@@ -639,6 +838,265 @@ namespace Gestor_OC_Gerdau.Calidad
             }
             else
                 MessageBox.Show("NO hay Etiquetas para Reparar la Inconsistenacia", "Avisos Sistema");
+        }
+
+        private void Btn_VerLote_Click(object sender, EventArgs e)
+        {
+            Calidad.Frm_WB_Ver lForm = new Frm_WB_Ver(); string lTxLote = "";
+
+            if (Tx_lote.Text.Trim().Length > 0)
+                lTxLote = Tx_lote.Text;
+            else
+                lTxLote = Lbl_Lote.Text;
+
+
+            lForm.CargaTicket(lTxLote);
+            lForm.ShowDialog();
+            //CargaTicket
+        }
+
+        private void Btn_RevisaHD_Click(object sender, EventArgs e)
+        {
+            Revisa_ArchivosEnServidor(Tx_Codigo.Text,"");
+        }
+
+        private Boolean ExisteArchivoEnServer(string iLote, string iSuc , string iPathSigla, string iCodigo, string iIdColada, string iIdEtiquetaTO)
+        {
+            Boolean lRes = false; EnviosAutomaticos lEnv = new EnviosAutomaticos(); 
+            string lPathCalidad = ""; DataTable lTblLotes = new DataTable(); string lPathInfLote = "";
+            string[] separators = { "-" }; string lPathCertLote = ""; DataSet lDts = new DataSet();
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";int i = 0;
+            DataTable lTblColadas = new DataTable();DataRow lFila = null; 
+
+            lEnv.mGenerandoArchivo = true;
+
+            lTblColadas.Columns.Add("Colada", Type.GetType("System.String"));
+            //VErificamos si tiene una o varias coladas asociadas
+            if (iIdColada.Equals("-1"))
+            {
+                lSql = string.Concat(" select distinct Lote  from EtiquetasVinculadas v , EtiquetaAZA e where v.IdQR =e.id  and   IdEtiquetaTO =", iIdEtiquetaTO);
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTblLotes = lDts.Tables[0].Copy();
+                    for (i = 0; i < lTblLotes.Rows.Count; i++)
+                    {
+                        lFila = lTblColadas.NewRow(); lFila["Colada"] = lTblLotes.Rows[i]["Lote"].ToString(); lTblColadas.Rows.Add(lFila);
+                    }
+                }
+
+             }
+            else  //HAy solo una colada para la Etiqueta
+            {
+                lFila = lTblColadas.NewRow(); lFila["Colada"] = iLote; lTblColadas.Rows.Add(lFila);
+            }
+
+            lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
+            for (i = 0; i < lTblColadas.Rows.Count; i++)
+            {    
+                if (lEnv.EsLoteAza(iLote) == true)
+                {
+                    lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), string.Concat(lTblColadas.Rows [i]["Colada"].ToString (), "_I.pdf"));
+                    lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), string.Concat(lTblColadas.Rows[i]["Colada"].ToString(), "_C.pdf"));
+                    if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))
+                    {
+                        lRes = true;
+                    }
+                    else
+                    {
+                        lRes = false;
+                        i = lTblColadas.Rows.Count;
+                    }
+                }
+                else
+                {
+                    DataView lVista = null; string lNomLoteInf = ""; string lNomLoteCert = ""; int lCont = 0;
+                    lSql = string.Concat("  Select * from certificadosColadasCap where lote='", iLote, "' ");
+                    lDts = lPx.ObtenerDatos(lSql);
+                    if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    {
+                        lTblLotes = lDts.Tables[0].Copy();
+                        lVista = new DataView(lTblLotes, "", "", DataViewRowState.CurrentRows);
+                        if (lVista.Count > 0)
+                        {
+                            for (lCont = 0; lCont < lVista.Count; lCont++)
+                            {
+                                if (lVista[lCont]["TipoDocumento"].ToString().ToUpper().Equals("INFORME"))
+                                    lNomLoteInf = string.Concat(iLote, "_", lVista[lCont]["IdDocumento"].ToString(), "_I.pdf");
+                                else
+                                    lNomLoteCert = string.Concat(iLote, "_", lVista[lCont]["IdDocumento"].ToString(), "_C.pdf");
+
+                            }
+                        }
+                    }
+                    lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteInf);
+                    lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteCert);
+                    if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))
+                    {
+                        lRes = true;
+                    }
+                    else
+                    {
+                        lRes = false;
+                    }
+                }
+            }
+            return lRes;
+        }
+
+        public void Revisa_ArchivosEnServidor(string iCodigo, string iObra)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = ""; DataTable lTblDetalle = new DataTable();
+            DataTable TblUC = new DataTable(); string lLote = ""; Boolean lPuedeSeguir = true;string lTmp = "";
+            //MailMessage MMessage = new MailMessage();
+            string lPathInfLote = ""; string lPathCertLote = ""; string lLotesEnviados = ""; 
+            lSql = String.Concat("  SP_Consultas_WS  192,'", iCodigo, "','','','',',','',''");
+            EnviosAutomaticos lEnv = new EnviosAutomaticos(); string lLog = "";
+            string lPathCalidad = ""; DataTable lTblLotes = new DataTable();
+            Clases.Cls_EnvioDoc lDoc = new Clases.Cls_EnvioDoc();
+
+            try
+            {
+                lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
+                lEnv.mGenerandoArchivo = true;
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTblDetalle = lDts.Tables[0].Copy();
+
+
+                    lTx = "";
+                    if (lTblDetalle.Rows.Count > 0)
+                    {
+                        for (i = 0; i < lTblDetalle.Rows.Count; i++)
+                        {
+                            if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
+                                lLote = lTblDetalle.Rows[i]["LoteAza"].ToString();
+                            else
+                                lLote = lTblDetalle.Rows[i]["Lote"].ToString();
+                            if (lEnv.VerificaLotePaquete(lLote, lTblDetalle.Rows[i]["Id"].ToString()) == "N")
+                            {
+                                lPuedeSeguir = false;
+                                i = lTblDetalle.Rows.Count-1;
+                                lLog = string .Concat ("lEnv.VerificaLotePaquete=N - IdPaq=", lTblDetalle.Rows[i]["Id"].ToString(),Environment .NewLine);
+                            }
+                        }
+
+                        if (lPuedeSeguir == true)
+                        {
+
+                            string lSuc = ""; string lPathCertificado = "";
+                            string[] separators = { "-" }; string lPathInforme = "";
+                            string[] lPartes = iCodigo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                            string lPathSigla = lPartes[0].ToString();
+
+                            lSql = "  select distinct    s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s   ";
+                            lSql = string.Concat(lSql, "    where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id   ");
+                            lSql = string.Concat(lSql, " and  codigo='", iCodigo, "'");
+                            lDts = lPx.ObtenerDatos(lSql);
+                            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                            {
+                                lTbl = lDts.Tables[0].Copy();  // tabla con los lotes del viaje 
+                                lSuc = string.Concat(lTbl.Rows[0]["Sucursal"].ToString(), "\\");
+                                //lPathCalidad
+                                lPathCertificado = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "CertificadoFabricacion.pdf");
+                               lPathInforme = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "TrazabilidadColadas.pdf");
+                               
+
+                                if ((File.Exists(lPathCertificado) == true) && (File.Exists(lPathInforme) == true))
+                                {
+                                    //  Comenzamos a Iterar sobre el detalle de los Lotes Siempre deben haber 2  archivos 
+                                    // Si la columna IdColada es -1 ==> pueden haber mas de una colada asociada y hay que procesarla
+                                    for (i = 0; i < lTblDetalle.Rows.Count; i++)
+                                    {
+                                        if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
+                                            lLote = string.Concat(lTblDetalle.Rows[i]["LoteAza"].ToString());//, "_");
+                                        else
+                                            lLote = string.Concat(lTblDetalle.Rows[i]["Lote"].ToString());//, "_");
+
+
+                                        if (lLotesEnviados.IndexOf(lLote) == -1)
+                                        {
+                                             lTmp = lDoc.ExisteArchivoEnServer(lLote, lSuc, lPathSigla, iCodigo, lTblDetalle.Rows[i]["idcolada"].ToString(), lTblDetalle.Rows[i]["id"].ToString());
+                                            if (lTmp.Trim().Length == 0)
+                                                lPuedeSeguir = true;
+                                            else
+                                                lPuedeSeguir = false;
+
+
+                                            if (lPuedeSeguir ==true )
+                                            {
+                                                lPuedeSeguir = true;
+                                            }
+                                            else
+                                            {
+                                                lPuedeSeguir = false;
+                                                i = lTblDetalle.Rows.Count;
+                                                lLog = string.Concat(lLog, " Revisa Archivos en Server: ", lTmp);
+                                            }
+
+                                           lLotesEnviados = string.Concat(lLotesEnviados, lLote, "-");
+                                        }
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    lPuedeSeguir = false;
+                                    lLog = string.Concat(lLog, " Archivo Generados NO Encontrados  ", lPathCertificado, " - ", lPathInforme, Environment.NewLine);
+                                }
+
+
+
+                                if (lPuedeSeguir == true)
+                                {
+                                    //persistimo el envio para no enviarlo nuevamente
+                                    lSql = String.Concat("  Update viaje set mailCalidadEnviado=null where Codigo='", iCodigo, "' ");
+                                    lDts = lPx.ObtenerDatos(lSql);
+                                    Tx_Codigo.BackColor = Color.LightGreen;
+  
+                                }
+                                else
+                                {
+                                    Tx_Codigo.BackColor = Color.LightSalmon;
+                                    MessageBox.Show(string.Concat("Detalle: ", lLog), "Avisos Sistema");
+                                    //lSql = String.Concat("  Update viaje set mailCalidadEnviado='E' where Codigo='", iCodigo, "' ");
+                                    //lDts = lPx.ObtenerDatos(lSql);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Tx_Codigo.BackColor = Color.LightSalmon;
+                            MessageBox.Show(string.Concat("Detalle: ", lLog), "Avisos Sistema");
+                            //lSql = String.Concat("  Update viaje set mailCalidadEnviado='E' where Codigo='", iCodigo, "' ");
+                            //lDts = lPx.ObtenerDatos(lSql);
+                        }
+                    }
+                }
+            }
+            catch (Exception iex)
+            {
+                MessageBox.Show(iex.Message.ToString(), "Avisos Sistema");
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           string lPathFin = "";Calidad.Frm_WB lFrm = new Frm_WB(); string url = ""; string lNombreArc = "206878_I.pdf";
+            DataSet lDts = new DataSet(); WebClient cliente = null;
+            lPathFin = System.IO.Path.Combine(@"C:\TMP\Calidad\Docs\CAP", lNombreArc);
+
+            //     < a href = "/cap/cake/ConsultaInformes/bajar/1826693/33863/32" > Ver </ a >
+            //http://intranet.idiem.cl/cap/cake/ConsultaInformes/bajar/1826693/33863/32
+
+            url = string.Concat("http://intranet.idiem.cl/cap/cake/ConsultaInformes/bajar/1826693/33863/32" );
+
+            cliente = new WebClient();
+            cliente.DownloadFile(url, lPathFin);
         }
     }
 }

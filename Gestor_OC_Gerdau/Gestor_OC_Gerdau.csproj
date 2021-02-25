@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonLibrary, Version=1.0.0.19058, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CommonLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
@@ -50,6 +54,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
@@ -100,11 +105,23 @@
     <Compile Include="Calidad\Frm_WB.Designer.cs">
       <DependentUpon>Frm_WB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calidad\Frm_WB_CAP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB_CAP.Designer.cs">
+      <DependentUpon>Frm_WB_CAP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calidad\Frm_WB_Php.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Calidad\Frm_WB_Php.Designer.cs">
       <DependentUpon>Frm_WB_Php.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB_Ver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_WB_Ver.Designer.cs">
+      <DependentUpon>Frm_WB_Ver.cs</DependentUpon>
     </Compile>
     <Compile Include="Calidad\Rep_CertificadoMan.cs">
       <AutoGen>True</AutoGen>
@@ -127,6 +144,12 @@
       <DependentUpon>EnviosAutomaticos.cs</DependentUpon>
     </Compile>
     <Compile Include="Facturacion\Cls_RevisaBloqueos_LC.cs" />
+    <Compile Include="Facturacion\Frm_RevisionSaldos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Facturacion\Frm_RevisionSaldos.Designer.cs">
+      <DependentUpon>Frm_RevisionSaldos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Facturacion\Frm_VinculaGuiaFactura.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,8 +181,14 @@
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\LineaCredito.cs" />
+    <Compile Include="Models\ValorUF.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\WsFacturacion\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WS_Gerdau\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,8 +220,14 @@
     <EmbeddedResource Include="Calidad\Frm_WB.resx">
       <DependentUpon>Frm_WB.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_WB_CAP.resx">
+      <DependentUpon>Frm_WB_CAP.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Frm_WB_Php.resx">
       <DependentUpon>Frm_WB_Php.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_WB_Ver.resx">
+      <DependentUpon>Frm_WB_Ver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Rep_CertificadoMan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -204,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnviosAutomaticos.resx">
       <DependentUpon>EnviosAutomaticos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Facturacion\Frm_RevisionSaldos.resx">
+      <DependentUpon>Frm_RevisionSaldos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Facturacion\Frm_VinculaGuiaFactura.resx">
       <DependentUpon>Frm_VinculaGuiaFactura.cs</DependentUpon>
@@ -253,6 +291,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\WsFacturacion\Facturacion.wsdl" />
+    <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.ListaDataSet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.Parametro.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.Viaje.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WS_Gerdau\Gestor_OC_Gerdau.WS_Gerdau.Detalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -338,6 +386,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\WsFacturacion\" />
     <WCFMetadataStorage Include="Service References\WS_Gerdau\" />
     <WCFMetadataStorage Include="Service References\WS_TO\" />
   </ItemGroup>
@@ -358,6 +407,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WsFacturacion\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WsFacturacion\configuration.svcinfo" />
+    <None Include="Service References\WsFacturacion\configuration91.svcinfo" />
+    <None Include="Service References\WsFacturacion\Facturacion.disco" />
     <None Include="Service References\WS_TO\Ws_To1.disco" />
     <None Include="Service References\WS_TO\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>

@@ -35,6 +35,7 @@
             this.Lbl_Lote = new System.Windows.Forms.Label();
             this.Btn_lotesProblema = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Btn_RevisaHD = new System.Windows.Forms.Button();
             this.Btn_ActualizaPorViaje = new System.Windows.Forms.Button();
             this.Tx_Codigo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -44,9 +45,15 @@
             this.Lbl_IdPaquete = new System.Windows.Forms.Label();
             this.Lbl_Diam = new System.Windows.Forms.Label();
             this.Lbl_Kgs = new System.Windows.Forms.Label();
+            this.Btn_VerLote = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Tx_lote = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -74,7 +81,7 @@
             // 
             // Btn_Refresh
             // 
-            this.Btn_Refresh.Location = new System.Drawing.Point(88, 25);
+            this.Btn_Refresh.Location = new System.Drawing.Point(11, 49);
             this.Btn_Refresh.Name = "Btn_Refresh";
             this.Btn_Refresh.Size = new System.Drawing.Size(75, 38);
             this.Btn_Refresh.TabIndex = 1;
@@ -84,7 +91,7 @@
             // 
             // Btn_ActualizaLote
             // 
-            this.Btn_ActualizaLote.Location = new System.Drawing.Point(175, 25);
+            this.Btn_ActualizaLote.Location = new System.Drawing.Point(92, 49);
             this.Btn_ActualizaLote.Name = "Btn_ActualizaLote";
             this.Btn_ActualizaLote.Size = new System.Drawing.Size(75, 38);
             this.Btn_ActualizaLote.TabIndex = 2;
@@ -95,7 +102,7 @@
             // Lbl_Lote
             // 
             this.Lbl_Lote.AutoSize = true;
-            this.Lbl_Lote.Location = new System.Drawing.Point(191, 70);
+            this.Lbl_Lote.Location = new System.Drawing.Point(89, 90);
             this.Lbl_Lote.Name = "Lbl_Lote";
             this.Lbl_Lote.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Lote.TabIndex = 3;
@@ -103,7 +110,7 @@
             // 
             // Btn_lotesProblema
             // 
-            this.Btn_lotesProblema.Location = new System.Drawing.Point(8, 25);
+            this.Btn_lotesProblema.Location = new System.Drawing.Point(7, 1);
             this.Btn_lotesProblema.Name = "Btn_lotesProblema";
             this.Btn_lotesProblema.Size = new System.Drawing.Size(75, 38);
             this.Btn_lotesProblema.TabIndex = 4;
@@ -113,21 +120,32 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Btn_RevisaHD);
             this.groupBox2.Controls.Add(this.Btn_ActualizaPorViaje);
             this.groupBox2.Controls.Add(this.Tx_Codigo);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(284, 14);
+            this.groupBox2.Location = new System.Drawing.Point(173, 1);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(282, 88);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Por IT";
             // 
+            // Btn_RevisaHD
+            // 
+            this.Btn_RevisaHD.Location = new System.Drawing.Point(163, 53);
+            this.Btn_RevisaHD.Name = "Btn_RevisaHD";
+            this.Btn_RevisaHD.Size = new System.Drawing.Size(113, 29);
+            this.Btn_RevisaHD.TabIndex = 4;
+            this.Btn_RevisaHD.Text = "Revisa Archivos HD";
+            this.Btn_RevisaHD.UseVisualStyleBackColor = true;
+            this.Btn_RevisaHD.Click += new System.EventHandler(this.Btn_RevisaHD_Click);
+            // 
             // Btn_ActualizaPorViaje
             // 
-            this.Btn_ActualizaPorViaje.Location = new System.Drawing.Point(189, 22);
+            this.Btn_ActualizaPorViaje.Location = new System.Drawing.Point(163, 13);
             this.Btn_ActualizaPorViaje.Name = "Btn_ActualizaPorViaje";
-            this.Btn_ActualizaPorViaje.Size = new System.Drawing.Size(75, 38);
+            this.Btn_ActualizaPorViaje.Size = new System.Drawing.Size(113, 29);
             this.Btn_ActualizaPorViaje.TabIndex = 3;
             this.Btn_ActualizaPorViaje.Text = "Actualiza Por Viaje";
             this.Btn_ActualizaPorViaje.UseVisualStyleBackColor = true;
@@ -151,7 +169,7 @@
             // 
             // Btn_CP
             // 
-            this.Btn_CP.Location = new System.Drawing.Point(591, 25);
+            this.Btn_CP.Location = new System.Drawing.Point(461, 9);
             this.Btn_CP.Name = "Btn_CP";
             this.Btn_CP.Size = new System.Drawing.Size(81, 49);
             this.Btn_CP.TabIndex = 6;
@@ -173,7 +191,7 @@
             // Btn_ReparaET
             // 
             this.Btn_ReparaET.Enabled = false;
-            this.Btn_ReparaET.Location = new System.Drawing.Point(721, 3);
+            this.Btn_ReparaET.Location = new System.Drawing.Point(548, 14);
             this.Btn_ReparaET.Name = "Btn_ReparaET";
             this.Btn_ReparaET.Size = new System.Drawing.Size(102, 38);
             this.Btn_ReparaET.TabIndex = 8;
@@ -184,7 +202,7 @@
             // Lbl_IdPaquete
             // 
             this.Lbl_IdPaquete.AutoSize = true;
-            this.Lbl_IdPaquete.Location = new System.Drawing.Point(737, 49);
+            this.Lbl_IdPaquete.Location = new System.Drawing.Point(558, 59);
             this.Lbl_IdPaquete.Name = "Lbl_IdPaquete";
             this.Lbl_IdPaquete.Size = new System.Drawing.Size(70, 13);
             this.Lbl_IdPaquete.TabIndex = 9;
@@ -193,7 +211,7 @@
             // Lbl_Diam
             // 
             this.Lbl_Diam.AutoSize = true;
-            this.Lbl_Diam.Location = new System.Drawing.Point(737, 64);
+            this.Lbl_Diam.Location = new System.Drawing.Point(558, 74);
             this.Lbl_Diam.Name = "Lbl_Diam";
             this.Lbl_Diam.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Diam.TabIndex = 10;
@@ -202,17 +220,67 @@
             // Lbl_Kgs
             // 
             this.Lbl_Kgs.AutoSize = true;
-            this.Lbl_Kgs.Location = new System.Drawing.Point(737, 77);
+            this.Lbl_Kgs.Location = new System.Drawing.Point(558, 87);
             this.Lbl_Kgs.Name = "Lbl_Kgs";
             this.Lbl_Kgs.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Kgs.TabIndex = 11;
             this.Lbl_Kgs.Text = " 2612432102";
+            // 
+            // Btn_VerLote
+            // 
+            this.Btn_VerLote.Location = new System.Drawing.Point(656, 9);
+            this.Btn_VerLote.Name = "Btn_VerLote";
+            this.Btn_VerLote.Size = new System.Drawing.Size(75, 38);
+            this.Btn_VerLote.TabIndex = 12;
+            this.Btn_VerLote.Text = "Ver Lote AZA";
+            this.Btn_VerLote.UseVisualStyleBackColor = true;
+            this.Btn_VerLote.Click += new System.EventHandler(this.Btn_VerLote_Click);
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.Tx_lote);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Location = new System.Drawing.Point(737, 9);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(112, 63);
+            this.groupBox3.TabIndex = 13;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Ver Lote";
+            // 
+            // Tx_lote
+            // 
+            this.Tx_lote.Location = new System.Drawing.Point(6, 33);
+            this.Tx_lote.Name = "Tx_lote";
+            this.Tx_lote.Size = new System.Drawing.Size(99, 20);
+            this.Tx_lote.TabIndex = 1;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 17);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "LOTE";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(656, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(175, 38);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "Descarga Doc CAP";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Frm_CertificacionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1110, 436);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.Btn_VerLote);
             this.Controls.Add(this.Lbl_Kgs);
             this.Controls.Add(this.Lbl_Diam);
             this.Controls.Add(this.Lbl_IdPaquete);
@@ -234,6 +302,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,5 +327,11 @@
         private System.Windows.Forms.Label Lbl_IdPaquete;
         private System.Windows.Forms.Label Lbl_Diam;
         private System.Windows.Forms.Label Lbl_Kgs;
+        private System.Windows.Forms.Button Btn_VerLote;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.TextBox Tx_lote;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button Btn_RevisaHD;
+        private System.Windows.Forms.Button button1;
     }
 }

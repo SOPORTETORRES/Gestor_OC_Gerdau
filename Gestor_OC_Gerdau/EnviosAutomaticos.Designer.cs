@@ -43,6 +43,7 @@
             this.Dtg_Envios = new System.Windows.Forms.DataGridView();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.Tm_Envios = new System.Windows.Forms.Timer(this.components);
+            this.Btn_CorrigePreIT = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Envios)).BeginInit();
             this.SuspendLayout();
@@ -126,9 +127,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(102, 45);
             this.button2.TabIndex = 8;
-            this.button2.Text = "Envio PL Electronico";
+            this.button2.Text = "Envio BOM";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Btn_EnvioProdTosol
             // 
@@ -168,14 +169,26 @@
             // 
             // Tm_Envios
             // 
+            this.Tm_Envios.Enabled = true;
             this.Tm_Envios.Interval = 60000;
             this.Tm_Envios.Tick += new System.EventHandler(this.Tm_Envios_Tick);
+            // 
+            // Btn_CorrigePreIT
+            // 
+            this.Btn_CorrigePreIT.Location = new System.Drawing.Point(710, 76);
+            this.Btn_CorrigePreIT.Name = "Btn_CorrigePreIT";
+            this.Btn_CorrigePreIT.Size = new System.Drawing.Size(85, 38);
+            this.Btn_CorrigePreIT.TabIndex = 11;
+            this.Btn_CorrigePreIT.Text = "corrigue Kgs Pre IT";
+            this.Btn_CorrigePreIT.UseVisualStyleBackColor = true;
+            this.Btn_CorrigePreIT.Click += new System.EventHandler(this.Btn_CorrigePreIT_Click);
             // 
             // EnviosAutomaticos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 400);
+            this.Controls.Add(this.Btn_CorrigePreIT);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Btn_EnvioProdTosol);
             this.Controls.Add(this.button2);
@@ -214,5 +227,6 @@
         private System.Windows.Forms.DataGridView Dtg_Envios;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Timer Tm_Envios;
+        private System.Windows.Forms.Button Btn_CorrigePreIT;
     }
 }

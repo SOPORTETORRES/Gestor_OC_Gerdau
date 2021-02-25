@@ -11,6 +11,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 namespace Gestor_OC_Gerdau.Calidad
 {
@@ -1194,10 +1195,18 @@ namespace Gestor_OC_Gerdau.Calidad
             if ((lTblViajes.Tables.Count > 0) && (lTblViajes.Tables[0].Rows.Count > 0))
             {
                 lTbl = lTblViajes.Tables[0].Copy();
+                PB.Maximum = lTbl.Rows.Count;PB.Minimum = 0; PB.Value = 0;
                 for (i = 0; i < lTbl.Rows.Count; i++)
                 {
-                    lEnvio.EnviaMail_Doc_Calidad(lTbl.Rows[i]["Codigo"].ToString(), lTbl.Rows[i]["IdObra"].ToString());
-           
+                    if (PB.Value < PB.Maximum)
+                        PB.Value = PB.Value + 1;
+                    else
+                        PB.Value = PB.Value - 1;
+
+                    PB.Refresh();
+                    Application.DoEvents();
+                    //lEnvio.EnviaMail_Doc_Calidad(lTbl.Rows[i]["Codigo"].ToString(), lTbl.Rows[i]["IdObra"].ToString());
+                    lEnvio.EnviaMail_Doc_Calidad_ZIP(lTbl.Rows[i]["Codigo"].ToString(), lTbl.Rows[i]["IdObra"].ToString());
 
                 }
             }
@@ -1215,7 +1224,209 @@ namespace Gestor_OC_Gerdau.Calidad
             //estiloMillaresDataGridViewColumn(Dtg_Datos, 3);
             //estiloMillaresDataGridViewColumn(Dtg_Datos, 4);
 
-            ReparaCodigos();
+            //  ReparaCodigos();
+
+            //Revisa_Datos_Servidor("");
+
+            //enviaMailColadasNoEncontradas();
+
+            //InsertaDocEnviado("");
+            ProcesaDatos();
+        }
+
+
+        private void ProcesaDatos( )
+        {
+            int i = 0; string lViaje = "";string lSql = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+
+            //Los pasos son:
+            //1.- si los Kgs certificados son 0 ==> se procesa, doble click 
+            //2.- si los Kgs certificados son > 0  ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==>  click en cert. OK
+            //3.-  Sino  ==> se procesa, doble click 
+
+
+            for (i = 0; i < Dtg_Datos.RowCount; i++)
+            {
+                lViaje = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
+                if (Dtg_Datos.Rows[i].Cells["Sucursal"].Value.ToString().IndexOf("TOSOL") > -1)
+                {
+                    lSql = string.Concat("  update Viaje set CertificadosOK='S', CarpetaOK='S',");
+                    lSql = string.Concat ( lSql , "  MailCalidadEnviado='S' where Codigo='",lViaje ,"'");
+                    lPx.ObtenerDatos(lSql);
+                }
+
+                if (lViaje.Equals("PEL-52/1"))
+                    this.Close();
+                else
+                if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == 0)
+                {   //1.- si los Kgs certificados son 0 ==> se procesa, doble click 
+                    Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                    lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(),"N");
+                    // lFrm.ActualizaRegistros();
+                    lFrm.ShowDialog();
+                    System.Threading.Thread.Sleep(1000);
+                    
+                }
+                else
+                {
+                    if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
+                    {   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
+                        CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                    }
+                    else    //3.-  Sino  ==> se procesa, doble click
+                    {
+                        Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                        lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                        lFrm.ActualizaRegistros();
+                        lFrm.Close();
+                        lFrm.Dispose();
+                        System.Threading.Thread.Sleep(1000);
+                    }
+                    //else
+                    if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
+                    {   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
+                        CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                    }
+                }
+
+            }
+
+            //WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            //string lSql = ""; DataTable lTbl = new DataTable();  DataSet lTblViajes = new DataSet();
+            //DateTime lFecha = DateTime.Now;
+            //for (i = 0; i < 365; i++)
+            //{
+            //    lSql = String.Concat("  insert into  EnvioDocumentos ( FechaEnvio, doc_enviado, path_doc) values (");
+            //    lSql = String.Concat(lSql, "dateadd(day,", i, ", getdate() ),'e_PL_400','')");
+            //    lTblViajes = lPx.ObtenerDatos(lSql);
+            //}
+            //}
+
+        }
+
+        private void InsertaDocEnviado(string iArea)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); 
+            string lSql = ""; DataTable lTbl = new DataTable(); int i = 0; DataSet lTblViajes = new DataSet();
+            DateTime lFecha = DateTime.Now;
+            for (i = 0; i < 365; i++)
+            {
+                lSql = String.Concat("  insert into  EnvioDocumentos ( FechaEnvio, doc_enviado, path_doc) values (");
+                lSql = String.Concat(lSql, "dateadd(day,",i, ", getdate() ),'BOM_400','')");
+                lTblViajes = lPx.ObtenerDatos(lSql);
+            }
+            //}
+
+        }
+
+
+
+
+        private void enviaMailColadasNoEncontradas()
+        {
+            EnviosAutomaticos lFrm = new EnviosAutomaticos();
+            lFrm.EnviaMail_Lotes_NO_Encontrados();
+
+            MessageBox.Show("Mail enviado", "Avisos Sistema");
+
+        }
+
+        private void Revisa_Datos_Servidor(string iViaje)
+        {
+            TraverseTree(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\");
+
+            Console.WriteLine("Press any key");
+            Console.ReadKey();
+        }
+
+        public static void TraverseTree(string root)
+        {
+            string lDir_a_Revisar = "";
+            // Data structure to hold names of subfolders to be
+            // examined for files.
+            Stack<string> dirs = new Stack<string>(20);
+
+            if (!System.IO.Directory.Exists(root))
+            {
+                throw new ArgumentException();
+            }
+            dirs.Push(root);
+
+            while (dirs.Count > 0)
+            {
+                string currentDir = dirs.Pop();
+                string[] subDirs;
+                try
+                {
+                    subDirs = System.IO.Directory.GetDirectories(currentDir);
+                }
+                // An UnauthorizedAccessException exception will be thrown if we do not have
+                // discovery permission on a folder or file. It may or may not be acceptable
+                // to ignore the exception and continue enumerating the remaining files and
+                // folders. It is also possible (but unlikely) that a DirectoryNotFound exception
+                // will be raised. This will happen if currentDir has been deleted by
+                // another application or thread after our call to Directory.Exists. The
+                // choice of which exceptions to catch depends entirely on the specific task
+                // you are intending to perform and also on how much you know with certainty
+                // about the systems on which this code will run.
+                catch (UnauthorizedAccessException e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+                catch (System.IO.DirectoryNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+
+                string[] files = null;
+                try
+                {
+                    files = System.IO.Directory.GetFiles(currentDir);
+                }
+
+                catch (UnauthorizedAccessException e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+
+                catch (System.IO.DirectoryNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                    continue;
+                }
+                // Perform the required action on each file here.
+                // Modify this block to perform your required task.
+                if ((files.Length >0 ) && (files.Length < 3))
+                {
+                    lDir_a_Revisar = string.Concat(lDir_a_Revisar, currentDir, Environment.NewLine);
+                    //foreach (string file in files)
+                    //{
+                    //    try
+                    //    {
+                    //        // Perform whatever action is required in your scenario.
+                    //        System.IO.FileInfo fi = new System.IO.FileInfo(file);
+                    //        lDir_a_Revisar=string .Concat (fi.Name, fi.Length, fi.CreationTime);
+                    //    }
+                    //    catch (System.IO.FileNotFoundException e)
+                    //    {
+                    //        // If file was deleted by a separate application
+                    //        //  or thread since the call to TraverseTree()
+                    //        // then just continue.
+                    //        Console.WriteLine(e.Message);
+                    //        continue;
+                    //    }
+                    //}
+                }
+                // Push the subdirectories onto the stack for traversal.
+                // This could also be done before handing the files.
+                foreach (string str in subDirs)
+                    dirs.Push(str);
+            }
+            MessageBox.Show(lDir_a_Revisar, " Directorios a Revisar ");
         }
 
         private void ReparaCodigos()
@@ -1406,6 +1617,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void Btn_NotificaLotes_Click(object sender, EventArgs e)
         {
             EnviarMail_ACliente();
+            MessageBox.Show("FIN");
 
             //EnviosAutomaticos lDal = new EnviosAutomaticos();
             //lDal.EnviaMail_Lotes_NO_Encontrados();
@@ -1420,20 +1632,65 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Dtg_Datos_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int  lIndex = e.RowIndex;
+            int  lIndex = e.RowIndex;string lSoloVer = "";
             string lUsaQr = Dtg_Datos.Rows[lIndex].Cells["UsaQR"].Value.ToString();
             string lCodigo = Dtg_Datos.Rows[lIndex].Cells["Codigo"].Value.ToString();
 
+            if (Chk_SoloVer.Checked == true)
+                lSoloVer = "S";
+            else
+                lSoloVer = "N";
+
+
+
             Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
-            lFrm.Inicialida(lCodigo);
+            lFrm.Inicialida(lCodigo, lSoloVer);
             lFrm.ShowDialog();
 
         }
+
+
+
+
 
         private void Dtg_Datos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            EnviosAutomaticos lEnv = new EnviosAutomaticos();
+            lEnv.EnviaMail_Lotes_NO_Encontrados();
+            lEnv.Dispose();
+
+        }
+
+        private void Btn_ProcesaCAP_Click(object sender, EventArgs e)
+        {
+            ProcesaColadasCAP();
+        }
+
+        private void ProcesaColadasCAP()
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();  
+            string lSql = ""; DataTable lTbl = new DataTable(); int i = 0; DataSet lTblViajes = new DataSet();
+
+
+            lSql = String.Concat("  SP_ConsultasInformes  32, ' ', ' ', '', '', '' ");
+            lTblViajes = lPx.ObtenerDatos(lSql);
+            if ((lTblViajes.Tables.Count > 0) && (lTblViajes.Tables[0].Rows.Count > 0))
+            {
+                lTbl = lTblViajes.Tables[0].Copy();
+                for (i = 0; i < lTbl.Rows .Count ; i++)
+                {
+                    Frm_WB_CAP lFrm = new Frm_WB_CAP();
+                    lFrm.IniciaForm(lTbl.Rows[i]["Horneada"].ToString(), lTbl.Rows[i]["Diametro"].ToString(),"");
+                    lFrm.ShowDialog();
+                }
+            }
+        }
+
     }
 
 }

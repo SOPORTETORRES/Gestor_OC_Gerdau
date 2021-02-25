@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ssingest.cl/TO/WS" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.ssingest.cl/TO/WS" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.ssingest.cl/TO/WS">
+      <s:element name="ObtenerDato">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iTx" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDatoResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ListaDataSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="_dataSet">
+            <s:complexType>
+              <s:sequence>
+                <s:element ref="s:schema" />
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="_error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataSet">
+            <s:complexType>
+              <s:sequence>
+                <s:element ref="s:schema" />
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ListarParametro">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="where" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarParametroResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarParametroResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarCambioParametros">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="timer" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="facturacionAutomatica" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="motivo" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminal" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarCambioParametrosResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GuardarCambioParametrosResult" type="tns:Parametro" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Parametro">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Tabla" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodInt" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alf1" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alf2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Alf3" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Num1" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Num2" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Num3" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ListarDespachoCamion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="agencia" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarDespachoCamionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarDespachoCamionResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarLogViaje">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="viaje" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="agencia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usuario" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="estadoGuiaDespacho" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fechaGuiaDespacho" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="respuestaGuiaDespacho" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="nroINET" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="estadoFacturacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="fechaFacturacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="respuestaFacturacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminal" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarLogViajeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GuardarLogViajeResult" type="tns:Viaje" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Viaje">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Viaje" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EstadoGuia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaGuia" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="NroINET" type="s:short" />
+          <s:element minOccurs="0" maxOccurs="1" name="EstadoFactura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaFactura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RespuestaGuia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="RespuestaFactura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerInformacionViaje">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="viaje" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="origen" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerInformacionViajeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerInformacionViajeResult" type="tns:Viaje" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidaCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="iPor" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="iClte" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidaClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ValidaClienteResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PersitirDatosEvento">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iEvento" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iObs" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iClte" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PersitirDatosEventoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PersitirDatosEventoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerTotalDespachoSiguienteSemana_V2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iTipo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="NroDias" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerTotalDespachoSiguienteSemana_V2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ObtenerTotalDespachoSiguienteSemana_V2Result" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatosLN_Cliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatosLN_ClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDatosLN_ClienteResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatosLN_Cliente_V2">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iNroDias" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDatosLN_Cliente_V2Response">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDatosLN_Cliente_V2Result" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotificarEvento">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iEvento" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iClte" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="iPorcentaje" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotificarEventoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="NotificarEventoResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiaEstadoCliente">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="lEstado" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CambiaEstadoClienteResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CambiaEstadoClienteResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviaCorreoNotificacion_LC">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iTipoNot" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iListDest" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iRZ" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="iTLC" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EnviaCorreoNotificacion_LCResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EnviaCorreoNotificacion_LCResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Obtener_LINEA_CREDITO">
+        <s:complexType />
+      </s:element>
+      <s:element name="Obtener_LINEA_CREDITOResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Obtener_LINEA_CREDITOResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="ObtenerDatoSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDato" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatoSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDatoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarParametroSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarParametro" />
+  </wsdl:message>
+  <wsdl:message name="ListarParametroSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarParametroResponse" />
+  </wsdl:message>
+  <wsdl:message name="GuardarCambioParametrosSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarCambioParametros" />
+  </wsdl:message>
+  <wsdl:message name="GuardarCambioParametrosSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarCambioParametrosResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarDespachoCamionSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarDespachoCamion" />
+  </wsdl:message>
+  <wsdl:message name="ListarDespachoCamionSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarDespachoCamionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GuardarLogViajeSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarLogViaje" />
+  </wsdl:message>
+  <wsdl:message name="GuardarLogViajeSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarLogViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerInformacionViajeSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerInformacionViaje" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerInformacionViajeSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerInformacionViajeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidaClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidaCliente" />
+  </wsdl:message>
+  <wsdl:message name="ValidaClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidaClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="PersitirDatosEventoSoapIn">
+    <wsdl:part name="parameters" element="tns:PersitirDatosEvento" />
+  </wsdl:message>
+  <wsdl:message name="PersitirDatosEventoSoapOut">
+    <wsdl:part name="parameters" element="tns:PersitirDatosEventoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTotalDespachoSiguienteSemana_V2SoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalDespachoSiguienteSemana_V2" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerTotalDespachoSiguienteSemana_V2SoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerTotalDespachoSiguienteSemana_V2Response" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosLN_ClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosLN_Cliente" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosLN_ClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosLN_ClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosLN_Cliente_V2SoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosLN_Cliente_V2" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDatosLN_Cliente_V2SoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDatosLN_Cliente_V2Response" />
+  </wsdl:message>
+  <wsdl:message name="NotificarEventoSoapIn">
+    <wsdl:part name="parameters" element="tns:NotificarEvento" />
+  </wsdl:message>
+  <wsdl:message name="NotificarEventoSoapOut">
+    <wsdl:part name="parameters" element="tns:NotificarEventoResponse" />
+  </wsdl:message>
+  <wsdl:message name="CambiaEstadoClienteSoapIn">
+    <wsdl:part name="parameters" element="tns:CambiaEstadoCliente" />
+  </wsdl:message>
+  <wsdl:message name="CambiaEstadoClienteSoapOut">
+    <wsdl:part name="parameters" element="tns:CambiaEstadoClienteResponse" />
+  </wsdl:message>
+  <wsdl:message name="EnviaCorreoNotificacion_LCSoapIn">
+    <wsdl:part name="parameters" element="tns:EnviaCorreoNotificacion_LC" />
+  </wsdl:message>
+  <wsdl:message name="EnviaCorreoNotificacion_LCSoapOut">
+    <wsdl:part name="parameters" element="tns:EnviaCorreoNotificacion_LCResponse" />
+  </wsdl:message>
+  <wsdl:message name="Obtener_LINEA_CREDITOSoapIn">
+    <wsdl:part name="parameters" element="tns:Obtener_LINEA_CREDITO" />
+  </wsdl:message>
+  <wsdl:message name="Obtener_LINEA_CREDITOSoapOut">
+    <wsdl:part name="parameters" element="tns:Obtener_LINEA_CREDITOResponse" />
+  </wsdl:message>
+  <wsdl:portType name="FacturacionSoap">
+    <wsdl:operation name="ObtenerDato">
+      <wsdl:input message="tns:ObtenerDatoSoapIn" />
+      <wsdl:output message="tns:ObtenerDatoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarParametro">
+      <wsdl:input message="tns:ListarParametroSoapIn" />
+      <wsdl:output message="tns:ListarParametroSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCambioParametros">
+      <wsdl:input message="tns:GuardarCambioParametrosSoapIn" />
+      <wsdl:output message="tns:GuardarCambioParametrosSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarDespachoCamion">
+      <wsdl:input message="tns:ListarDespachoCamionSoapIn" />
+      <wsdl:output message="tns:ListarDespachoCamionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarLogViaje">
+      <wsdl:input message="tns:GuardarLogViajeSoapIn" />
+      <wsdl:output message="tns:GuardarLogViajeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerInformacionViaje">
+      <wsdl:input message="tns:ObtenerInformacionViajeSoapIn" />
+      <wsdl:output message="tns:ObtenerInformacionViajeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidaCliente">
+      <wsdl:input message="tns:ValidaClienteSoapIn" />
+      <wsdl:output message="tns:ValidaClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PersitirDatosEvento">
+      <wsdl:input message="tns:PersitirDatosEventoSoapIn" />
+      <wsdl:output message="tns:PersitirDatosEventoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalDespachoSiguienteSemana_V2">
+      <wsdl:input message="tns:ObtenerTotalDespachoSiguienteSemana_V2SoapIn" />
+      <wsdl:output message="tns:ObtenerTotalDespachoSiguienteSemana_V2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente">
+      <wsdl:input message="tns:ObtenerDatosLN_ClienteSoapIn" />
+      <wsdl:output message="tns:ObtenerDatosLN_ClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente_V2">
+      <wsdl:input message="tns:ObtenerDatosLN_Cliente_V2SoapIn" />
+      <wsdl:output message="tns:ObtenerDatosLN_Cliente_V2SoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEvento">
+      <wsdl:input message="tns:NotificarEventoSoapIn" />
+      <wsdl:output message="tns:NotificarEventoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CambiaEstadoCliente">
+      <wsdl:input message="tns:CambiaEstadoClienteSoapIn" />
+      <wsdl:output message="tns:CambiaEstadoClienteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EnviaCorreoNotificacion_LC">
+      <wsdl:input message="tns:EnviaCorreoNotificacion_LCSoapIn" />
+      <wsdl:output message="tns:EnviaCorreoNotificacion_LCSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Obtener_LINEA_CREDITO">
+      <wsdl:input message="tns:Obtener_LINEA_CREDITOSoapIn" />
+      <wsdl:output message="tns:Obtener_LINEA_CREDITOSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="FacturacionSoap" type="tns:FacturacionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerDato">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDato" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarParametro">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ListarParametro" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCambioParametros">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/GuardarCambioParametros" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDespachoCamion">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ListarDespachoCamion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarLogViaje">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/GuardarLogViaje" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerInformacionViaje">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerInformacionViaje" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidaCliente">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ValidaCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PersitirDatosEvento">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/PersitirDatosEvento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalDespachoSiguienteSemana_V2">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerTotalDespachoSiguienteSemana_V2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDatosLN_Cliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente_V2">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDatosLN_Cliente_V2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEvento">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/NotificarEvento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiaEstadoCliente">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/CambiaEstadoCliente" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviaCorreoNotificacion_LC">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/EnviaCorreoNotificacion_LC" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener_LINEA_CREDITO">
+      <soap:operation soapAction="http://www.ssingest.cl/TO/WS/Obtener_LINEA_CREDITO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="FacturacionSoap12" type="tns:FacturacionSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="ObtenerDato">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDato" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarParametro">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ListarParametro" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCambioParametros">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/GuardarCambioParametros" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarDespachoCamion">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ListarDespachoCamion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarLogViaje">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/GuardarLogViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerInformacionViaje">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerInformacionViaje" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidaCliente">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ValidaCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PersitirDatosEvento">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/PersitirDatosEvento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerTotalDespachoSiguienteSemana_V2">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerTotalDespachoSiguienteSemana_V2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDatosLN_Cliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDatosLN_Cliente_V2">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/ObtenerDatosLN_Cliente_V2" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NotificarEvento">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/NotificarEvento" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CambiaEstadoCliente">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/CambiaEstadoCliente" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EnviaCorreoNotificacion_LC">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/EnviaCorreoNotificacion_LC" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Obtener_LINEA_CREDITO">
+      <soap12:operation soapAction="http://www.ssingest.cl/TO/WS/Obtener_LINEA_CREDITO" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Facturacion">
+    <wsdl:port name="FacturacionSoap" binding="tns:FacturacionSoap">
+      <soap:address location="http://192.168.1.191/test/WS/Facturacion.asmx" />
+    </wsdl:port>
+    <wsdl:port name="FacturacionSoap12" binding="tns:FacturacionSoap12">
+      <soap12:address location="http://192.168.1.191/test/WS/Facturacion.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

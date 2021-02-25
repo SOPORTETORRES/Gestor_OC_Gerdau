@@ -1,6 +1,7 @@
 ﻿using Gestor_OC_Gerdau.Calidad;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -150,40 +151,177 @@ namespace Gestor_OC_Gerdau.Clases
             return lRes;
         }
 
+        private Boolean CopiarDocumentosIdiem_CAP(string iViaje, string iPathColadas, string ipathDestino, string iLote)
+        {
+            Boolean lRes = true; string lPathSigla = ""; string lPathDest = ""; int i = 0;string lArchFinal = "";
+            string[] separators = { "-" }; string lArchivoTmp = "";string lInforme = ""; string lCertificado = "";
+            string[] lPartes = iViaje.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+
+            try
+            {
+                lPathSigla = lPartes[0].ToString();
+                lPathDest = Path.Combine(ipathDestino, lPathSigla);
+                if (Directory.Exists(lPathDest) == false)
+                {
+                    Directory.CreateDirectory(lPathDest);
+                }
+
+                lPathDest = Path.Combine(ipathDestino, lPathSigla, iViaje.Replace("/", "_"));
+                if (Directory.Exists(lPathDest) == false)
+                {
+                    Directory.CreateDirectory(lPathDest);
+                }
+                //**************************
+                string lSql = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+                DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+
+                lSql = String.Concat("    select * from certificadoscoladasCap where lote='", iLote,"'  ");
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    if (lTbl.Rows.Count > 1)
+                    {
+                        for (i = 0; i < lTbl.Rows.Count; i++)
+                        {
+                            if (lTbl.Rows[i]["TipoDocumento"].ToString().ToUpper().Equals("INFORME"))
+                            {
+                                lArchFinal = string.Concat(iLote, "_", lTbl.Rows[i]["IdDocumento"].ToString(), "_I.pdf");
+                                lInforme = string.Concat(iPathColadas,  lArchFinal);
+                            }
+                            else
+                            {
+                                lArchFinal = string.Concat(iLote, "_", lTbl.Rows[i]["IdDocumento"].ToString(), "_C.pdf");
+                                lCertificado = string.Concat(iPathColadas,   lArchFinal);
+                            }
+                                
+
+                            if (lInforme.Trim().Length > 0)
+                            {
+                                if (File.Exists(lInforme) == true)
+                                {
+                                    File.Copy(lInforme, Path.Combine(lPathDest, lArchFinal), true);
+                                    lInforme = "";
+                                }
+                            }
+
+                            if (lCertificado.Trim().Length > 0)
+                            {
+                                if (File.Exists(lCertificado) == true)
+                                {
+                                    File.Copy(lCertificado, Path.Combine(lPathDest, lArchFinal), true);
+                                    lCertificado = "";
+                                }
+                            }
+
+                        }
+
+                    }
+                }            
+            }
+            catch (Exception iEx)
+            {
+                lRes = false;
+            }
+
+            return lRes;
+        }
+        public  Boolean EsLoteAza(string iLote)
+        {
+            Boolean lRes = true; string lTmp = "";
+
+            if (iLote.Trim().Length<9)  // si el lote es 5 caracteres 
+                lRes = false;
+
+            lTmp = string.Concat("00000", iLote);
+            if (iLote.Equals(lTmp))  // si el lote del tipo 0000054321
+                lRes = false;
+
+
+            return lRes;
+        }
+
+        private DataTable ObtenerTablaConLotes(string iViaje)
+        {
+            DataSet lDts = new DataSet();
+            DataTable lTbl = new DataTable(); WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            //1.- Por viaje Obtener Certificado e Informe
+            lSql = "  select distinct    Lote ,   s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s  , EtiquetasVinculadas e , EtiquetaAZA ea   ";
+            lSql = string.Concat(lSql, "   where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id    and e.IdQR =ea.id and e.IdEtiquetaTO =d.id ");
+            lSql = string.Concat(lSql, " and  v.codigo='", iViaje, "'");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                lTbl = lDts.Tables[0].Copy();
+            }
+            else
+            {
+                lSql = "  select distinct    ( select lote   from   CertificadosPaquete c where d.Id =c.IdPaquete  ) Lote ,  ";
+                lSql = string.Concat(lSql, " s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s   ");
+                lSql = string.Concat(lSql, "    where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id   ");
+                lSql = string.Concat(lSql, " and  codigo='", iViaje, "'");
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                }
+            }
+
+
+                return lTbl;
+        }
+
+
         public  void GeneraDocumentacionEnCarpeta(string iViaje)
         {
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
-            string lPathColadas = ""; string lPathDestino = ""; string lSuc = "";
+            string lPathColadas = ""; string lPathDestino = ""; string lSuc = ""; string lPathCalidad = "";
 
-            //1.- Por viaje Obtener Certificado e Informe
-            lSql = "  select distinct    ( select lote   from   CertificadosPaquete c where d.Id =c.IdPaquete  ) Lote ,  ";
-            lSql = string.Concat(lSql, " s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s   ");
-            lSql = string.Concat(lSql, "    where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id   ");
-            lSql = string.Concat(lSql, " and  codigo='", iViaje, "'");
-            lDts = lPx.ObtenerDatos(lSql);
-            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
-            {
-                lTbl = lDts.Tables[0].Copy();  // tabla con los lotes del viaje 
+            lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
+            ////1.- Por viaje Obtener Certificado e Informe
+            //lSql = "  select distinct    Lote ,   s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s  , EtiquetasVinculadas e , EtiquetaAZA ea   ";
+            //lSql = string.Concat(lSql, "   where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id    and e.IdQR =ea.id and e.IdEtiquetaTO =d.id ");
+            //lSql = string.Concat(lSql, " and  v.codigo='", iViaje, "'");
+            //lDts = lPx.ObtenerDatos(lSql);
 
+
+            //if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            //{
+            // lTbl = lDts.Tables[0].Copy();  // tabla con los lotes del viaje 
+            lTbl = ObtenerTablaConLotes(iViaje);
                 for (i = 0; i < lTbl.Rows.Count; i++)
                 {
                     // hay que buscar las coladas en el repositorio y copiarlas al destino
                     if (lTbl.Rows[i]["Lote"].ToString().Trim().Length > 0)
                     {
-                        lSuc = string.Concat(lTbl.Rows[i]["Sucursal"].ToString(), "\\");
-                        lPathColadas = @"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\";
-                        lPathDestino = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc);
-                        //lPathDestino = Path.Combine(@"C:\TMP\Calidad\Certificacion Automatica\", lSuc);
-                        CopiarDocumentosIdiem(iViaje, lPathColadas, lPathDestino, lTbl.Rows[i]["Lote"].ToString());
+                        if (EsLoteAza(lTbl.Rows[i]["Lote"].ToString())==true )
+                        { 
+                            lSuc = string.Concat(lTbl.Rows[i]["Sucursal"].ToString(), "\\");
+                            lPathColadas = @"C:\TMP\Calidad\Docs\";
+
+                            lPathDestino = Path.Combine(lPathCalidad, lSuc);
+                            //lPathDestino = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc);
+                            CopiarDocumentosIdiem(iViaje, lPathColadas, lPathDestino, lTbl.Rows[i]["Lote"].ToString());
+                        }
+                        else
+                        {
+                            lSuc = string.Concat(lTbl.Rows[i]["Sucursal"].ToString(), "\\");
+                            lPathColadas = @"C:\TMP\Calidad\Docs\CAP\";
+                            lPathDestino = Path.Combine(lPathCalidad, lSuc);
+                            //lPathDestino = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc);
+                            CopiarDocumentosIdiem_CAP(iViaje, lPathColadas, lPathDestino, lTbl.Rows[i]["Lote"].ToString());
+
+                        }
+
                     }
                     else
                     {
                         lSql = string.Concat(" Update viaje set CertificadosOK='P' where codigo='", iViaje, "'");
                         lDts = lPx.ObtenerDatos(lSql);
                     }
+                //}
                 }
-            }
             //2.- Resumen de trazabilidad
             ImprimeResumenTrazabilidad(lPathDestino, iViaje);
             //3.- Certificado de Fabricación
@@ -298,6 +436,93 @@ namespace Gestor_OC_Gerdau.Clases
             }
         }
 
+        public string  ExisteArchivoEnServer(string iLote, string iSuc, string iPathSigla, string iCodigo, string iIdColada, string iIdEtiquetaTO)
+        {
+            string  lRes = ""; EnviosAutomaticos lEnv = new EnviosAutomaticos();
+            string lPathCalidad = ""; DataTable lTblLotes = new DataTable(); string lPathInfLote = "";
+            string[] separators = { "-" }; string lPathCertLote = ""; DataSet lDts = new DataSet();
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
+            DataTable lTblColadas = new DataTable(); DataRow lFila = null;
+
+            lEnv.mGenerandoArchivo = true;
+
+            lTblColadas.Columns.Add("Colada", Type.GetType("System.String"));
+            //VErificamos si tiene una o varias coladas asociadas
+            if (iIdColada.Equals("-1"))
+            {
+                lSql = string.Concat(" select distinct Lote  from EtiquetasVinculadas v , EtiquetaAZA e where v.IdQR =e.id  and   IdEtiquetaTO =", iIdEtiquetaTO);
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTblLotes = lDts.Tables[0].Copy();
+                    for (i = 0; i < lTblLotes.Rows.Count; i++)
+                    {
+                        lFila = lTblColadas.NewRow(); lFila["Colada"] = lTblLotes.Rows[i]["Lote"].ToString(); lTblColadas.Rows.Add(lFila);
+                    }
+                }
+
+            }
+            else  //HAy solo una colada para la Etiqueta
+            {
+                lFila = lTblColadas.NewRow(); lFila["Colada"] = iLote; lTblColadas.Rows.Add(lFila);
+            }
+
+            lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
+            for (i = 0; i < lTblColadas.Rows.Count; i++)
+            {
+                if (lEnv.EsLoteAza(iLote) == true)
+                {
+                    lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), string.Concat(lTblColadas.Rows[i]["Colada"].ToString(), "_I.pdf"));
+                    lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), string.Concat(lTblColadas.Rows[i]["Colada"].ToString(), "_C.pdf"));
+                    if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))
+                    {
+                        lRes = "" ;
+                    }
+                    else
+                    {
+                        lRes = string.Concat("NO se encontro la Path: ", lPathInfLote, "   -  ", lPathCertLote);
+                        i = lTblColadas.Rows.Count;
+                    }
+                }
+                else
+                {
+                    DataView lVista = null; string lNomLoteInf = ""; string lNomLoteCert = ""; int lCont = 0;
+                    lSql = string.Concat("  Select * from certificadosColadasCap where lote='", iLote, "' ");
+                    lDts = lPx.ObtenerDatos(lSql);
+                    if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    {
+                        lTblLotes = lDts.Tables[0].Copy();
+                        lVista = new DataView(lTblLotes, "", "", DataViewRowState.CurrentRows);
+                        if (lVista.Count > 0)
+                        {
+                            for (lCont = 0; lCont < lVista.Count; lCont++)
+                            {
+                               if (lVista[lCont]["TipoDocumento"].ToString().ToUpper().Equals("INFORME"))
+                                    lNomLoteInf = string.Concat(iLote, "_", lVista[lCont]["IdDocumento"].ToString(), "_I.pdf");
+                                else
+                                    lNomLoteCert = string.Concat(iLote, "_", lVista[lCont]["IdDocumento"].ToString(), "_C.pdf");
+
+
+                                if (lCont == 1)
+                                    lCont = lVista.Count;
+
+                            }
+                        }
+                    }
+                    lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteInf);
+                    lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteCert);
+                    if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))
+                    {
+                        lRes = "";
+                    }
+                    else
+                    {
+                        lRes = lRes = string.Concat("NO se encontro la Path: ", lPathInfLote, "   -  ", lPathCertLote); ;
+                    }
+                }
+            }
+            return lRes;
+        }
 
         private void ImprimeResumenTrazabilidad(string iPathDestino, string iviaje)
         {

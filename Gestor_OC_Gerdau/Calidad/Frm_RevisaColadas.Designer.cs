@@ -57,6 +57,9 @@
             this.Cmb_Suc = new System.Windows.Forms.ComboBox();
             this.Btn_actualizaLote = new System.Windows.Forms.Button();
             this.Btn_NotificaLotes = new System.Windows.Forms.Button();
+            this.Chk_SoloVer = new System.Windows.Forms.CheckBox();
+            this.Btn_MailColadas = new System.Windows.Forms.Button();
+            this.Btn_ProcesaCAP = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -157,7 +160,7 @@
             // Lbl_Msg
             // 
             this.Lbl_Msg.AutoSize = true;
-            this.Lbl_Msg.Location = new System.Drawing.Point(650, 77);
+            this.Lbl_Msg.Location = new System.Drawing.Point(507, 70);
             this.Lbl_Msg.Name = "Lbl_Msg";
             this.Lbl_Msg.Size = new System.Drawing.Size(35, 13);
             this.Lbl_Msg.TabIndex = 7;
@@ -165,7 +168,7 @@
             // 
             // PB
             // 
-            this.PB.Location = new System.Drawing.Point(478, 3);
+            this.PB.Location = new System.Drawing.Point(428, 5);
             this.PB.Name = "PB";
             this.PB.Size = new System.Drawing.Size(293, 18);
             this.PB.TabIndex = 8;
@@ -212,7 +215,7 @@
             // 
             // Btn_CertificadosOK
             // 
-            this.Btn_CertificadosOK.Location = new System.Drawing.Point(798, 2);
+            this.Btn_CertificadosOK.Location = new System.Drawing.Point(818, 2);
             this.Btn_CertificadosOK.Name = "Btn_CertificadosOK";
             this.Btn_CertificadosOK.Size = new System.Drawing.Size(64, 30);
             this.Btn_CertificadosOK.TabIndex = 13;
@@ -232,7 +235,7 @@
             // 
             // Btn_CertPEND
             // 
-            this.Btn_CertPEND.Location = new System.Drawing.Point(798, 35);
+            this.Btn_CertPEND.Location = new System.Drawing.Point(821, 36);
             this.Btn_CertPEND.Name = "Btn_CertPEND";
             this.Btn_CertPEND.Size = new System.Drawing.Size(64, 30);
             this.Btn_CertPEND.TabIndex = 15;
@@ -339,19 +342,52 @@
             // 
             // Btn_NotificaLotes
             // 
-            this.Btn_NotificaLotes.Location = new System.Drawing.Point(727, 28);
+            this.Btn_NotificaLotes.Location = new System.Drawing.Point(730, 3);
             this.Btn_NotificaLotes.Name = "Btn_NotificaLotes";
-            this.Btn_NotificaLotes.Size = new System.Drawing.Size(65, 34);
+            this.Btn_NotificaLotes.Size = new System.Drawing.Size(85, 34);
             this.Btn_NotificaLotes.TabIndex = 21;
             this.Btn_NotificaLotes.Text = "Envia Mail cliente";
             this.Btn_NotificaLotes.UseVisualStyleBackColor = true;
             this.Btn_NotificaLotes.Click += new System.EventHandler(this.Btn_NotificaLotes_Click);
+            // 
+            // Chk_SoloVer
+            // 
+            this.Chk_SoloVer.AutoSize = true;
+            this.Chk_SoloVer.Location = new System.Drawing.Point(572, 73);
+            this.Chk_SoloVer.Name = "Chk_SoloVer";
+            this.Chk_SoloVer.Size = new System.Drawing.Size(66, 17);
+            this.Chk_SoloVer.TabIndex = 22;
+            this.Chk_SoloVer.Text = "Solo Ver";
+            this.Chk_SoloVer.UseVisualStyleBackColor = true;
+            // 
+            // Btn_MailColadas
+            // 
+            this.Btn_MailColadas.Location = new System.Drawing.Point(730, 34);
+            this.Btn_MailColadas.Name = "Btn_MailColadas";
+            this.Btn_MailColadas.Size = new System.Drawing.Size(85, 34);
+            this.Btn_MailColadas.TabIndex = 23;
+            this.Btn_MailColadas.Text = "Mail Coladas ";
+            this.Btn_MailColadas.UseVisualStyleBackColor = true;
+            this.Btn_MailColadas.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Btn_ProcesaCAP
+            // 
+            this.Btn_ProcesaCAP.Location = new System.Drawing.Point(730, 74);
+            this.Btn_ProcesaCAP.Name = "Btn_ProcesaCAP";
+            this.Btn_ProcesaCAP.Size = new System.Drawing.Size(85, 26);
+            this.Btn_ProcesaCAP.TabIndex = 24;
+            this.Btn_ProcesaCAP.Text = "Procesa CAP ";
+            this.Btn_ProcesaCAP.UseVisualStyleBackColor = true;
+            this.Btn_ProcesaCAP.Click += new System.EventHandler(this.Btn_ProcesaCAP_Click);
             // 
             // Frm_RevisaColadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 450);
+            this.Controls.Add(this.Btn_ProcesaCAP);
+            this.Controls.Add(this.Btn_MailColadas);
+            this.Controls.Add(this.Chk_SoloVer);
             this.Controls.Add(this.Btn_NotificaLotes);
             this.Controls.Add(this.Btn_actualizaLote);
             this.Controls.Add(this.groupBox2);
@@ -417,5 +453,8 @@
         private System.Windows.Forms.ComboBox Cmb_Suc;
         private System.Windows.Forms.Button Btn_actualizaLote;
         private System.Windows.Forms.Button Btn_NotificaLotes;
+        private System.Windows.Forms.CheckBox Chk_SoloVer;
+        private System.Windows.Forms.Button Btn_MailColadas;
+        private System.Windows.Forms.Button Btn_ProcesaCAP;
     }
 }

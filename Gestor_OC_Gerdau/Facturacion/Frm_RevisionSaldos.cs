@@ -6,12 +6,14 @@ using CommonLibrary;
 using System.Windows.Forms;
 using System.Xml;
 using System.Configuration;
+using ExcelApp = Microsoft.Office.Interop.Excel;
 
 namespace Gestor_OC_Gerdau.Facturacion
 {
     public partial class Frm_RevisionSaldos : Form
     {
         private StringUtility su = new StringUtility();
+        private List<Models.LineaCredito> list = new List<Models.LineaCredito>();
         public Frm_RevisionSaldos()
         {
             InitializeComponent();
@@ -42,7 +44,7 @@ namespace Gestor_OC_Gerdau.Facturacion
 
         private void CargaInforme_LC(string iFiltro)
         {
-            List<Models.LineaCredito> list = new List<Models.LineaCredito>();
+          
             Models.LineaCredito lc = null; DataTable dt = new DataTable();
             bool add = false;
             string fechaHoy_yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
@@ -163,9 +165,9 @@ namespace Gestor_OC_Gerdau.Facturacion
                         //1) Todo lo facturado (Pendiente de pago)
                         //2) Despachado (No facturado)
                         //3) Despachos programados (1 semana)
-                        lc.F_PP = valor1 / Convert.ToInt32(valorUF);
+                        lc.F_PP = valor1; /// Convert.ToInt32(valorUF);
                         lc.D_ProximaSem = valor2 / Convert.ToInt32(valorUF);
-                        lc.D_SinFact = valor3 / Convert.ToInt32(valorUF);
+                        lc.D_SinFact = valor3; /// Convert.ToInt32(valorUF);
                         lc.D_ProximaSem_Mas7 = valor4 / Convert.ToInt32(valorUF); // wsFacturacion.ObtenerTotalDespachoSiguienteSemana_V2(lc.Rut, "L",7);
 
                         if (lMontoExc > 0)
@@ -191,7 +193,7 @@ namespace Gestor_OC_Gerdau.Facturacion
             }
             catch (Exception exc)
             {
-
+                MessageBox.Show(exc.Message.ToString(), "Errores Sistema");
             }
 
         }
@@ -331,6 +333,146 @@ namespace Gestor_OC_Gerdau.Facturacion
         {
             string lPathCOF = "";
             lPathCOF = string.Concat(ConfigurationManager.AppSettings["Path_ArchivoCOF"].ToString());
+            object paramMissing = Type.Missing;
+            ExcelApp.Application excelApplication = new ExcelApp.Application();
+            excelApplication.DisplayAlerts = false;
+            excelApplication.Visible = true;
+            ExcelApp.Workbook excelWorkBook = excelApplication.Workbooks.Open(lPathCOF); //.Add(paramMissing);
+            ExcelApp.Worksheet excelSheet = null;
+            DataTable ltblDatos = new DataTable(); DataTable ltblDatosPor_IT = new DataTable();
+            string LCO_F = ""; string LCO_J = ""; DataTable lTblExcel = new DataTable();DataRow lFila=null;
+            string LCO_Cliente = ""; string LCO_Rut = "";
+            string lRangoEx = "";int i = 0;
+
+            lTblExcel.Columns.Add("Cliente", Type.GetType("System.String"));
+            lTblExcel.Columns.Add("Rut", Type.GetType("System.String"));
+            lTblExcel.Columns.Add("COL_F", Type.GetType("System.String"));
+            lTblExcel.Columns.Add("COL_J", Type.GetType("System.String"));
+
+            if (excelWorkBook != null)
+            {
+                //LLenaremos primero el detalle de la pestaña de  Resumen GD, de la plantilla
+                //Hoja: Resumen
+                (excelSheet = (ExcelApp.Worksheet)excelWorkBook.Worksheets[14]).Select();
+
+                for (i=0;i<300;i++)
+                {
+                    lRangoEx = string.Concat("B", (11 + i).ToString());
+                    if (excelSheet.Range[lRangoEx].Value!=null )
+                        LCO_Cliente = excelSheet.Range[lRangoEx].Value;
+
+                    lRangoEx = string.Concat("C", (11 + i).ToString());
+                    if (excelSheet.Range[lRangoEx].Value != null)
+                        LCO_Rut = excelSheet.Range[lRangoEx].Value.ToString();
+
+
+                    lRangoEx = string.Concat("F", (11 + i).ToString());
+                    if (excelSheet.Range[lRangoEx].Value != null)
+                        LCO_F = excelSheet.Range[lRangoEx].Value.ToString();
+
+
+                    lRangoEx = string.Concat("J", (11 + i).ToString());
+                    if (excelSheet.Range[lRangoEx].Value != null)
+                        LCO_J = excelSheet.Range[lRangoEx].Value.ToString();
+
+                    if ((LCO_Cliente.Length > 0) && (LCO_Rut.Length > 0))
+                    {
+                        lFila = lTblExcel.NewRow();
+                        lFila["Cliente"] = LCO_Cliente;
+                        lFila["Rut"] = LCO_Rut;
+                        lFila["COL_F"] = LCO_F;
+                        lFila["COL_J"] = LCO_J;
+                        lTblExcel.Rows.Add(lFila);
+                    }
+                     LCO_Cliente="";
+                     LCO_Rut = "";
+                    LCO_F = "";
+                    LCO_J = "";
+                }
+                excelWorkBook.Close(false);
+                excelApplication.Quit();
+
+                if (excelSheet != null)
+                {
+                    while (System.Runtime.InteropServices.Marshal.ReleaseComObject(excelSheet) != 0) { }
+                    excelSheet = null;
+                }
+                if (excelWorkBook != null)
+                {
+                    while (System.Runtime.InteropServices.Marshal.ReleaseComObject(excelWorkBook) != 0) { }
+                    excelWorkBook = null;
+                }
+                if (excelApplication != null)
+                {
+                    while (System.Runtime.InteropServices.Marshal.ReleaseComObject(excelApplication) != 0) { }
+                    excelApplication = null;
+                }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+            Dtg_ArcDAni.DataSource = lTblExcel;
+        }
+
+       
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DataTable lTblLC = new DataTable(); DataTable lTblDani = new DataTable();
+            DataView lVista = null; int i = 0;string lRUT = ""; int lCont = 0;
+            Clases.Cls_Comun lCom = new Clases.Cls_Comun();
+            //list 
+            lTblDani = (DataTable)Dtg_ArcDAni.DataSource;
+
+
+            for (i = 0; i < lTblDani.Rows.Count; i++)
+            {
+                lRUT = lTblDani.Rows[i]["Rut"].ToString().Replace(".","");
+                lRUT = lRUT.Replace("-", "");
+
+                for (lCont = 0; lCont < list.Count; lCont++)
+                {
+                    if (list[lCont].Rut.Equals(lRUT))
+                    {
+                        if (lCom.EsNumero_INT64  (lTblDani.Rows[i]["Col_F"].ToString())==true )
+                           list[lCont].COF_F = lCom.Val_INT64 (lTblDani.Rows[i]["Col_F"].ToString());
+
+                        if (Val(lTblDani.Rows[i]["Col_J"].ToString())>0)
+                            list[lCont].COF_J = Val(lTblDani.Rows[i]["Col_J"].ToString());
+
+
+                        if (lCom.EsNumero_INT64(list[lCont].Diferencia_F.ToString ()) == true)
+                            list[lCont].Diferencia_F = lCom.Val_INT64(list[lCont].F_PP .ToString()) - lCom.Val_INT64(lTblDani.Rows[i]["COL_F"].ToString());
+
+                        if (lCom.EsNumero_INT64(list[lCont].Diferencia_J.ToString()) == true)
+                            list[lCont].Diferencia_J = lCom.Val_INT64(list[lCont].D_SinFact  .ToString() ) - Val(lTblDani.Rows[i]["COL_J"].ToString());
+
+
+                        lCont = list.Count;
+                    }
+                }
+            }
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Dtg_ArcDAni.Visible = false;
+
+            int i = 0;
+
+            for (i = 0; i < Dtg_Datos.RowCount; i++)
+            {
+                if (Dtg_Datos.Rows[i].Cells["Diferencia_F"].Value.ToString().Equals("0"))
+                    Dtg_Datos.Rows[i].Cells["Diferencia_F"].Style.BackColor = System.Drawing.Color.LightGreen;
+                else
+                    Dtg_Datos.Rows[i].Cells["Diferencia_F"].Style.BackColor = System.Drawing.Color.LightSalmon ;
+
+                if (Dtg_Datos.Rows[i].Cells["Diferencia_J"].Value.ToString().Equals("0"))
+                    Dtg_Datos.Rows[i].Cells["Diferencia_J"].Style.BackColor = System.Drawing.Color.LightGreen;
+                else
+                    Dtg_Datos.Rows[i].Cells["Diferencia_J"].Style.BackColor = System.Drawing.Color.LightSalmon;
+
+            }
 
         }
     }

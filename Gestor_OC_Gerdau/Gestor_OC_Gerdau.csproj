@@ -135,6 +135,7 @@
       <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Clases\Cls_Comun.cs" />
     <Compile Include="Clases\Cls_EnvioDoc.cs" />
     <Compile Include="Clases\Cls_Lotes.cs" />
     <Compile Include="EnviosAutomaticos.cs">

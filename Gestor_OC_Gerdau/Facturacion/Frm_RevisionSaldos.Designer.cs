@@ -37,6 +37,7 @@
             this.Rb_Todos = new System.Windows.Forms.RadioButton();
             this.Rb_OK = new System.Windows.Forms.RadioButton();
             this.Rb_NOOK = new System.Windows.Forms.RadioButton();
+            this.Btn_enviaMail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_ArcDAni)).BeginInit();
             this.SuspendLayout();
@@ -76,7 +77,7 @@
             // 
             this.Btn_compara.Location = new System.Drawing.Point(401, 3);
             this.Btn_compara.Name = "Btn_compara";
-            this.Btn_compara.Size = new System.Drawing.Size(115, 23);
+            this.Btn_compara.Size = new System.Drawing.Size(85, 23);
             this.Btn_compara.TabIndex = 3;
             this.Btn_compara.Text = "Comparar";
             this.Btn_compara.UseVisualStyleBackColor = true;
@@ -95,9 +96,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(595, 3);
+            this.button1.Location = new System.Drawing.Point(522, 6);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 23);
+            this.button1.Size = new System.Drawing.Size(95, 23);
             this.button1.TabIndex = 5;
             this.button1.Text = "Ver Resultados";
             this.button1.UseVisualStyleBackColor = true;
@@ -107,7 +108,7 @@
             // 
             this.Rb_Todos.AutoSize = true;
             this.Rb_Todos.Checked = true;
-            this.Rb_Todos.Location = new System.Drawing.Point(716, 9);
+            this.Rb_Todos.Location = new System.Drawing.Point(636, 6);
             this.Rb_Todos.Name = "Rb_Todos";
             this.Rb_Todos.Size = new System.Drawing.Size(55, 17);
             this.Rb_Todos.TabIndex = 6;
@@ -119,7 +120,7 @@
             // Rb_OK
             // 
             this.Rb_OK.AutoSize = true;
-            this.Rb_OK.Location = new System.Drawing.Point(777, 9);
+            this.Rb_OK.Location = new System.Drawing.Point(697, 6);
             this.Rb_OK.Name = "Rb_OK";
             this.Rb_OK.Size = new System.Drawing.Size(64, 17);
             this.Rb_OK.TabIndex = 7;
@@ -130,7 +131,7 @@
             // Rb_NOOK
             // 
             this.Rb_NOOK.AutoSize = true;
-            this.Rb_NOOK.Location = new System.Drawing.Point(861, 9);
+            this.Rb_NOOK.Location = new System.Drawing.Point(781, 6);
             this.Rb_NOOK.Name = "Rb_NOOK";
             this.Rb_NOOK.Size = new System.Drawing.Size(59, 17);
             this.Rb_NOOK.TabIndex = 8;
@@ -138,11 +139,22 @@
             this.Rb_NOOK.UseVisualStyleBackColor = true;
             this.Rb_NOOK.Visible = false;
             // 
+            // Btn_enviaMail
+            // 
+            this.Btn_enviaMail.Location = new System.Drawing.Point(858, 6);
+            this.Btn_enviaMail.Name = "Btn_enviaMail";
+            this.Btn_enviaMail.Size = new System.Drawing.Size(95, 23);
+            this.Btn_enviaMail.TabIndex = 9;
+            this.Btn_enviaMail.Text = "Enviar Mail.";
+            this.Btn_enviaMail.UseVisualStyleBackColor = true;
+            this.Btn_enviaMail.Click += new System.EventHandler(this.Btn_enviaMail_Click);
+            // 
             // Frm_RevisionSaldos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1069, 521);
+            this.Controls.Add(this.Btn_enviaMail);
             this.Controls.Add(this.Rb_NOOK);
             this.Controls.Add(this.Rb_OK);
             this.Controls.Add(this.Rb_Todos);
@@ -173,5 +185,6 @@
         private System.Windows.Forms.RadioButton Rb_Todos;
         private System.Windows.Forms.RadioButton Rb_OK;
         private System.Windows.Forms.RadioButton Rb_NOOK;
+        private System.Windows.Forms.Button Btn_enviaMail;
     }
 }

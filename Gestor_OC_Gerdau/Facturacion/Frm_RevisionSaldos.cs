@@ -475,5 +475,19 @@ namespace Gestor_OC_Gerdau.Facturacion
             }
 
         }
+
+        private void Btn_enviaMail_Click(object sender, EventArgs e)
+        {
+            EnviaMail();
+        }
+
+        private void EnviaMail()
+        {
+            EnviosAutomaticos lEnv = new EnviosAutomaticos();
+            lEnv.EnviaMail_RevisionSaldos_LC(list);
+            lEnv.Dispose();
+
+
+        }
     }
 }

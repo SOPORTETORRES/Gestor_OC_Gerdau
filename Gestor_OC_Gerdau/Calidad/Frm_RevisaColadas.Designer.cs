@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Btn_CargaTablaMySql = new System.Windows.Forms.Button();
             this.Btn_CargaDatos = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -106,8 +106,8 @@
             this.Dtg_Datos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Dtg_Datos.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Datos.Name = "Dtg_Datos";
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle2;
             this.Dtg_Datos.Size = new System.Drawing.Size(982, 332);
             this.Dtg_Datos.TabIndex = 0;
             this.Dtg_Datos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Datos_CellClick);
@@ -177,11 +177,10 @@
             // 
             this.Btn_Copia.Location = new System.Drawing.Point(888, 5);
             this.Btn_Copia.Name = "Btn_Copia";
-            this.Btn_Copia.Size = new System.Drawing.Size(108, 28);
+            this.Btn_Copia.Size = new System.Drawing.Size(108, 42);
             this.Btn_Copia.TabIndex = 9;
-            this.Btn_Copia.Text = "Copia Certificados";
+            this.Btn_Copia.Text = "Envia Etiquetas No Cerradas";
             this.Btn_Copia.UseVisualStyleBackColor = true;
-            this.Btn_Copia.Visible = false;
             this.Btn_Copia.Click += new System.EventHandler(this.Btn_Copia_Click);
             // 
             // Btn_GeneraDoc

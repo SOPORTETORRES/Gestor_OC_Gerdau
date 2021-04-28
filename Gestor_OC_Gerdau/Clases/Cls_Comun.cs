@@ -24,6 +24,22 @@ namespace Gestor_OC_Gerdau.Clases
             return lRes;
         }
 
+        public Boolean EsNumero_Double(string iValor)
+        {
+            Boolean lRes = false; Double  lNro = 0;
+            try
+            {
+                lNro = Double.Parse(iValor);
+                lRes = true;
+            }
+            catch (Exception iex)
+            {
+                lRes = false;
+            }
+
+            return lRes;
+        }
+
         public Int64 Val_INT64(string iValor)
         {
             Int64 lRes = 0; Int64 lNro = 0;
@@ -39,6 +55,7 @@ namespace Gestor_OC_Gerdau.Clases
 
             return lRes;
         }
+
 
     }
 }

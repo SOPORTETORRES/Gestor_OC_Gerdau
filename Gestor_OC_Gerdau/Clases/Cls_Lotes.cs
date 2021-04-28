@@ -129,6 +129,41 @@ namespace Gestor_OC_Gerdau.Clases
 
         }
 
+        public void PesisteColadasErroneas(string iLoteSolicitado, string iRespuesta)
+        {
+            string lLote = ""; 
+            Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
+
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+
+            string lSql = string.Concat(" Select 1 from ColadasAzaErroneas where ColadaSolicitada='", iLoteSolicitado, "'");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0)) //&& (lDts.Tables[0].Rows.Count > 0))
+            {
+                if (lDts.Tables[0].Rows.Count == 0)
+                {
+                    lSql = string.Concat(" insert into ColadasAzaErroneas (ColadaSolicitada,Respuesta, FechaRegistro ) ");
+                    lSql = string.Concat(lSql, " values ('", iLoteSolicitado, "','", iRespuesta, "',  getdate() )  select @@Identity ");
+                    lDts = lPx.ObtenerDatos(lSql);
+                    //if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    //{
+
+
+                    //}
+                }
+                else
+                {
+                    lSql = string.Concat("  Update  ColadasAzaErroneas set Respuesta='", iRespuesta, "' ");
+                    lSql = string.Concat(lSql, " Where ColadaSolicitada='", lLote, "'");
+                    lDts = lPx.ObtenerDatos(lSql);
+
+                }
+
+            }
+
+        }
+
         public  void ObtenerDatosCertificados_WB()
         {
             //DataTable lTbl = new DataTable(); int i = 0; string lPathFin = "";

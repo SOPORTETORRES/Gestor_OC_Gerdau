@@ -27,6 +27,8 @@ namespace Gestor_OC_Gerdau
             //Application.Run(new FrmCambioPrecios());
 
             //Application.Run(new Frm_CreaMP());
+
+            //Application.Run(new Produccion.Frm_IngresaDatos());
         }
     }
 }

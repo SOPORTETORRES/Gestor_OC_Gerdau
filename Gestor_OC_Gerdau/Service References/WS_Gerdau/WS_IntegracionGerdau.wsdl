@@ -115,6 +115,27 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="SolicitudMP_OptiSteelPorSucursal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iSucursal" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SolicitudMP_OptiSteelPorSucursalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SolicitudMP_OptiSteelPorSucursalResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="GrabarArchivoEnvioMail">
         <s:complexType>
           <s:sequence>
@@ -201,6 +222,48 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="PersisteSKU">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iDatos">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PersisteSKUResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PersisteSKUResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PersisteViajeOpt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iDatos">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PersisteViajeOptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PersisteViajeOptResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="ObtenerDatosPorEnviarSoapIn">
@@ -226,6 +289,12 @@
   </wsdl:message>
   <wsdl:message name="GrabarArchivoFTPSoapOut">
     <wsdl:part name="parameters" element="tns:GrabarArchivoFTPResponse" />
+  </wsdl:message>
+  <wsdl:message name="SolicitudMP_OptiSteelPorSucursalSoapIn">
+    <wsdl:part name="parameters" element="tns:SolicitudMP_OptiSteelPorSucursal" />
+  </wsdl:message>
+  <wsdl:message name="SolicitudMP_OptiSteelPorSucursalSoapOut">
+    <wsdl:part name="parameters" element="tns:SolicitudMP_OptiSteelPorSucursalResponse" />
   </wsdl:message>
   <wsdl:message name="GrabarArchivoEnvioMailSoapIn">
     <wsdl:part name="parameters" element="tns:GrabarArchivoEnvioMail" />
@@ -257,6 +326,18 @@
   <wsdl:message name="EnviarCorreoNotificacionSoapOut">
     <wsdl:part name="parameters" element="tns:EnviarCorreoNotificacionResponse" />
   </wsdl:message>
+  <wsdl:message name="PersisteSKUSoapIn">
+    <wsdl:part name="parameters" element="tns:PersisteSKU" />
+  </wsdl:message>
+  <wsdl:message name="PersisteSKUSoapOut">
+    <wsdl:part name="parameters" element="tns:PersisteSKUResponse" />
+  </wsdl:message>
+  <wsdl:message name="PersisteViajeOptSoapIn">
+    <wsdl:part name="parameters" element="tns:PersisteViajeOpt" />
+  </wsdl:message>
+  <wsdl:message name="PersisteViajeOptSoapOut">
+    <wsdl:part name="parameters" element="tns:PersisteViajeOptResponse" />
+  </wsdl:message>
   <wsdl:portType name="WS_IntegracionGerdauSoap">
     <wsdl:operation name="ObtenerDatosPorEnviar">
       <wsdl:input message="tns:ObtenerDatosPorEnviarSoapIn" />
@@ -273,6 +354,10 @@
     <wsdl:operation name="GrabarArchivoFTP">
       <wsdl:input message="tns:GrabarArchivoFTPSoapIn" />
       <wsdl:output message="tns:GrabarArchivoFTPSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SolicitudMP_OptiSteelPorSucursal">
+      <wsdl:input message="tns:SolicitudMP_OptiSteelPorSucursalSoapIn" />
+      <wsdl:output message="tns:SolicitudMP_OptiSteelPorSucursalSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="GrabarArchivoEnvioMail">
       <wsdl:input message="tns:GrabarArchivoEnvioMailSoapIn" />
@@ -293,6 +378,14 @@
     <wsdl:operation name="EnviarCorreoNotificacion">
       <wsdl:input message="tns:EnviarCorreoNotificacionSoapIn" />
       <wsdl:output message="tns:EnviarCorreoNotificacionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PersisteSKU">
+      <wsdl:input message="tns:PersisteSKUSoapIn" />
+      <wsdl:output message="tns:PersisteSKUSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PersisteViajeOpt">
+      <wsdl:input message="tns:PersisteViajeOptSoapIn" />
+      <wsdl:output message="tns:PersisteViajeOptSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WS_IntegracionGerdauSoap" type="tns:WS_IntegracionGerdauSoap">
@@ -326,6 +419,15 @@
     </wsdl:operation>
     <wsdl:operation name="GrabarArchivoFTP">
       <soap:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoFTP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SolicitudMP_OptiSteelPorSucursal">
+      <soap:operation soapAction="http://TorresOcaranza.cl/SolicitudMP_OptiSteelPorSucursal" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -378,6 +480,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PersisteSKU">
+      <soap:operation soapAction="http://TorresOcaranza.cl/PersisteSKU" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PersisteViajeOpt">
+      <soap:operation soapAction="http://TorresOcaranza.cl/PersisteViajeOpt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="WS_IntegracionGerdauSoap12" type="tns:WS_IntegracionGerdauSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -410,6 +530,15 @@
     </wsdl:operation>
     <wsdl:operation name="GrabarArchivoFTP">
       <soap12:operation soapAction="http://TorresOcaranza.cl/GrabarArchivoFTP" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SolicitudMP_OptiSteelPorSucursal">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/SolicitudMP_OptiSteelPorSucursal" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -455,6 +584,24 @@
     </wsdl:operation>
     <wsdl:operation name="EnviarCorreoNotificacion">
       <soap12:operation soapAction="http://TorresOcaranza.cl/EnviarCorreoNotificacion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PersisteSKU">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/PersisteSKU" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PersisteViajeOpt">
+      <soap12:operation soapAction="http://TorresOcaranza.cl/PersisteViajeOpt" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

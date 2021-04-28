@@ -470,6 +470,7 @@ namespace Gestor_OC_Gerdau.Clases
             lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
             for (i = 0; i < lTblColadas.Rows.Count; i++)
             {
+
                 if (lEnv.EsLoteAza(iLote) == true)
                 {
                     lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), string.Concat(lTblColadas.Rows[i]["Colada"].ToString(), "_I.pdf"));

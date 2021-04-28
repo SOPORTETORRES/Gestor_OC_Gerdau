@@ -44,6 +44,13 @@ namespace Gestor_OC_Gerdau.WS_Gerdau {
         [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/GrabarArchivoFTP", ReplyAction="*")]
         System.Threading.Tasks.Task<string> GrabarArchivoFTPAsync(Gestor_OC_Gerdau.WS_Gerdau.ArchivosGerdau iObjArchivo);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/SolicitudMP_OptiSteelPorSucursal", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        System.Data.DataSet SolicitudMP_OptiSteelPorSucursal(string iSucursal);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/SolicitudMP_OptiSteelPorSucursal", ReplyAction="*")]
+        System.Threading.Tasks.Task<System.Data.DataSet> SolicitudMP_OptiSteelPorSucursalAsync(string iSucursal);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/GrabarArchivoEnvioMail", ReplyAction="*")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
         string GrabarArchivoEnvioMail(Gestor_OC_Gerdau.WS_Gerdau.ArchivosGerdau iObjArchivo);
@@ -78,6 +85,20 @@ namespace Gestor_OC_Gerdau.WS_Gerdau {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/EnviarCorreoNotificacion", ReplyAction="*")]
         System.Threading.Tasks.Task<string> EnviarCorreoNotificacionAsync(string iOrigen, string iMsg, int iObra, string iTitulo);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/PersisteSKU", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string PersisteSKU(System.Data.DataSet iDatos);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/PersisteSKU", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> PersisteSKUAsync(System.Data.DataSet iDatos);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/PersisteViajeOpt", ReplyAction="*")]
+        [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
+        string PersisteViajeOpt(System.Data.DataSet iDatos);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://TorresOcaranza.cl/PersisteViajeOpt", ReplyAction="*")]
+        System.Threading.Tasks.Task<string> PersisteViajeOptAsync(System.Data.DataSet iDatos);
     }
     
     /// <remarks/>
@@ -739,6 +760,14 @@ namespace Gestor_OC_Gerdau.WS_Gerdau {
             return base.Channel.GrabarArchivoFTPAsync(iObjArchivo);
         }
         
+        public System.Data.DataSet SolicitudMP_OptiSteelPorSucursal(string iSucursal) {
+            return base.Channel.SolicitudMP_OptiSteelPorSucursal(iSucursal);
+        }
+        
+        public System.Threading.Tasks.Task<System.Data.DataSet> SolicitudMP_OptiSteelPorSucursalAsync(string iSucursal) {
+            return base.Channel.SolicitudMP_OptiSteelPorSucursalAsync(iSucursal);
+        }
+        
         public string GrabarArchivoEnvioMail(Gestor_OC_Gerdau.WS_Gerdau.ArchivosGerdau iObjArchivo) {
             return base.Channel.GrabarArchivoEnvioMail(iObjArchivo);
         }
@@ -777,6 +806,22 @@ namespace Gestor_OC_Gerdau.WS_Gerdau {
         
         public System.Threading.Tasks.Task<string> EnviarCorreoNotificacionAsync(string iOrigen, string iMsg, int iObra, string iTitulo) {
             return base.Channel.EnviarCorreoNotificacionAsync(iOrigen, iMsg, iObra, iTitulo);
+        }
+        
+        public string PersisteSKU(System.Data.DataSet iDatos) {
+            return base.Channel.PersisteSKU(iDatos);
+        }
+        
+        public System.Threading.Tasks.Task<string> PersisteSKUAsync(System.Data.DataSet iDatos) {
+            return base.Channel.PersisteSKUAsync(iDatos);
+        }
+        
+        public string PersisteViajeOpt(System.Data.DataSet iDatos) {
+            return base.Channel.PersisteViajeOpt(iDatos);
+        }
+        
+        public System.Threading.Tasks.Task<string> PersisteViajeOptAsync(System.Data.DataSet iDatos) {
+            return base.Channel.PersisteViajeOptAsync(iDatos);
         }
     }
 }

@@ -183,6 +183,18 @@
     </Compile>
     <Compile Include="Models\LineaCredito.cs" />
     <Compile Include="Models\ValorUF.cs" />
+    <Compile Include="Produccion\Frm_IngresaDatos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Produccion\Frm_IngresaDatos.Designer.cs">
+      <DependentUpon>Frm_IngresaDatos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Produccion\Frm_MP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Produccion\Frm_MP.Designer.cs">
+      <DependentUpon>Frm_MP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\WsFacturacion\Reference.cs">
@@ -258,6 +270,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_WB_EnvAut.resx">
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Produccion\Frm_IngresaDatos.resx">
+      <DependentUpon>Frm_IngresaDatos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Produccion\Frm_MP.resx">
+      <DependentUpon>Frm_MP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -426,6 +444,7 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

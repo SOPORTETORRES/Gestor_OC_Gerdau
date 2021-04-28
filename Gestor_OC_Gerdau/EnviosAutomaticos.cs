@@ -25,9 +25,9 @@ namespace Gestor_OC_Gerdau
 
         private void Btn_EnviaPL_Click(object sender, EventArgs e)
         {
-            EnviarPL("682", "220");
-            System.Threading.Thread.Sleep(1000);
-            EnviarPL( "807", "600");
+            //EnviarPL("682", "220");
+            //System.Threading.Thread.Sleep(1000);
+            //EnviarPL( "807", "600");
 
 
             //ProcesaEnvioBOM();
@@ -1127,7 +1127,7 @@ namespace Gestor_OC_Gerdau
         }
 
 
-        public  void EnviaMail_Lotes_NO_Encontrados ( )
+        public  void EnviaMail_Lotes_NO_Encontrados()
         {
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = "";
@@ -1209,6 +1209,94 @@ namespace Gestor_OC_Gerdau
 
                         }
                     }
+                }
+            }
+            catch (Exception iex)
+            {
+
+            }
+
+        }
+
+        public void EnviaMail_RevisionSaldos_LC(List<Models.LineaCredito> iLista)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();  int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = "";
+            WS_Gerdau.WS_IntegracionGerdauSoapClient lDal = new WS_Gerdau.WS_IntegracionGerdauSoapClient();
+            DataSet lDtsViajes = new DataSet();
+
+            try
+            {
+                Tm_Envios.Enabled = false;
+                mGenerandoArchivo = true;
+            
+                if (iLista.Count >0)
+                {
+                    lTx = "";
+                    lTx = String.Concat(" Hola Estimados: <br> A continuación les enviamos el detalle de los Clientes con inconsistencias  <br>  ");
+                    lTx = String.Concat(lTx, "   <br> <br> ");
+                    lTx = String.Concat(lTx, "<table   border='1'>    <tr>  ");
+                    lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>R.U.T.</td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Cliente</td>");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Monto</td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Bloqueo</td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Fact. P P </td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Desp. Sin Fact</td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>COF F </td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Diferencia F</td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>COF J </td> ");
+                    lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Diferencia J</td> ");
+                    lTx = String.Concat(lTx, "  </tr> ");
+                    for (i = 0; i < iLista.Count; i++)
+                    {
+                        if ((iLista[i].Diferencia_F != 0) || (iLista[i].Diferencia_J != 0))
+                        {
+                            lTx = String.Concat(lTx, "  <tr> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].Rut.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].Cliente.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td> ", iLista[i].Monto.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].Bloqueo.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].F_PP.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].D_SinFact.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td> ", iLista[i].COF_F.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].Diferencia_F.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td> ", iLista[i].COF_J.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  <td>", iLista[i].Diferencia_J.ToString(), "</td> ");
+                            lTx = String.Concat(lTx, "  </tr> ");
+                        }
+                    }
+                    lTx = String.Concat(lTx, " </table > <BR> <BR>  ");
+                    lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR>");
+                    lTx = String.Concat(lTx, "  Los acentos y caracteres especiales han sido eliminado del correo <BR>");
+
+
+
+                    lTbl = ObtenerDestinatarios("-1800");
+                    MailMessage MMessage = new MailMessage();  
+                    string[] separators = { "-" };  
+
+                    //lPathDest = Path.Combine(ipathDestino, lPathSigla);
+
+                    for (i = 0; i < lTbl.Rows.Count; i++)
+                        MMessage.To.Add(lTbl.Rows[i]["MailDest"].ToString());
+
+                    MMessage.From = new MailAddress("notificaciones@smtyo.cl", " Revisión de saldos en Línea de Crédito  ", System.Text.Encoding.UTF8);
+                    MMessage.Subject = "Revisión de saldos en Línea de Crédito  ";
+                    MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                    MMessage.Body = lTx;
+
+                    MMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                    MMessage.IsBodyHtml = true; // 'Formato html;
+
+                    // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
+                    SmtpClient SClient = new SmtpClient();
+                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                    SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
+                    SClient.Port = 587;  // 'Puerto del SMTP de Gmail
+                    SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
+                                                // ' //'Capturamos los errores en el envio
+                    SClient.Send(MMessage);
+
                 }
             }
             catch (Exception iex)
@@ -1550,6 +1638,7 @@ namespace Gestor_OC_Gerdau
 
 
                                         ZipFile.CreateFromDirectory(lPathArchs, lPathZip);
+
 
                                     MMessage = new MailMessage();
 

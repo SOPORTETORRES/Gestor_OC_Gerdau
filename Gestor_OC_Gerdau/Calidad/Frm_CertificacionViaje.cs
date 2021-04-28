@@ -215,10 +215,12 @@ namespace Gestor_OC_Gerdau.Calidad
                     if (lEnv.EsLoteAza(lLote) == false)
                     {
                         lLote = lLote.Replace("00000", "");
+                        lColadasCap = ObtenerUrl_CAP(lLote);
+                        lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
                         if (lLote.ToString() != lUltimoLote)
                         {
-                            lColadasCap = ObtenerUrl_CAP(lLote);
-                            lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                            //lColadasCap = ObtenerUrl_CAP(lLote);
+                            //lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
                             if (lPartes.Length > 1)
                             {
                                 lTbl.Rows[i]["UrlInforme"] = lPartes[0];
@@ -228,19 +230,15 @@ namespace Gestor_OC_Gerdau.Calidad
                         }
                         else
                         {
-                            if (lPartes != null)
+                            if ((lPartes != null) && (lPartes.Length >0))
                             {
                                 lTbl.Rows[i]["UrlInforme"] = lPartes[0];
                                 lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
                                 lUltimoLote = lTbl.Rows[i]["Lote"].ToString();
-                            }
-                            
+                            }                            
                         }
-
                     }
-
                 }
-
 
                     Dtg_Datos.DataSource = lTbl;
 
@@ -391,9 +389,13 @@ namespace Gestor_OC_Gerdau.Calidad
             }
             else
             {
-                DescargaPdfs_WB_CAP(lLote );
-                Lbl_Lote.Text = "";
-                CargaDatos();
+                if (lLote.Trim().Length > 0)
+                {
+
+                    DescargaPdfs_WB_CAP(lLote);
+                    Lbl_Lote.Text = "";
+                    CargaDatos();
+                }
             }
            
         }
@@ -557,11 +559,21 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
+        private string ObtenerColada(string iColada)
+        {
+            string lRes = "";
+
+            lRes = iColada.Replace("{", "");
+            //lRes = iColada.Replace("", "");
+
+            return lRes; 
+
+        }
         private void ActualizaCetificados(string iLote)
         {
-            DataTable lTbl = new DataTable(); int i = 0; int lCont = 0;
-            string lSql = ""; string lRes = ""; string lDato = "";
-            Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
+            DataTable lTbl = new DataTable(); int i = 0; int lCont = 0;int k = 0;
+            string lSql = ""; string lRes = ""; string lDato = ""; string lColadaTmp = "";
+            Clases.Cls_Lotes lLot = new Clases.Cls_Lotes(); string lLoteColada = "";
 
             lSql = string.Concat(" select * from lotes where lote='", iLote, "'");
             lTbl = lLot.CargarDatos(lSql);
@@ -579,40 +591,130 @@ namespace Gestor_OC_Gerdau.Calidad
                 {
                     if (lTbl.Rows[i]["Respuesta"].ToString ().Length>5 )
                     {
-                        lDato = lTbl.Rows[i]["Respuesta"].ToString();
-                        string[] lpartes = lDato.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
-                        if (lpartes.Length > 0)
+                        if (iLote.Equals (lTbl.Rows[i]["lote"].ToString()))
                         {
-                            // Hay mas de un colada en la definicion
-                            for (lCont = 0; lCont < lpartes.Length; lCont++)
+                            lDato = lTbl.Rows[i]["Respuesta"].ToString();
+                            if (lDato .IndexOf (iLote )>-1)
                             {
-                                string[] separatingStrings2 = { ":{" };
-                                lDato = lpartes[lCont].ToString();
-                                string[] lpartes2 = lDato.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                string[] lpartes = lDato.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
                                 if (lpartes.Length > 0)
                                 {
-                                    string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
-                                    if (lPartesColada.Length == 5)
+                                    // Hay mas de un colada en la definicion
+                                    for (lCont = 0; lCont < lpartes.Length; lCont++)
                                     {
-                                        lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
-                                        //if (PB.Value < PB.Maximum)
-                                        //    PB.Value = PB.Value + 1;
-                                        //else
-                                        //    PB.Value = PB.Value - 1;
+                                        string[] separatingStrings2 = { ":{" };
+                                        lDato = lpartes[lCont].ToString();
+                                        string[] lpartes2 = lDato.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                        if (lpartes.Length > 0)
+                                        {
+                                            lLoteColada = ObtenerColada(lpartes2[0].ToString());
+                                            if (lLoteColada.IndexOf(iLote) > -1)
+                                            {
+                                                string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                if (lPartesColada.Length == 5)
+                                                {
+                                                    lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                }
+                                            }      
+                                        }
                                     }
                                 }
+                                else
+                                {
+                                    // NO hay solo una Colada en la definicion
+
+                                }
+
                             }
-                        }
-                        else
-                        {
-                            // hay solo una Colada en la definicion
+                            else
+                             {
+                                // Se debe verificar el caso de coladas madres e Hijas.
+                                //"2613649302-03-04":{
+                                // "Colada":"2613649302-03-04","Informe":"http://repositorio.idiem.cl/verifica/ej1vH8V1Yc",
+                                //"Publicacion_Informe":"2021-03-30 15:07:45","Certificado":"http://repositorio.idiem.cl/verifica/1uxkMGWQme",
+                                //"Publicacion_Certificado":"2021-03-30 18:23:59"}
+                                // Colada solicitada: 2613649303  , Respuesta: "2613649302-03-04"
+                                string[] separatingStrings2 = { ":{" };
+                                string[] lpartes = lDato.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                                if (lpartes.Length > 0)
+                                {
+                                    for (lCont = 0; lCont < lpartes.Length; lCont++)
+                                    {
+                                        string[] lpartes2 = lpartes[lCont ].Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                        lLoteColada = ObtenerColada(lpartes2[0].ToString());
+                                        if (lLoteColada.IndexOf("-") > -1)
+                                        {
+                                            string[] lPartesColada = (lLoteColada.Split(new Char[] { '-' }));
+                                            for (k=0; k<lPartesColada .Length; k++)
+                                            {
+                                                if (k == 0)
+                                                {
+                                                    lColadaTmp = lPartesColada[k].ToString();
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                          lPartesColada = (lpartes [lCont].ToString ().Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            k = lPartesColada.Length;
+                                                        }
+                                                    }
+                                                }
+                                                   
+                                                else
+                                                {
+                                                    //lColadaTmp = lPartesColada[k].ToString();
+                                                    lDato = lColadaTmp.Substring(0, lColadaTmp.Length - 2);
+                                                    lColadaTmp = string.Concat(lDato, lPartesColada[k].ToString());
+                                                    //lColadaTmp = lPartesColada[k].ToString();
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                        lPartesColada = (lpartes[lCont].ToString().Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            k = lPartesColada.Length;
+                                                        }
+                                                    }
 
-                        }
+                                                }
+
+
+                                            }
+
+                                        }
+                                        else {
+                                            if (lLoteColada.IndexOf(iLote) > -1)
+                                            {
+                                                string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                if (lPartesColada.Length == 5)
+                                                {
+                                                    lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                }
+                                            }
+                                        }
+                                             
+
+
+
+                                    }
+                                    ////string[] separatingStrings2 = { ":{" };
+                                    //lDato = lpartes[0].ToString();
+                                    //lpartes = lDato.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                    //// Se debe persistir para poder informarlo via  Mail
+                                    //lLot.PesisteColadasErroneas(iLote, lDato);
+                                }
+
+                              
+
+                            }
+
+
+
+                        }                      
                     }
-
                 }
             }
-
         }
 
         private void Dtg_Datos_CellContentClick(object sender, DataGridViewCellEventArgs e)

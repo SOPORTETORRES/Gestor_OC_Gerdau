@@ -25,7 +25,116 @@ namespace Gestor_OC_Gerdau.Calidad
         }
 
 
+        public void NotificarEtiquetasQR_NoCerradas()
+        {
+            DataTable lTblDest = new DataTable(); string lMsg = ""; string lSql = "";
+            DataSet lTblEstadoMaq = new DataSet(); DataSet lBtnDetalle = new DataSet();
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
 
+            lSql = "  SP_ConsultasGenerales  158,'','','','',''";
+            lBtnDetalle = lPx.ObtenerDatos(lSql);
+
+
+            if ((lBtnDetalle.Tables.Count > 0) && (lBtnDetalle.Tables[0].Rows.Count > 0))
+            {
+                lMsg = " Señores : <br>   <br> ";
+                lMsg = string.Concat(lMsg, " Resumen de las etiquetas QR, que no han sido consumidas en su totalidad  <Br>   <Br>  ");
+                lMsg = string.Concat(lMsg, "        <Br>  <table   border='1'>   <tr>  ");
+                lMsg = string.Concat(lMsg, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Sucursal </td> ");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Id QR  </td>");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Lote </td> ");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Nro Paquete </td> ");
+                lMsg = string.Concat(lMsg, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Kgs Paquete </td> ");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Producido  </td>");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Saldo </td> ");
+                lMsg = string.Concat(lMsg, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Calidad Acero </td> ");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Codigo </td>");
+                lMsg = string.Concat(lMsg, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> Producto </td> ");
+                lMsg = string.Concat(lMsg, "  </tr> ");
+                for (i = 0; i < lBtnDetalle.Tables[0].Rows.Count; i++)
+                {
+
+                    lMsg = String.Concat(lMsg, "  <tr> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["Nombre"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["IdQr"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["Lote"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["paquete"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["PesoPaquete"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["Prod"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["saldo"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["CalidadAcero"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["Codigo"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  <td>", lBtnDetalle.Tables[0].Rows[i]["Producto"].ToString(), "</td> ");
+                    lMsg = String.Concat(lMsg, "  </tr> ");
+                }
+                lMsg = String.Concat(lMsg, " </table > <BR> <BR>   ");
+
+                lMsg = string.Concat(lMsg, "  <Br>   <Br>   Saludos   <Br> ");
+
+                lMsg = string.Concat(lMsg, " Sistema de  envíos Automáticos   -  Torres Ocaranza  <Br> ");
+                lMsg = string.Concat(lMsg, " Favor NO responder a este correo, ya que ha sido generado de forma Automatica  <Br> ");
+
+
+                lTblDest = ObtenerDestinatarios("-1900");
+                if (lTblDest.Rows.Count > 0)
+                {
+                    MailMessage MMessage = new MailMessage();
+                    try
+                    {
+                        for (i = 0; i < lTblDest.Rows.Count; i++)
+                        {
+                            MMessage.To.Add(lTblDest.Rows[i]["MailDest"].ToString());
+                        }
+
+                        MMessage.From = new MailAddress("notificaciones@smtyo.cl", " Etiquetas QR NO Cerradas ", System.Text.Encoding.UTF8);
+
+                        MMessage.Subject = "Resumen de Etiquetas NO cerradas  "; // '"Notificación por Reglas de Negocio "
+                        MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                        MMessage.Body = lMsg;// '"Esto es una prueba";
+                        MMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                        MMessage.IsBodyHtml = true; // 'Formato html
+
+
+                        //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
+                        SmtpClient SClient = new SmtpClient();
+                        SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                        SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
+                        SClient.Port = 587; // 'Puerto del SMTP de Gmail
+                        SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
+                                                  //'Capturamos los errores en el envio
+                        SClient.Send(MMessage);
+                    }
+                    catch (Exception iex)
+                    {
+                        // MessageBox.Show(string.Concat("Ha Ocurrido el Siguiente Error: ", iex.Message.ToString(), "Avisos Sistema")); 
+                        //  lRes = iex.Message.ToString();
+                        throw iex;
+                    }
+                }
+            }
+            //return lRes;
+        }
+
+        private DataTable ObtenerDestinatarios(string itipo)
+        {
+            string lSql = String.Concat(" SP_ConsultasInformes  20, '", itipo, "',' ','','',''");
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
+            try
+            {
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                }
+            }
+            catch (Exception iex)
+            {
+                throw iex;
+            }
+            return lTbl;
+        }
 
         private void CargaBmd()
         {
@@ -609,7 +718,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Btn_Copia_Click(object sender, EventArgs e)
         {
-
+            NotificarEtiquetasQR_NoCerradas();
         }
 
         private void Btn_GeneraDoc_Click(object sender, EventArgs e)

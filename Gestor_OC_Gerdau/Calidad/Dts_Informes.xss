@@ -9,7 +9,7 @@
     <Shape ID="DesignTable:Cabecera_CertMan" ZOrder="4" X="0" Y="0" Height="162" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
     <Shape ID="DesignTable:CertificadoMan" ZOrder="3" X="239" Y="29" Height="143" Width="155" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="139" />
     <Shape ID="DesignTable:CabeceraTrazColadas" ZOrder="2" X="54" Y="246" Height="86" Width="188" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
-    <Shape ID="DesignTable:DetalleTrazColadas" ZOrder="1" X="268" Y="208" Height="219" Width="176" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="215" />
+    <Shape ID="DesignTable:DetalleTrazColadas" ZOrder="1" X="441" Y="112" Height="257" Width="176" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="253" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

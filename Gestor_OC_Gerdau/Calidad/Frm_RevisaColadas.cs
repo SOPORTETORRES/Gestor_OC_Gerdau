@@ -25,14 +25,14 @@ namespace Gestor_OC_Gerdau.Calidad
         }
 
 
-        public void NotificarEtiquetasQR_NoCerradas()
+        public void NotificarEtiquetasQR_NoCerradas(string iSucursal )
         {
             DataTable lTblDest = new DataTable(); string lMsg = ""; string lSql = "";
             DataSet lTblEstadoMaq = new DataSet(); DataSet lBtnDetalle = new DataSet();
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i = 0;
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
 
-            lSql = "  SP_ConsultasGenerales  158,'','','','',''";
+            lSql = string.Concat ("  SP_ConsultasGenerales  158,'", iSucursal ,"','','','',''");
             lBtnDetalle = lPx.ObtenerDatos(lSql);
 
 
@@ -76,7 +76,8 @@ namespace Gestor_OC_Gerdau.Calidad
                 lMsg = string.Concat(lMsg, " Favor NO responder a este correo, ya que ha sido generado de forma Automatica  <Br> ");
 
 
-                lTblDest = ObtenerDestinatarios("-1900");
+                lTblDest = ObtenerDestinatarios("-1900"); // Santiago
+                //                  lTblDest = ObtenerDestinatarios("-1910"); ==> Calama
                 if (lTblDest.Rows.Count > 0)
                 {
                     MailMessage MMessage = new MailMessage();
@@ -718,7 +719,8 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Btn_Copia_Click(object sender, EventArgs e)
         {
-            NotificarEtiquetasQR_NoCerradas();
+            NotificarEtiquetasQR_NoCerradas("CALAMA");
+            NotificarEtiquetasQR_NoCerradas("SANTIAGO");
         }
 
         private void Btn_GeneraDoc_Click(object sender, EventArgs e)
@@ -1356,6 +1358,8 @@ namespace Gestor_OC_Gerdau.Calidad
 
             for (i = 0; i < Dtg_Datos.RowCount; i++)
             {
+                if (Dtg_Datos.Rows[i].Cells["Codigo"].Value!=null)
+                { }
                 lViaje = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
                 if (Dtg_Datos.Rows[i].Cells["Sucursal"].Value.ToString().IndexOf("TOSOL") > -1)
                 {
@@ -1399,18 +1403,6 @@ namespace Gestor_OC_Gerdau.Calidad
                 }
 
             }
-
-            //WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
-            //string lSql = ""; DataTable lTbl = new DataTable();  DataSet lTblViajes = new DataSet();
-            //DateTime lFecha = DateTime.Now;
-            //for (i = 0; i < 365; i++)
-            //{
-            //    lSql = String.Concat("  insert into  EnvioDocumentos ( FechaEnvio, doc_enviado, path_doc) values (");
-            //    lSql = String.Concat(lSql, "dateadd(day,", i, ", getdate() ),'e_PL_400','')");
-            //    lTblViajes = lPx.ObtenerDatos(lSql);
-            //}
-            //}
-
         }
 
         private void InsertaDocEnviado(string iArea)

@@ -399,6 +399,37 @@ namespace Gestor_OC_Gerdau.Calidad
             }
            
         }
+        private void ActualizaLoteForzado(string iLote)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
+
+            // 0.- Revisamos si esta en tabla certificadosColadas.
+            lSql = string.Concat("select * from certificadosColadas  where  lote='", iLote, "'");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count == 0))
+            {
+                //   Revisamos si esta en tabla Lotes de Mysql
+                lSql = string.Concat("select * from lotes  where  lote='", iLote, "'");
+                lTbl = lLot.CargarDatos(lSql);
+                if (lTbl.Rows.Count > 0)
+                {
+                    lSql = string.Concat(" delete from lotes  where  lote='", iLote, "'");
+                    lTbl = lLot.CargarDatos(lSql);
+                }
+                lLot.GrabarRegistro(iLote, 0);
+                lLot.ObtenerDatosCertificados_WB();
+                this.ActualizaCetificados_Revisado(iLote);
+                DescargaPdfs_WB(iLote);
+            }
+            else
+            {
+                ActualizaCetificados(iLote);
+                DescargaPdfs_WB(iLote);
+            }
+
+
+        }
 
         private void ActualizaLote(string iLote)
         {
@@ -692,6 +723,35 @@ namespace Gestor_OC_Gerdau.Calidad
                                                     lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
                                                 }
                                             }
+                                            else   // para el caso de  261359560203
+                                            {
+                                                if (lLoteColada.Length == 14)
+                                                {
+                                                    lColadaTmp = lLoteColada.Substring(0, 11);
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                        string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        lColadaTmp = lLoteColada.Substring(0, 9);
+                                                        lColadaTmp = string.Concat(lColadaTmp, lLoteColada.Substring(11,2));
+                                                        if (lColadaTmp.IndexOf(iLote) > -1)
+                                                        {
+                                                            string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                            if (lPartesColada.Length == 5)
+                                                            {
+                                                                lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
                                         }
                                              
 
@@ -716,6 +776,186 @@ namespace Gestor_OC_Gerdau.Calidad
                 }
             }
         }
+
+
+        private void ActualizaCetificados_Revisado (string iLote)
+        {
+            DataTable lTbl = new DataTable(); int i = 0; int lCont = 0; int k = 0;
+            string lSql = ""; string lRes = ""; string lDato = ""; string lColadaTmp = "";
+            Clases.Cls_Lotes lLot = new Clases.Cls_Lotes(); string lLoteColada = "";
+
+            lSql = string.Concat(" select * from lotes where lote='", iLote, "'");
+            lTbl = lLot.CargarDatos(lSql);
+            if (lTbl.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay datos a procesar, Revisar", " Avisos Sistema");
+            }
+            else
+            {
+                string[] separatingStrings = { "}," };
+
+
+                //PB.Maximum = Dtg_Datos.Rows.Count; PB.Minimum = 0; PB.Value = 0;
+                for (i = 0; i < lTbl.Rows.Count; i++)
+                {
+                    if (lTbl.Rows[i]["Respuesta"].ToString().Length > 5)
+                    {
+                        if (iLote.Equals(lTbl.Rows[i]["lote"].ToString()))
+                        {
+                            lDato = lTbl.Rows[i]["Respuesta"].ToString();
+                            if (lDato.IndexOf(iLote) > -1)
+                            {
+                                string[] lpartes = lDato.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                                if (lpartes.Length > 0)
+                                {
+                                    // Hay mas de un colada en la definicion
+                                    for (lCont = 0; lCont < lpartes.Length; lCont++)
+                                    {
+                                        string[] separatingStrings2 = { ":{" };
+                                        lDato = lpartes[lCont].ToString();
+                                        string[] lpartes2 = lDato.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                        if (lpartes.Length > 0)
+                                        {
+                                            lLoteColada = ObtenerColada(lpartes2[0].ToString());
+                                            if (lLoteColada.IndexOf(iLote) > -1)
+                                            {
+                                                string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                if (lPartesColada.Length == 5)
+                                                {
+                                                    lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    // NO hay solo una Colada en la definicion
+
+                                }
+
+                            }
+                            else
+                            {
+                                // Se debe verificar el caso de coladas madres e Hijas.
+                                //"2613649302-03-04":{
+                                // "Colada":"2613649302-03-04","Informe":"http://repositorio.idiem.cl/verifica/ej1vH8V1Yc",
+                                //"Publicacion_Informe":"2021-03-30 15:07:45","Certificado":"http://repositorio.idiem.cl/verifica/1uxkMGWQme",
+                                //"Publicacion_Certificado":"2021-03-30 18:23:59"}
+                                // Colada solicitada: 2613649303  , Respuesta: "2613649302-03-04"
+                                string[] separatingStrings2 = { ":{" };
+                                string[] lpartes = lDato.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                                if (lpartes.Length > 0)
+                                {
+                                    for (lCont = 0; lCont < lpartes.Length; lCont++)
+                                    {
+                                        string[] lpartes2 = lpartes[lCont].Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                        lLoteColada = ObtenerColada(lpartes2[0].ToString());
+                                        if (lLoteColada.IndexOf("-") > -1)
+                                        {
+                                            string[] lPartesColada = (lLoteColada.Split(new Char[] { '-' }));
+                                            for (k = 0; k < lPartesColada.Length; k++)
+                                            {
+                                                if (k == 0)
+                                                {
+                                                    lColadaTmp = lPartesColada[k].ToString();
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                        lPartesColada = (lpartes[lCont].ToString().Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            k = lPartesColada.Length;
+                                                        }
+                                                    }
+                                                }
+
+                                                else
+                                                {
+                                                    //lColadaTmp = lPartesColada[k].ToString();
+                                                    lDato = lColadaTmp.Substring(0, lColadaTmp.Length - 2);
+                                                    lColadaTmp = string.Concat(lDato, lPartesColada[k].ToString());
+                                                    //lColadaTmp = lPartesColada[k].ToString();
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                        lPartesColada = (lpartes[lCont].ToString().Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            k = lPartesColada.Length;
+                                                        }
+                                                    }
+
+                                                }
+
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (lLoteColada.IndexOf(iLote) > -1)
+                                            {
+                                                string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                if (lPartesColada.Length == 5)
+                                                {
+                                                    lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                }
+                                            }
+                                            else   // para el caso de  261359560203
+                                            {
+                                                if (lLoteColada.Length == 14)
+                                                {
+                                                    lColadaTmp = lLoteColada.Substring(0, 11);
+                                                    if (lColadaTmp.IndexOf(iLote) > -1)
+                                                    {
+                                                        string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                        if (lPartesColada.Length == 5)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        lColadaTmp = lLoteColada.Substring(0, 9);
+                                                        lColadaTmp = string.Concat(lColadaTmp, lLoteColada.Substring(11, 2));
+                                                        if (lColadaTmp.IndexOf(iLote) > -1)
+                                                        {
+                                                            string[] lPartesColada = (lDato.Split(new Char[] { ',' }));
+                                                            if (lPartesColada.Length == 5)
+                                                            {
+                                                                lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+                                            }
+                                        }
+
+
+
+
+                                    }
+                                    ////string[] separatingStrings2 = { ":{" };
+                                    //lDato = lpartes[0].ToString();
+                                    //lpartes = lDato.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                                    //// Se debe persistir para poder informarlo via  Mail
+                                    //lLot.PesisteColadasErroneas(iLote, lDato);
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+        }
+
 
         private void Dtg_Datos_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -795,7 +1035,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Btn_CP_Click(object sender, EventArgs e)
         {
-            InsertaCertificadosPaquete();
+           InsertaCertificadosPaquete();
 
 
         }
@@ -1199,6 +1439,30 @@ namespace Gestor_OC_Gerdau.Calidad
 
             cliente = new WebClient();
             cliente.DownloadFile(url, lPathFin);
+        }
+
+        private void Btn_LoteForzado_Click(object sender, EventArgs e)
+        {
+            //ActualizaCetificados_Revisado();
+            string lLote = ""; EnviosAutomaticos lEnv = new EnviosAutomaticos();
+
+            if (Tx_lote.Text.Trim().Length > 0)
+                lLote = Tx_lote.Text;
+            else
+                lLote = Lbl_Lote.Text;
+
+            if (lEnv.EsLoteAza(lLote) == true)
+            {
+                if (lLote.Trim().Length > 0)
+                {
+                    ActualizaLoteForzado(lLote);
+                    Lbl_Lote.Text = "";
+                    CargaDatos();
+                }
+
+            }
+           
+
         }
     }
 }

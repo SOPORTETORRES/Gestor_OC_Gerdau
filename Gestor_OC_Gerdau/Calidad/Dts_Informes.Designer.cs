@@ -1327,6 +1327,10 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             private global::System.Data.DataColumn columnIdDetallePieza;
             
+            private global::System.Data.DataColumn columnSector;
+            
+            private global::System.Data.DataColumn columnReferencia;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public DetalleTrazColadasDataTable() {
@@ -1442,6 +1446,22 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn SectorColumn {
+                get {
+                    return this.columnSector;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ReferenciaColumn {
+                get {
+                    return this.columnReferencia;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1477,7 +1497,7 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public DetalleTrazColadasRow AddDetalleTrazColadasRow(string Obra, string Viaje, string FechaCreacion, string Colada, string NroCertificado, string Kgs, string Procedencia, string Diametro, string Etiqueta, string IdDetallePieza) {
+            public DetalleTrazColadasRow AddDetalleTrazColadasRow(string Obra, string Viaje, string FechaCreacion, string Colada, string NroCertificado, string Kgs, string Procedencia, string Diametro, string Etiqueta, string IdDetallePieza, string Sector, string Referencia) {
                 DetalleTrazColadasRow rowDetalleTrazColadasRow = ((DetalleTrazColadasRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Obra,
@@ -1489,7 +1509,9 @@ namespace Gestor_OC_Gerdau.Calidad {
                         Procedencia,
                         Diametro,
                         Etiqueta,
-                        IdDetallePieza};
+                        IdDetallePieza,
+                        Sector,
+                        Referencia};
                 rowDetalleTrazColadasRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDetalleTrazColadasRow);
                 return rowDetalleTrazColadasRow;
@@ -1522,6 +1544,8 @@ namespace Gestor_OC_Gerdau.Calidad {
                 this.columnDiametro = base.Columns["Diametro"];
                 this.columnEtiqueta = base.Columns["Etiqueta"];
                 this.columnIdDetallePieza = base.Columns["IdDetallePieza"];
+                this.columnSector = base.Columns["Sector"];
+                this.columnReferencia = base.Columns["Referencia"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1547,6 +1571,10 @@ namespace Gestor_OC_Gerdau.Calidad {
                 base.Columns.Add(this.columnEtiqueta);
                 this.columnIdDetallePieza = new global::System.Data.DataColumn("IdDetallePieza", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIdDetallePieza);
+                this.columnSector = new global::System.Data.DataColumn("Sector", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSector);
+                this.columnReferencia = new global::System.Data.DataColumn("Referencia", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReferencia);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2348,6 +2376,38 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Sector {
+                get {
+                    try {
+                        return ((string)(this[this.tableDetalleTrazColadas.SectorColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Sector\' de la tabla \'DetalleTrazColadas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDetalleTrazColadas.SectorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Referencia {
+                get {
+                    try {
+                        return ((string)(this[this.tableDetalleTrazColadas.ReferenciaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Referencia\' de la tabla \'DetalleTrazColadas\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDetalleTrazColadas.ReferenciaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsObraNull() {
                 return this.IsNull(this.tableDetalleTrazColadas.ObraColumn);
             }
@@ -2464,6 +2524,30 @@ namespace Gestor_OC_Gerdau.Calidad {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetIdDetallePiezaNull() {
                 this[this.tableDetalleTrazColadas.IdDetallePiezaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsSectorNull() {
+                return this.IsNull(this.tableDetalleTrazColadas.SectorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetSectorNull() {
+                this[this.tableDetalleTrazColadas.SectorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsReferenciaNull() {
+                return this.IsNull(this.tableDetalleTrazColadas.ReferenciaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetReferenciaNull() {
+                this[this.tableDetalleTrazColadas.ReferenciaColumn] = global::System.Convert.DBNull;
             }
         }
         

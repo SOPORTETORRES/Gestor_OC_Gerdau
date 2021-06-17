@@ -50,6 +50,7 @@
             this.Tx_lote = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.Btn_LoteForzado = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -273,11 +274,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // Btn_LoteForzado
+            // 
+            this.Btn_LoteForzado.Location = new System.Drawing.Point(871, 9);
+            this.Btn_LoteForzado.Name = "Btn_LoteForzado";
+            this.Btn_LoteForzado.Size = new System.Drawing.Size(75, 38);
+            this.Btn_LoteForzado.TabIndex = 15;
+            this.Btn_LoteForzado.Text = "Actualiza Lote forzado";
+            this.Btn_LoteForzado.UseVisualStyleBackColor = true;
+            this.Btn_LoteForzado.Click += new System.EventHandler(this.Btn_LoteForzado_Click);
+            // 
             // Frm_CertificacionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1110, 436);
+            this.Controls.Add(this.Btn_LoteForzado);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.Btn_VerLote);
@@ -333,5 +345,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button Btn_RevisaHD;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Btn_LoteForzado;
     }
 }

@@ -135,6 +135,12 @@
       <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Calidad\Rep_trazabilidadCol_v2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_trazabilidadCol_v2.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Clases\Cls_Comun.cs" />
     <Compile Include="Clases\Cls_EnvioDoc.cs" />
     <Compile Include="Clases\Cls_Lotes.cs" />
@@ -183,6 +189,12 @@
     </Compile>
     <Compile Include="Models\LineaCredito.cs" />
     <Compile Include="Models\ValorUF.cs" />
+    <Compile Include="Produccion\Frm_DescargarArchivos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Produccion\Frm_DescargarArchivos.Designer.cs">
+      <DependentUpon>Frm_DescargarArchivos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Produccion\Frm_IngresaDatos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +262,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_TrazabilidadColada.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_trazabilidadCol_v2.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_trazabilidadCol_v2.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="EnviosAutomaticos.resx">
       <DependentUpon>EnviosAutomaticos.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,6 +286,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frm_WB_EnvAut.resx">
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Produccion\Frm_DescargarArchivos.resx">
+      <DependentUpon>Frm_DescargarArchivos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Produccion\Frm_IngresaDatos.resx">
       <DependentUpon>Frm_IngresaDatos.cs</DependentUpon>

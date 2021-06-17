@@ -20,7 +20,7 @@ namespace Gestor_OC_Gerdau
             //Application.Run(new Frm_ppal());
             //Application.Run(new EnviosAutomaticos());
             //Application.Run(new Facturacion.Frm_VinculaGuiaFactura());
-            Application.Run(new Calidad.Frm_RevisaColadas());
+           Application.Run(new Calidad.Frm_RevisaColadas());
             //Application.Run(new Facturacion.Frm_RevisionSaldos());
             //Application.Run(new Calidad.Frm_SqlMysql());
             //Application.Run(new Calidad.Frm_WB());
@@ -29,6 +29,8 @@ namespace Gestor_OC_Gerdau
             //Application.Run(new Frm_CreaMP());
 
             //Application.Run(new Produccion.Frm_IngresaDatos());
+
+            //Application.Run(new Produccion.Frm_DescargarArchivos());
         }
     }
 }

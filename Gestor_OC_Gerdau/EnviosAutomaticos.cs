@@ -1642,11 +1642,15 @@ namespace Gestor_OC_Gerdau
 
                                     MMessage = new MailMessage();
 
+                                    // Cargamos en copia oculta a los destinatarios de Calidad y TI.
                                     TblUC = ObtenerDestinatarios("-1700");
+                                    for (i = 0; i < TblUC.Rows.Count; i++)
+                                        MMessage.Bcc.Add (TblUC.Rows[i]["MailDest"].ToString());
+
                                     lTbl = ObtenerDestinatarios(iObra);
-                                    lTbl.Merge(TblUC);
+                                    //lTbl.Merge(TblUC);
 
-
+                                    // Cargamos a los destinatarios  ingresado por sistema
                                     for (i = 0; i < lTbl.Rows.Count; i++)
                                         MMessage.To.Add(lTbl.Rows[i]["MailDest"].ToString());
 

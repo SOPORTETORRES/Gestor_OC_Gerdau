@@ -78,13 +78,12 @@
             // 
             // Btn_CargaDatos
             // 
-            this.Btn_CargaDatos.Location = new System.Drawing.Point(238, 0);
+            this.Btn_CargaDatos.Location = new System.Drawing.Point(650, 44);
             this.Btn_CargaDatos.Name = "Btn_CargaDatos";
-            this.Btn_CargaDatos.Size = new System.Drawing.Size(64, 28);
+            this.Btn_CargaDatos.Size = new System.Drawing.Size(74, 39);
             this.Btn_CargaDatos.TabIndex = 1;
-            this.Btn_CargaDatos.Text = "Carga Datos Certificados";
+            this.Btn_CargaDatos.Text = "Nuevo Report";
             this.Btn_CargaDatos.UseVisualStyleBackColor = true;
-            this.Btn_CargaDatos.Visible = false;
             this.Btn_CargaDatos.Click += new System.EventHandler(this.Btn_CargaDatos_Click);
             // 
             // groupBox1
@@ -264,7 +263,7 @@
             // 
             // Btn_Reprocesacol
             // 
-            this.Btn_Reprocesacol.Location = new System.Drawing.Point(572, 27);
+            this.Btn_Reprocesacol.Location = new System.Drawing.Point(572, 24);
             this.Btn_Reprocesacol.Name = "Btn_Reprocesacol";
             this.Btn_Reprocesacol.Size = new System.Drawing.Size(72, 34);
             this.Btn_Reprocesacol.TabIndex = 18;
@@ -385,6 +384,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 450);
             this.Controls.Add(this.Btn_ProcesaCAP);
+            this.Controls.Add(this.Btn_CargaDatos);
             this.Controls.Add(this.Btn_MailColadas);
             this.Controls.Add(this.Chk_SoloVer);
             this.Controls.Add(this.Btn_NotificaLotes);
@@ -407,7 +407,6 @@
             this.Controls.Add(this.Btn_DescargaPdf);
             this.Controls.Add(this.Btn_Actualiza);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.Btn_CargaDatos);
             this.Controls.Add(this.Btn_CargaTablaMySql);
             this.Name = "Frm_RevisaColadas";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

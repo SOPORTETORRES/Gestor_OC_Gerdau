@@ -45,13 +45,24 @@ namespace Gestor_OC_Gerdau.Calidad
             }
             else
             {
-                Rep_CertificadoMan mReport = new Rep_CertificadoMan();
+                if (mInforme.ToUpper().Equals("TC2"))
+                {
+                    Rep_trazabilidadCol_v2  mReport = new Rep_trazabilidadCol_v2();
+                    if (mDtsInforme.Tables.Count > 0)
+                    {
+                        mReport.SetDataSource(mDtsInforme);
+                        this.crystalReportViewer1.ReportSource = mReport;
+                    }
+                }
+                else
+                { 
+                    Rep_CertificadoMan mReport = new Rep_CertificadoMan();
                 if (mDtsInforme.Tables.Count > 0)
                 {
                     mReport.SetDataSource(mDtsInforme);
                     this.crystalReportViewer1.ReportSource = mReport;
                 }
-                //}
+                }
 
             }
         }
@@ -61,7 +72,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
-        public void GeneraPdf_TrazabilidadColadas(string iPathDestino, string iViaje )
+        public void GeneraPdf_TrazabilidadColadas(string iPathDestino, string iViaje ,  string iTipo )
         {
        
             if (mDtsInforme != null)
@@ -97,16 +108,30 @@ namespace Gestor_OC_Gerdau.Calidad
                                 File.Delete(lArchivo);
                         }
 
+                        if (iTipo.ToUpper ().Equals ("TC"))
+                        {
+                            Calidad.Rep_TrazabilidadColada mReport = new Calidad.Rep_TrazabilidadColada();
+                            mReport.SetDataSource(mDtsInforme);
+                            this.crystalReportViewer1.ReportSource = mReport;
+                            mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                            this.crystalReportViewer1.Dispose();
+                            this.crystalReportViewer1 = null;
+                            mReport.Close();
+                            mReport.Dispose();
+                        }
+                        else
+                        {
+                            Calidad.Rep_trazabilidadCol_v2 mReport = new Calidad.Rep_trazabilidadCol_v2();
+                            mReport.SetDataSource(mDtsInforme);
+                            this.crystalReportViewer1.ReportSource = mReport;
+                            mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                            this.crystalReportViewer1.Dispose();
+                            this.crystalReportViewer1 = null;
+                            mReport.Close();
+                            mReport.Dispose();
+                        }
 
-                        Calidad.Rep_TrazabilidadColada mReport = new Calidad.Rep_TrazabilidadColada();
-                        mReport.SetDataSource(mDtsInforme);
-                        this.crystalReportViewer1.ReportSource = mReport;
-                        mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
-                        //GrabaGeneracion_PL(mViaje, lPathArchivo, "P");
-                        this.crystalReportViewer1.Dispose();
-                        this.crystalReportViewer1 = null;
-                        mReport.Close();
-                        mReport.Dispose();
+
 
                     }
                    

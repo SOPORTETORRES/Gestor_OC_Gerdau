@@ -613,7 +613,9 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Btn_CargaDatos_Click(object sender, EventArgs e)
         {
-            ObtenerRegistrosColadasCetificados();
+            // ObtenerRegistrosColadasCetificados();
+            string iViaje = "TCC-9/1"; // Lbl_Viaje.Text;
+           new Clases.Cls_EnvioDoc(). ImprimeResumenTrazabilidad_V2(@"C:\TMP\Calidad\Informes", iViaje);
         }
 
         private void Btn_Actualiza_Click(object sender, EventArgs e)

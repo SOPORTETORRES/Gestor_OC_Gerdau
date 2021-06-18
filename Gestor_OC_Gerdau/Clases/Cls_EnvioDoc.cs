@@ -587,7 +587,80 @@ namespace Gestor_OC_Gerdau.Clases
                     Frm_Visualizador lFrmInf = new Frm_Visualizador();
                     lFrmInf.InicializaInforme("TC", lDts, "", false);
                     lFrmInf.VerInforme();
-                    lFrmInf.GeneraPdf_TrazabilidadColadas(iPathDestino, iviaje);
+                    lFrmInf.GeneraPdf_TrazabilidadColadas(iPathDestino, iviaje,"TC");
+                    lFrmInf.Close();
+                    lFrmInf.Dispose();
+                }
+            }
+
+        }
+
+
+        public  void ImprimeResumenTrazabilidad_V2(string iPathDestino, string iviaje)
+        {
+            DataTable lTblTmp = new DataTable();
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; string lRes = "";
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); string lTmp = "";
+            Dts_Informes.CabeceraTrazColadasDataTable lTblCab = new Dts_Informes.CabeceraTrazColadasDataTable();
+            Dts_Informes.DetalleTrazColadasDataTable lTblDet = new Dts_Informes.DetalleTrazColadasDataTable();
+            Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;
+            Dts_Informes.Cabecera_CertManDataTable lTblCap = new Dts_Informes.Cabecera_CertManDataTable();
+            DataSet lDtsTablas = new DataSet(); DataTable lTblViajes = new DataTable(); DataSet lDtsViajes = new DataSet();
+            DataRow lRow = null; DataSet lDtsDatos = new DataSet(); DataSet lDtsTmp = new DataSet();
+            Dts_Informes.DetalleTrazColadasRow lFilaDet = null; string lEtiqueta = "";
+
+            lTblViajes.Columns.Add("Viaje", Type.GetType("System.String"));
+            lTblViajes.Clear();
+            lDtsViajes.Tables.Clear();
+            lRow = lTblViajes.NewRow();
+            lRow["Viaje"] = iviaje;
+
+            lTblViajes.Rows.Add(lRow);
+            lDtsViajes.Tables.Add(lTblViajes);
+            lDtsDatos = lPx.ObtenerTrazabilidadColadas(lDtsViajes);
+            if (lDtsDatos.Tables.Count > 0)
+            {
+                //'   Carga Tabla Cabecera Informe
+                if (lDtsDatos.Tables.Count > 1)
+                {
+                    lTblTmp = lDtsDatos.Tables["Informe"].Copy();
+                    lFila = lTblCab.NewCabeceraTrazColadasRow();
+                    lFila["CodigoInf"] = lTblTmp.Rows[0]["Codigo"].ToString();
+                    lFila["RevisionInf"] = lTblTmp.Rows[0]["Ver"].ToString();
+                    lFila["FechaRev_Inf"] = lTblTmp.Rows[0]["Fecha"].ToString();
+                    lTblCab.Rows.Add(lFila);
+                    lDts.Merge(lTblCab);
+
+                    //   '   Carga Tabla Detalle Informe
+                    //lTblTmp = New DataTable();
+                    lTblTmp = lDtsDatos.Tables["Detalle"].Copy();
+                    for (i = 0; i < lTblTmp.Rows.Count; i++)
+                    {
+                        lFilaDet = lTblDet.NewDetalleTrazColadasRow();
+                        lFilaDet["Obra"] = lTblTmp.Rows[i]["Nombre"].ToString();
+                        lFilaDet["Viaje"] = lTblTmp.Rows[i]["Codigo"].ToString();
+                        lFilaDet["FechaCreacion"] = lTblTmp.Rows[i]["FechaCreacion"].ToString();
+                        lFilaDet["Colada"] = lTblTmp.Rows[i]["COLADA"].ToString();
+                        lFilaDet["NroCertificado"] = lTblTmp.Rows[i]["NroCertificado"].ToString();
+                        lFilaDet["Kgs"] = lTblTmp.Rows[i]["CantidadKgs"].ToString();
+                        lFilaDet["Procedencia"] = lTblTmp.Rows[i]["Procedencia"].ToString();
+                        lFilaDet["Diametro"] = lTblTmp.Rows[i]["Diametro"].ToString();
+                        lEtiqueta = lTblTmp.Rows[i]["NroEtiqueta"].ToString().Replace(" Tag #:  ", "");
+                        lEtiqueta = lEtiqueta.Replace(" of ", "-");
+                        lFilaDet["Etiqueta"] = lEtiqueta;
+                        lFilaDet["IdDetallePieza"] = lTblTmp.Rows[i]["IdDetallePieza"].ToString();
+                        lFilaDet["Sector"] = lTblTmp.Rows[i]["Sector"].ToString();
+                        lFilaDet["Referencia"] = lTblTmp.Rows[i]["Referencia"].ToString();
+                        lTblDet.Rows.Add(lFilaDet);
+                    }
+
+                    lDts.Merge(lTblDet);
+
+                    //' Imprimimos y visualizamos
+                    Frm_Visualizador lFrmInf = new Frm_Visualizador();
+                    lFrmInf.InicializaInforme("TC2", lDts, "", false);
+                    lFrmInf.VerInforme();
+                    lFrmInf.GeneraPdf_TrazabilidadColadas(iPathDestino, iviaje,"TC2");
                     lFrmInf.Close();
                     lFrmInf.Dispose();
                 }

@@ -323,7 +323,12 @@ namespace Gestor_OC_Gerdau.Clases
                 //}
                 }
             //2.- Resumen de trazabilidad
-            ImprimeResumenTrazabilidad(lPathDestino, iViaje);
+            if (iViaje.IndexOf("TCC") > -1)
+                ImprimeResumenTrazabilidad_V2(lPathDestino, iViaje);
+            else
+                ImprimeResumenTrazabilidad(lPathDestino, iViaje);
+
+
             //3.- Certificado de Fabricación
             // Obtenemos los datos  para la realización del certificado de fabricacion
             lSql = "   select  o.id , o.nombre , o.cliente , NroGuiaInet,   ";

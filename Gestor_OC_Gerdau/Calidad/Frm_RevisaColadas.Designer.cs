@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Btn_CargaTablaMySql = new System.Windows.Forms.Button();
             this.Btn_CargaDatos = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -60,6 +60,7 @@
             this.Chk_SoloVer = new System.Windows.Forms.CheckBox();
             this.Btn_MailColadas = new System.Windows.Forms.Button();
             this.Btn_ProcesaCAP = new System.Windows.Forms.Button();
+            this.Btn_GuiasNO_Escaneadas = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -105,8 +106,8 @@
             this.Dtg_Datos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Dtg_Datos.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Datos.Name = "Dtg_Datos";
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle1;
             this.Dtg_Datos.Size = new System.Drawing.Size(982, 332);
             this.Dtg_Datos.TabIndex = 0;
             this.Dtg_Datos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Datos_CellClick);
@@ -115,7 +116,7 @@
             // 
             // Btn_Actualiza
             // 
-            this.Btn_Actualiza.Location = new System.Drawing.Point(308, 3);
+            this.Btn_Actualiza.Location = new System.Drawing.Point(344, 0);
             this.Btn_Actualiza.Name = "Btn_Actualiza";
             this.Btn_Actualiza.Size = new System.Drawing.Size(70, 34);
             this.Btn_Actualiza.TabIndex = 3;
@@ -378,11 +379,22 @@
             this.Btn_ProcesaCAP.UseVisualStyleBackColor = true;
             this.Btn_ProcesaCAP.Click += new System.EventHandler(this.Btn_ProcesaCAP_Click);
             // 
+            // Btn_GuiasNO_Escaneadas
+            // 
+            this.Btn_GuiasNO_Escaneadas.Location = new System.Drawing.Point(244, -5);
+            this.Btn_GuiasNO_Escaneadas.Name = "Btn_GuiasNO_Escaneadas";
+            this.Btn_GuiasNO_Escaneadas.Size = new System.Drawing.Size(94, 43);
+            this.Btn_GuiasNO_Escaneadas.TabIndex = 25;
+            this.Btn_GuiasNO_Escaneadas.Text = "Envia Guias NO Escaneadas";
+            this.Btn_GuiasNO_Escaneadas.UseVisualStyleBackColor = true;
+            this.Btn_GuiasNO_Escaneadas.Click += new System.EventHandler(this.Btn_GuiasNO_Escaneadas_Click);
+            // 
             // Frm_RevisaColadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 450);
+            this.Controls.Add(this.Btn_GuiasNO_Escaneadas);
             this.Controls.Add(this.Btn_ProcesaCAP);
             this.Controls.Add(this.Btn_CargaDatos);
             this.Controls.Add(this.Btn_MailColadas);
@@ -454,5 +466,6 @@
         private System.Windows.Forms.CheckBox Chk_SoloVer;
         private System.Windows.Forms.Button Btn_MailColadas;
         private System.Windows.Forms.Button Btn_ProcesaCAP;
+        private System.Windows.Forms.Button Btn_GuiasNO_Escaneadas;
     }
 }

@@ -59,6 +59,7 @@
             this.Btn_grabarDePara = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.Tx_existe1 = new System.Windows.Forms.TextBox();
+            this.Btn_Coronel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Prod)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -312,7 +313,7 @@
             // 
             // Btn_grabarDePara
             // 
-            this.Btn_grabarDePara.Location = new System.Drawing.Point(752, 268);
+            this.Btn_grabarDePara.Location = new System.Drawing.Point(684, 258);
             this.Btn_grabarDePara.Name = "Btn_grabarDePara";
             this.Btn_grabarDePara.Size = new System.Drawing.Size(66, 41);
             this.Btn_grabarDePara.TabIndex = 26;
@@ -336,11 +337,22 @@
             this.Tx_existe1.Size = new System.Drawing.Size(54, 20);
             this.Tx_existe1.TabIndex = 27;
             // 
+            // Btn_Coronel
+            // 
+            this.Btn_Coronel.Location = new System.Drawing.Point(834, 258);
+            this.Btn_Coronel.Name = "Btn_Coronel";
+            this.Btn_Coronel.Size = new System.Drawing.Size(93, 41);
+            this.Btn_Coronel.TabIndex = 29;
+            this.Btn_Coronel.Text = "Crea Productos Coronel";
+            this.Btn_Coronel.UseVisualStyleBackColor = true;
+            this.Btn_Coronel.Click += new System.EventHandler(this.Btn_Coronel_Click);
+            // 
             // Frm_CreaMP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1020, 461);
+            this.Controls.Add(this.Btn_Coronel);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.Tx_existe1);
             this.Controls.Add(this.Btn_grabarDePara);
@@ -416,5 +428,6 @@
         private System.Windows.Forms.Button Btn_grabarDePara;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox Tx_existe1;
+        private System.Windows.Forms.Button Btn_Coronel;
     }
 }

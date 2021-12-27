@@ -834,7 +834,7 @@ namespace Gestor_OC_Gerdau.Calidad
             lSql = string.Concat(lSql, " and v.idit = it.id and it.idobra = o.id and o.estadoalta not in ('Fin')   ");
             lSql = string.Concat(lSql, " and d.IdViaje = v.id  ");
             // and d.id = LOG_ETIQUETA_PIEZA
-            //lSql = string.Concat(lSql, " and  codigo in ('QBF-944/1','QBF-949/1') ");
+            //lSql = string.Concat(lSql, " and  codigo like '%TCC%'  ");
             // and LOG_FECHA > '01/03/2020 00:00:01'  "); 
             lDts = lPx.ObtenerDatos(lSql);
 
@@ -1794,6 +1794,13 @@ namespace Gestor_OC_Gerdau.Calidad
             }
         }
 
+        private void Btn_GuiasNO_Escaneadas_Click(object sender, EventArgs e)
+        {
+            EnviosAutomaticos lFrm = new EnviosAutomaticos();
+            lFrm.mGenerandoArchivo = false;
+            lFrm.Envia_Guias_Pendientes_Entrega_Camion();
+
+        }
     }
 
 }

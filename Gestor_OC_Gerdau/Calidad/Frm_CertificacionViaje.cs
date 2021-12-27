@@ -74,12 +74,16 @@ namespace Gestor_OC_Gerdau.Calidad
 
             if (iTipo.ToUpper().Equals("E"))   //etiqeutaTO
             {
-                lWhere = string.Concat(" id=", iDato );
-                lVista = new DataView(mTblEtViaje, lWhere, "", DataViewRowState.CurrentRows);
-                if (lVista.Count >0)
-                      lRes = true;
-                else
-                    lRes = false;              
+                if (mTblEtViaje.Rows.Count > 0)
+                {
+                    lWhere = string.Concat(" id=", iDato);
+                    lVista = new DataView(mTblEtViaje, lWhere, "", DataViewRowState.CurrentRows);
+                    if (lVista.Count > 0)
+                        lRes = true;
+                    else
+                        lRes = false;
+                }
+                   
             }
 
             if (iTipo.ToUpper().Equals("L"))   //Lote 
@@ -597,7 +601,7 @@ namespace Gestor_OC_Gerdau.Calidad
             lRes = iColada.Replace("{", "");
             //lRes = iColada.Replace("", "");
 
-            return lRes; 
+            return lRes.Trim (); 
 
         }
         private void ActualizaCetificados(string iLote)
@@ -680,7 +684,7 @@ namespace Gestor_OC_Gerdau.Calidad
                                             {
                                                 if (k == 0)
                                                 {
-                                                    lColadaTmp = lPartesColada[k].ToString();
+                                                    lColadaTmp = lPartesColada[k].ToString().Trim ();
                                                     if (lColadaTmp.IndexOf(iLote) > -1)
                                                     {
                                                           lPartesColada = (lpartes [lCont].ToString ().Split(new Char[] { ',' }));

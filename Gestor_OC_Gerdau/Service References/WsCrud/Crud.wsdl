@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.Ssingest.cl/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.Ssingest.cl/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.Ssingest.cl/">
+      <s:element name="GuardarBodega">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="bodega" type="tns:Bodega" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Bodega">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tipo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Activa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GuardarBodegaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GuardarBodegaResult" type="tns:Bodega" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarBodega">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarBodegaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DesactivarBodegaResult" type="tns:Bodega" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarBodega">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarBodegaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarBodegaResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ListaDataSet">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="_dataSet">
+            <s:complexType>
+              <s:sequence>
+                <s:element ref="s:schema" />
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="_error" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DataSet">
+            <s:complexType>
+              <s:sequence>
+                <s:element ref="s:schema" />
+                <s:any />
+              </s:sequence>
+            </s:complexType>
+          </s:element>
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ObtenerBodega">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerBodegaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerBodegaResult" type="tns:Bodega" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarCamion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="camion" type="tns:Camion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Camion">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Patente" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Transportista" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Obs" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Activo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GuardarCamionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GuardarCamionResult" type="tns:Camion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarCamion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patente" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarCamionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DesactivarCamionResult" type="tns:Camion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarCamion">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarCamionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarCamionResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerCamion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="patente" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerCamionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerCamionResult" type="tns:Camion" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GuardarMaquina">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="maquina" type="tns:Maquina" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Maquina">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Descripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Activa" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="MensajeError" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GuardarMaquinaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GuardarMaquinaResult" type="tns:Maquina" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarMaquina">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DesactivarMaquinaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DesactivarMaquinaResult" type="tns:Maquina" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarMaquina">
+        <s:complexType />
+      </s:element>
+      <s:element name="ListarMaquinaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarMaquinaResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerMaquina">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerMaquinaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerMaquinaResult" type="tns:Maquina" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDetalleDespachadoSinFacturar">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="iRut" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ObtenerDetalleDespachadoSinFacturarResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObtenerDetalleDespachadoSinFacturarResult">
+              <s:complexType>
+                <s:sequence>
+                  <s:element ref="s:schema" />
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarAyudaSql">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sql" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ListarAyudaSqlResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ListarAyudaSqlResult" type="tns:ListaDataSet" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GuardarBodegaSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarBodega" />
+  </wsdl:message>
+  <wsdl:message name="GuardarBodegaSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarBodegaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarBodegaSoapIn">
+    <wsdl:part name="parameters" element="tns:DesactivarBodega" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarBodegaSoapOut">
+    <wsdl:part name="parameters" element="tns:DesactivarBodegaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarBodegaSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarBodega" />
+  </wsdl:message>
+  <wsdl:message name="ListarBodegaSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarBodegaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerBodegaSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerBodega" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerBodegaSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerBodegaResponse" />
+  </wsdl:message>
+  <wsdl:message name="GuardarCamionSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarCamion" />
+  </wsdl:message>
+  <wsdl:message name="GuardarCamionSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarCamionResponse" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarCamionSoapIn">
+    <wsdl:part name="parameters" element="tns:DesactivarCamion" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarCamionSoapOut">
+    <wsdl:part name="parameters" element="tns:DesactivarCamionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarCamionSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarCamion" />
+  </wsdl:message>
+  <wsdl:message name="ListarCamionSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarCamionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerCamionSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerCamion" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerCamionSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerCamionResponse" />
+  </wsdl:message>
+  <wsdl:message name="GuardarMaquinaSoapIn">
+    <wsdl:part name="parameters" element="tns:GuardarMaquina" />
+  </wsdl:message>
+  <wsdl:message name="GuardarMaquinaSoapOut">
+    <wsdl:part name="parameters" element="tns:GuardarMaquinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarMaquinaSoapIn">
+    <wsdl:part name="parameters" element="tns:DesactivarMaquina" />
+  </wsdl:message>
+  <wsdl:message name="DesactivarMaquinaSoapOut">
+    <wsdl:part name="parameters" element="tns:DesactivarMaquinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarMaquinaSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarMaquina" />
+  </wsdl:message>
+  <wsdl:message name="ListarMaquinaSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarMaquinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerMaquinaSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerMaquina" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerMaquinaSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerMaquinaResponse" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDetalleDespachadoSinFacturarSoapIn">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalleDespachadoSinFacturar" />
+  </wsdl:message>
+  <wsdl:message name="ObtenerDetalleDespachadoSinFacturarSoapOut">
+    <wsdl:part name="parameters" element="tns:ObtenerDetalleDespachadoSinFacturarResponse" />
+  </wsdl:message>
+  <wsdl:message name="ListarAyudaSqlSoapIn">
+    <wsdl:part name="parameters" element="tns:ListarAyudaSql" />
+  </wsdl:message>
+  <wsdl:message name="ListarAyudaSqlSoapOut">
+    <wsdl:part name="parameters" element="tns:ListarAyudaSqlResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CrudSoap">
+    <wsdl:operation name="GuardarBodega">
+      <wsdl:input message="tns:GuardarBodegaSoapIn" />
+      <wsdl:output message="tns:GuardarBodegaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarBodega">
+      <wsdl:input message="tns:DesactivarBodegaSoapIn" />
+      <wsdl:output message="tns:DesactivarBodegaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarBodega">
+      <wsdl:input message="tns:ListarBodegaSoapIn" />
+      <wsdl:output message="tns:ListarBodegaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerBodega">
+      <wsdl:input message="tns:ObtenerBodegaSoapIn" />
+      <wsdl:output message="tns:ObtenerBodegaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCamion">
+      <wsdl:input message="tns:GuardarCamionSoapIn" />
+      <wsdl:output message="tns:GuardarCamionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarCamion">
+      <wsdl:input message="tns:DesactivarCamionSoapIn" />
+      <wsdl:output message="tns:DesactivarCamionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarCamion">
+      <wsdl:input message="tns:ListarCamionSoapIn" />
+      <wsdl:output message="tns:ListarCamionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCamion">
+      <wsdl:input message="tns:ObtenerCamionSoapIn" />
+      <wsdl:output message="tns:ObtenerCamionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GuardarMaquina">
+      <wsdl:input message="tns:GuardarMaquinaSoapIn" />
+      <wsdl:output message="tns:GuardarMaquinaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarMaquina">
+      <wsdl:input message="tns:DesactivarMaquinaSoapIn" />
+      <wsdl:output message="tns:DesactivarMaquinaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarMaquina">
+      <wsdl:input message="tns:ListarMaquinaSoapIn" />
+      <wsdl:output message="tns:ListarMaquinaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMaquina">
+      <wsdl:input message="tns:ObtenerMaquinaSoapIn" />
+      <wsdl:output message="tns:ObtenerMaquinaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalleDespachadoSinFacturar">
+      <wsdl:input message="tns:ObtenerDetalleDespachadoSinFacturarSoapIn" />
+      <wsdl:output message="tns:ObtenerDetalleDespachadoSinFacturarSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarAyudaSql">
+      <wsdl:input message="tns:ListarAyudaSqlSoapIn" />
+      <wsdl:output message="tns:ListarAyudaSqlSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CrudSoap" type="tns:CrudSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GuardarBodega">
+      <soap:operation soapAction="http://www.Ssingest.cl/GuardarBodega" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarBodega">
+      <soap:operation soapAction="http://www.Ssingest.cl/DesactivarBodega" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarBodega">
+      <soap:operation soapAction="http://www.Ssingest.cl/ListarBodega" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerBodega">
+      <soap:operation soapAction="http://www.Ssingest.cl/ObtenerBodega" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCamion">
+      <soap:operation soapAction="http://www.Ssingest.cl/GuardarCamion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarCamion">
+      <soap:operation soapAction="http://www.Ssingest.cl/DesactivarCamion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarCamion">
+      <soap:operation soapAction="http://www.Ssingest.cl/ListarCamion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCamion">
+      <soap:operation soapAction="http://www.Ssingest.cl/ObtenerCamion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarMaquina">
+      <soap:operation soapAction="http://www.Ssingest.cl/GuardarMaquina" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarMaquina">
+      <soap:operation soapAction="http://www.Ssingest.cl/DesactivarMaquina" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarMaquina">
+      <soap:operation soapAction="http://www.Ssingest.cl/ListarMaquina" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMaquina">
+      <soap:operation soapAction="http://www.Ssingest.cl/ObtenerMaquina" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalleDespachadoSinFacturar">
+      <soap:operation soapAction="http://www.Ssingest.cl/ObtenerDetalleDespachadoSinFacturar" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarAyudaSql">
+      <soap:operation soapAction="http://www.Ssingest.cl/ListarAyudaSql" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CrudSoap12" type="tns:CrudSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GuardarBodega">
+      <soap12:operation soapAction="http://www.Ssingest.cl/GuardarBodega" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarBodega">
+      <soap12:operation soapAction="http://www.Ssingest.cl/DesactivarBodega" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarBodega">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ListarBodega" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerBodega">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ObtenerBodega" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarCamion">
+      <soap12:operation soapAction="http://www.Ssingest.cl/GuardarCamion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarCamion">
+      <soap12:operation soapAction="http://www.Ssingest.cl/DesactivarCamion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarCamion">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ListarCamion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerCamion">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ObtenerCamion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GuardarMaquina">
+      <soap12:operation soapAction="http://www.Ssingest.cl/GuardarMaquina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DesactivarMaquina">
+      <soap12:operation soapAction="http://www.Ssingest.cl/DesactivarMaquina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarMaquina">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ListarMaquina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerMaquina">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ObtenerMaquina" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ObtenerDetalleDespachadoSinFacturar">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ObtenerDetalleDespachadoSinFacturar" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarAyudaSql">
+      <soap12:operation soapAction="http://www.Ssingest.cl/ListarAyudaSql" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Crud">
+    <wsdl:port name="CrudSoap" binding="tns:CrudSoap">
+      <soap:address location="http://192.168.1.195/WS/Crud.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CrudSoap12" binding="tns:CrudSoap12">
+      <soap12:address location="http://192.168.1.195/WS/Crud.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

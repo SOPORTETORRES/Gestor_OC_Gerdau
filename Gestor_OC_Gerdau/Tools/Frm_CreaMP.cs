@@ -193,5 +193,57 @@ namespace Gestor_OC_Gerdau.Tools
 
 
         }
+
+        private void Btn_Coronel_Click(object sender, EventArgs e)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); DataSet ldts = new DataSet();
+            string lSql = "  ";DataTable lTbl = new DataTable();int i = 0; string lEs_FE = "";string lLargo = ""; int lKgs = 0;
+
+            //lSql = "select * from  Cubigestpruebas.dbo.materiaPrima  where  bodega = 'Coronel' ";
+            lSql = " select  *   from  cubigestpruebas.dbo.to_parametros  where subtabla  like  '%CodigoProd_INET_Cubigest%' and Par3='Coronel' ";
+            ldts = lPx.ObtenerDatos(lSql);
+            if ((ldts.Tables.Count > 0) && (ldts.Tables[0].Rows.Count > 0))
+            {
+                lTbl = ldts.Tables[0].Copy();
+                for (i = 0; i < lTbl.Rows.Count; i++)
+                {
+                    //if (lTbl.Rows[i]["Es_FE"].ToString ().Equals (""))
+                    //    lEs_FE = "N";
+
+                    //if (lTbl.Rows[i]["KgsEstimado"].ToString().Equals(""))
+                    //    lKgs = 0;
+
+                    //if (lTbl.Rows[i]["largo"].ToString().IndexOf(",")>-1)
+                    //    lLargo = lTbl.Rows[i]["largo"].ToString().Replace (",",".");
+
+                    // lSql = string.Concat("select 1 from   materiaPrima where  bodega ='Coronel' and codigo='", lTbl.Rows[i]["Codigo"].ToString(), "'");
+
+                    lSql = string.Concat(" select 1 from   to_parametros where subtabla  like  '%CodigoProd_INET_Cubigest%' and Par3='Coronel' ");
+                    lSql = string.Concat(lSql, " and par1='", lTbl.Rows[i]["par1"].ToString(),"' and  par2='", lTbl.Rows[i]["par2"].ToString(), "'");
+
+                    ldts = lPx.ObtenerDatos(lSql);
+                    if ((ldts.Tables.Count > 0) && (ldts.Tables[0].Rows.Count == 0))
+                    {
+
+                        //lSql = string.Concat("  Insert into  materiaPrima  (Bodega , codigo ,descripcion ,Tipo, NombreMedidas,largo,  ");
+                        //lSql = string.Concat(lSql, " KgsEstimado , Soldable, Vigente , CalidadAcero, Es_FE) Values ('Coronel','");
+                        //lSql = string.Concat(lSql, lTbl.Rows[i]["Codigo"].ToString(), "','", lTbl.Rows[i]["Descripcion"].ToString(), "','");
+                        //lSql = string.Concat(lSql, lTbl.Rows[i]["Tipo"].ToString(), "','", lTbl.Rows[i]["NombreMedidas"].ToString(), "','");
+                        //lSql = string.Concat(lSql, lLargo, "','", lKgs, "','");
+                        //lSql = string.Concat(lSql, lTbl.Rows[i]["Soldable"].ToString(), "','", lTbl.Rows[i]["Vigente"].ToString(), "','");
+                        //lSql = string.Concat(lSql, lTbl.Rows[i]["CalidadAcero"].ToString(), "','", lEs_FE, "')");
+
+                        lSql = string.Concat("  Insert into  to_parametros  (subTabla , Descripcion ,Par1, par2 ,Vermantenedor, par3) Values ('CodigoProd_INET_Cubigest','");
+                        lSql = string.Concat(lSql, lTbl.Rows[i]["Descripcion"].ToString(), "','", lTbl.Rows[i]["Par1"].ToString(), "','");
+                        lSql = string.Concat(lSql, lTbl.Rows[i]["Par2"].ToString(), "','", lTbl.Rows[i]["Vermantenedor"].ToString(), "','");
+                        lSql = string.Concat(lSql, lTbl.Rows[i]["Par3"].ToString(), "') ");
+                        ldts = lPx.ObtenerDatos(lSql);
+                    }
+                }
+
+            }
+
+
+        }
     }
 }

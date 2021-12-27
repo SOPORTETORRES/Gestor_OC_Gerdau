@@ -230,7 +230,7 @@ namespace Gestor_OC_Gerdau.Clases
         {
             Boolean lRes = true; string lTmp = "";
 
-            if (iLote.Trim().Length<9)  // si el lote es 5 caracteres 
+            if (iLote.Trim().Length<7)  // si el lote es 5 caracteres 
                 lRes = false;
 
             lTmp = string.Concat("00000", iLote);
@@ -311,9 +311,7 @@ namespace Gestor_OC_Gerdau.Clases
                             lPathDestino = Path.Combine(lPathCalidad, lSuc);
                             //lPathDestino = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc);
                             CopiarDocumentosIdiem_CAP(iViaje, lPathColadas, lPathDestino, lTbl.Rows[i]["Lote"].ToString());
-
                         }
-
                     }
                     else
                     {

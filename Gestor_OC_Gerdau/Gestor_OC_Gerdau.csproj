@@ -187,6 +187,18 @@
     <Compile Include="Frm_WB_EnvAut.Designer.cs">
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logistica\Frm_BodegaPT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logistica\Frm_BodegaPT.Designer.cs">
+      <DependentUpon>Frm_BodegaPT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logistica\Frm_WBGuiasPendientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logistica\Frm_WBGuiasPendientes.Designer.cs">
+      <DependentUpon>Frm_WBGuiasPendientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\LineaCredito.cs" />
     <Compile Include="Models\ValorUF.cs" />
     <Compile Include="Produccion\Frm_DescargarArchivos.cs">
@@ -209,6 +221,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\Px_BodegaPT\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\WsCrud\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WsFacturacion\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -287,6 +309,12 @@
     <EmbeddedResource Include="Frm_WB_EnvAut.resx">
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Logistica\Frm_BodegaPT.resx">
+      <DependentUpon>Frm_BodegaPT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Logistica\Frm_WBGuiasPendientes.resx">
+      <DependentUpon>Frm_WBGuiasPendientes.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Produccion\Frm_DescargarArchivos.resx">
       <DependentUpon>Frm_DescargarArchivos.cs</DependentUpon>
     </EmbeddedResource>
@@ -329,6 +357,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\Px_BodegaPT\Gestor_OC_Gerdau.Px_BodegaPT.ExecuteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Px_BodegaPT\wsmovexiall.wsdl" />
+    <None Include="Service References\WsCrud\Crud.wsdl" />
+    <None Include="Service References\WsCrud\Gestor_OC_Gerdau.WsCrud.Bodega.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsCrud\Gestor_OC_Gerdau.WsCrud.Camion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsCrud\Gestor_OC_Gerdau.WsCrud.ListaDataSet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsCrud\Gestor_OC_Gerdau.WsCrud.Maquina.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WsFacturacion\Facturacion.wsdl" />
     <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.ListaDataSet.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -424,6 +469,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Px_BodegaPT\" />
+    <WCFMetadataStorage Include="Service References\WsCrud\" />
     <WCFMetadataStorage Include="Service References\WsFacturacion\" />
     <WCFMetadataStorage Include="Service References\WS_Gerdau\" />
     <WCFMetadataStorage Include="Service References\WS_TO\" />
@@ -445,6 +492,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WsCrud\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WsCrud\configuration.svcinfo" />
+    <None Include="Service References\WsCrud\configuration91.svcinfo" />
+    <None Include="Service References\WsCrud\Crud.disco" />
+    <None Include="Service References\Px_BodegaPT\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Px_BodegaPT\configuration.svcinfo" />
+    <None Include="Service References\Px_BodegaPT\configuration91.svcinfo" />
     <None Include="Service References\WsFacturacion\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -463,7 +523,12 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Metalurgia\Metalurgia\app\Integracion_INET\Integracion_INET\Integracion_INET.vbproj">
+      <Project>{76c114fe-eea8-49fb-9cc9-f8f59eba3ca1}</Project>
+      <Name>Integracion_INET</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -102,7 +102,15 @@ namespace Gestor_OC_Gerdau.Produccion
             //CargaCombo_TipoGuiaINET()
 
         }
-     
-        
+
+        private void Btn_Descargar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn_Buscar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

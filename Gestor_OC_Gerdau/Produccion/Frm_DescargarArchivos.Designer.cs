@@ -140,6 +140,7 @@
             this.Btn_Buscar.TabIndex = 11;
             this.Btn_Buscar.Text = "Buscar Datos";
             this.Btn_Buscar.UseVisualStyleBackColor = true;
+            this.Btn_Buscar.Click += new System.EventHandler(this.Btn_Buscar_Click);
             // 
             // groupBox1
             // 
@@ -168,6 +169,7 @@
             this.Btn_Descargar.TabIndex = 13;
             this.Btn_Descargar.Text = "Descargar Atchivos Para OptiSteel (normal y Variables)";
             this.Btn_Descargar.UseVisualStyleBackColor = true;
+            this.Btn_Descargar.Click += new System.EventHandler(this.Btn_Descargar_Click);
             // 
             // Frm_DescargarArchivos
             // 

@@ -1126,6 +1126,94 @@ namespace Gestor_OC_Gerdau
             return lRes;
         }
 
+        public void Envia_Guias_Pendientes_Entrega_Camion()
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0; int j = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = "";  DataRow lFila = null;
+            WS_Gerdau.WS_IntegracionGerdauSoapClient lDal = new WS_Gerdau.WS_IntegracionGerdauSoapClient();
+            DataView lVista = null; string lwheres = ""; DataTable lTblTrans = new DataTable(); DataTable lTblDest = new DataTable();
+
+            lSql = String.Concat("  exec SP_Consultas_WS 218, '', '', '', '', '', '', '' ");
+            try
+            {
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    lSql = String.Concat(" select distinct  par4  from to_parametros  where subtabla='Transportistas'  ");
+                    lDts = lPx.ObtenerDatos(lSql);
+                    lTblTrans = lDts.Tables[0].Copy();
+                    for (j = 0; j < lTblTrans.Rows.Count; j++)
+                    {
+                        lwheres = string.Concat(" DiasPendientes>2  and Mail='", lTblTrans.Rows[j][0].ToString(),"'");
+                        lVista = new DataView(lTbl, lwheres, "Mail ", DataViewRowState.CurrentRows);
+                        if (lVista.Count > 0)
+                        {
+                            lTx = String.Concat(" Estimado/a: <br> De acuerdo a nuestros registros, están pendientes algunas de las guías de despacho firmadas por cliente en Obra, las cuales no han sido recibidas en nuestras  oficinas de Torres Ocaranza  <br>  ");
+                            lTx = String.Concat(lTx, "  Favor hacer llegar las siguientes guías de despacho  a la brevedad:   ");
+                            lTx = String.Concat(lTx, "   <br> <br> ");
+                            lTx = String.Concat(lTx, "<table   border='1'>    <tr>  ");
+                            lTx = String.Concat(lTx, "  <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'>Nro. Guia </td> ");
+                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> OBRA  </td>");
+                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> FECHA </td> ");
+                            lTx = String.Concat(lTx, " <td style = 'color: #FFFFFF; background-color: #000000 ;font-weight: normal; font-size: small;'> PATENTE </td> ");
+                            lTx = String.Concat(lTx, "  </tr> ");
+                            for (i = 0; i < lVista.Count; i++)
+                            {
+                                lTx = String.Concat(lTx, "  <tr> ");
+                                lTx = String.Concat(lTx, "  <td>", lVista[i]["NroGuiaInet"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>", lVista[i]["Obra"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>  ", lVista[i]["fechaDoc"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  <td>", lVista[i]["patente"].ToString(), "</td> ");
+                                lTx = String.Concat(lTx, "  </tr> ");
+
+                            }
+                            lTx = String.Concat(lTx, " </table > <BR> <BR>  ");
+                            lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR> Se ha omitido algunos caracteres, como los acentos");
+
+
+
+                            lTblDest = ObtenerDestinatarios("-2000");
+                            MailMessage MMessage = new MailMessage();
+                            //agregamos el correo del trasportista
+                            MMessage.To .Add(lTblTrans.Rows[j][0].ToString());
+
+                            for (i = 0; i < lTblDest.Rows.Count; i++)
+                                MMessage.CC.Add(lTblDest.Rows[i]["MailDest"].ToString());
+
+                            
+
+                            MMessage.From = new MailAddress("notificaciones@smtyo.cl", " Guias NO Entregadas ", System.Text.Encoding.UTF8);
+                            MMessage.Subject = " Guias pendientes de firma por cliente en Obra ";
+                            MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
+                            MMessage.Body = lTx;
+                            MMessage.BodyEncoding = System.Text.Encoding.UTF8;
+                            MMessage.IsBodyHtml = true; // 'Formato html;
+                                                        // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
+                            SmtpClient SClient = new SmtpClient();
+                            SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                            SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
+                            SClient.Port = 587;  // 'Puerto del SMTP de Gmail
+                            SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
+                                                      // ' //'Capturamos los errores en el envio
+                            SClient.Send(MMessage);
+
+
+
+
+                        }
+
+
+                    }
+
+                }
+            }
+            catch (Exception iex)
+            {
+
+            }
+
+        }
 
         public  void EnviaMail_Lotes_NO_Encontrados()
         {
@@ -1375,7 +1463,7 @@ namespace Gestor_OC_Gerdau
                             for (i = 0; i < lTbl.Rows.Count; i++)
                                 MMessage.To.Add(lTbl.Rows[i]["MailDest"].ToString());
 
-                            MMessage.From = new MailAddress("notificaciones@smtyo.cl", "Envio Certificados ", System.Text.Encoding.UTF8);
+                            MMessage.From = new MailAddress("Calidad@smtyo.cl", "Envio Certificados ", System.Text.Encoding.UTF8);
                             MMessage.Subject = " Envío de Certificados  electronicos T.O. ";
                             MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
                             MMessage.Body = lTx;
@@ -1435,7 +1523,7 @@ namespace Gestor_OC_Gerdau
 
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
-                                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                                    SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1473,7 +1561,7 @@ namespace Gestor_OC_Gerdau
         {
             Boolean lRes = true; string lTmp = "";
 
-            if (iLote.Trim().Length < 10 )  // si el lote es 5 caracteres 
+            if (iLote.Trim().Length < 7 )  // si el lote es 5 caracteres 
                 lRes = false;
 
             lTmp = string.Concat("00000", iLote);
@@ -1659,7 +1747,7 @@ namespace Gestor_OC_Gerdau
                                     lTx = String.Concat(lTx, " Para la obra: ", lTblDetalle.Rows[0]["NombreObra"].ToString(), " <br> <br> ");
                                     lTx = String.Concat(lTx, "  Este mensaje a sido generado de forma Automatica, favor NO responder este correo <BR>");
 
-                                    MMessage.From = new MailAddress("notificaciones@smtyo.cl", "Envio Certificados ", System.Text.Encoding.UTF8);
+                                    MMessage.From = new MailAddress("Calidad@smtyo.cl", "Envio Certificados ", System.Text.Encoding.UTF8);
                                     MMessage.Subject = " Envío de Certificados  electronicos T.O. ";
                                     MMessage.SubjectEncoding = System.Text.Encoding.UTF8;
                                     MMessage.Body = lTx;
@@ -1671,7 +1759,8 @@ namespace Gestor_OC_Gerdau
 
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
-                                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                                    SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
+
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -2149,14 +2238,17 @@ namespace Gestor_OC_Gerdau
                     //mGenerandoArchivo = true;
                     //ProcesaCierreTotems(iDia, iHora);
                     //mGenerandoArchivo = false;
-                    //break;
+                    break;
 
                 case "Doc_Cal": //Las certificaciones  que esten OK, se enviaran a clientes, que consta de:
                     //Certificado de Fabricacion y  certificado de trazabilidad.
                     //mGenerandoArchivo = true;
                     //Envia_DocumentosCalidad( );
                     //mGenerandoArchivo = false;
-                    //break;
+                    break;
+                case "Guias_Escaneadas": //Todos los días  Revision de las guias INET Cubigest
+           
+                    break;
 
                 //case "BOM_5": //Todos los días 
                 //    mGenerandoArchivo = true;

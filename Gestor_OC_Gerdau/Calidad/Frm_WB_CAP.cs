@@ -23,6 +23,9 @@ namespace Gestor_OC_Gerdau.Calidad
         private void Frm_WB_CAP_Load(object sender, EventArgs e)
         {
             WB.Navigate("http://intranet.idiem.cl/cap/cake/consulta_informes");
+            Tx_lote.Text = mLote;
+            Tx_diam.Text = mDiametro;
+          //  IniciaProceso();
         }
 
         public void IniciaForm(string iLote, string iDiametro, string iUrl)
@@ -35,17 +38,22 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void IniciaProceso()
         {
+            try
+            {
+                WB.Document.GetElementById("hornada").InnerText = mLote;
+                WB.Document.GetElementById("diametro").InnerText = mDiametro;
 
-            WB.Document.GetElementById("hornada").InnerText = mLote;
-            WB.Document.GetElementById("diametro").InnerText = mDiametro;
-
-            WB.Document.GetElementById("ConsultaInformesIndexForm").InvokeMember("submit");
+                WB.Document.GetElementById("ConsultaInformesIndexForm").InvokeMember("submit");
+            }
+            catch (Exception iex)
+            {
+            }
         }
 
         private void WB_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-
-            string lError = ""; String lTx = ""; string[] lPartes = null; string lTmpTx = "";
+            int i = 0;
+            string lError = ""; String lTx = ""; string[] lPartes = null; string[] lPartes_2 = null;
             string[] stringSeparators = new string[] { "<TBODY>" };
             try
             {
@@ -69,16 +77,34 @@ namespace Gestor_OC_Gerdau.Calidad
                                     lTx = element.InnerHtml;
                                     lPartes = lTx.Split(stringSeparators, StringSplitOptions.None);
                                     stringSeparators = new string[] { "<TR" };
-                                    lPartes = lPartes[2].Split(stringSeparators, StringSplitOptions.None);
+                                    if (lPartes.Length == 2)
+                                    {
+                                        lPartes_2 = lPartes[1].Split(stringSeparators, StringSplitOptions.None);
+                                        for (i = 0; i < lPartes_2.Length; i++)
+                                        {
+                                            if (lPartes_2[i].Length > 5)
+                                            {
+                                                PersisteDatos(lPartes_2);
+                                                i = lPartes_2[i].Length + 5;
+                                            }
 
-                                    PersisteDatos(lPartes);
+                                        }
+
+                                    }
+                                                           
+
+                                    //lPartes_2 = lPartes[1].Split(stringSeparators, StringSplitOptions.None);
+
+                                    //PersisteDatos(lPartes_2);
+                                    //lPartes_2 = lPartes[3].Split(stringSeparators, StringSplitOptions.None);
+                                    //PersisteDatos(lPartes_2);
                                     lProcesado = true;
                                 }
                             }
                         }
                         //else
                         //{
-                           
+
                         //}
                     }
                 }
@@ -113,9 +139,9 @@ namespace Gestor_OC_Gerdau.Calidad
                 if (lPartes.Length > 1)
                 {
                     lTmp = lPartes[0].ToString();
-                    lRes = lTmp.Replace("><A href=", "");
+                    lRes = lTmp.Replace("class=text-center><A class=text-decoration-none href=", "");
                     lRes = lRes.Substring(2, lRes.Length - 7);
-                    lRes = string.Concat("http://intranet.idiem.cl/", lRes);
+                    lRes = string.Concat("http://intranet.idiem.cl", lRes);
 
 
                     //("http://intranet.idiem.cl/cap/cake/ConsultaInformes/bajar/1826693/33863/32" );
@@ -193,7 +219,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void PersisteDatos(string[] iPartes)
         {
             int i = 0; string[] lPartes = null; DataRow lFila = null; int cont = 0; string lIdDoc = "";
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";int lCont = 0;
             string[] stringSeparators = new string[] { "TD" }; string lUrlArchivo = "";
             DataTable lTbl = new DataTable();
             DataSet lDts = new DataSet(); //DataTable lTbl = new DataTable();
@@ -215,7 +241,7 @@ namespace Gestor_OC_Gerdau.Calidad
                         lIdDoc = LimpiaCaracteres(lPartes[1], false);
                         if ((lIdDoc.ToString().Length >4))
                         {
-                            lSql = String.Concat("  select  1 from  certificadoscoladasCap where IdDocumento=",lIdDoc );
+                            lSql = String.Concat("  select  1 from  certificadoscoladasCap where IdDocumento='",lIdDoc,"'" );
                             lDts = lPx.ObtenerDatos(lSql);
                             if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0)) //Ya exsite 
                             {
@@ -223,11 +249,16 @@ namespace Gestor_OC_Gerdau.Calidad
                             }
                             else  // Es Nuevo
                             {
-                                lSql = String.Concat("  Insert into certificadoscoladasCap (Lote, IdDocumento, TipoDocumento, FechaProduccion, ");
-                                lSql = String.Concat(lSql, "  FechaFirma, UrlDocumento, Estado ) Values ('", LimpiaCaracteres(lPartes[5], false),"','");
-                                lSql = String.Concat(lSql, lIdDoc, "','", LimpiaCaracteres(lPartes[3], false), "','", LimpiaCaracteres(lPartes[9], false), "','", LimpiaCaracteres(lPartes[11], false));
-                                lSql = String.Concat(lSql, "','", LimpiaCaracteres(lPartes[13], true), "','OK')");
-                                lDts = lPx.ObtenerDatos(lSql);
+                                if (lCont < 2)
+                                {
+                                    lSql = String.Concat("  Insert into certificadoscoladasCap (Lote, IdDocumento, TipoDocumento, FechaProduccion, ");
+                                    lSql = String.Concat(lSql, "  FechaFirma, UrlDocumento, Estado ) Values ('", LimpiaCaracteres(lPartes[5], false), "','");
+                                    lSql = String.Concat(lSql, lIdDoc, "','", LimpiaCaracteres(lPartes[3], false), "','", LimpiaCaracteres(lPartes[9], false), "','", LimpiaCaracteres(lPartes[11], false));
+                                    lSql = String.Concat(lSql, "','", LimpiaCaracteres(lPartes[13], true), "','OK')");
+                                    lDts = lPx.ObtenerDatos(lSql);
+                                    lCont++;
+                                }
+                            
                             }
                             //   lFila = lTbl.NewRow();
                             //lFila["IdDocumento"] = lIdDoc;
@@ -245,6 +276,14 @@ namespace Gestor_OC_Gerdau.Calidad
 
             }
 
+        }
+
+        private void Btn_carga_Click(object sender, EventArgs e)
+        {
+            WB.Document.GetElementById("hornada").SetAttribute("value", Tx_lote.Text);
+            WB.Document.GetElementById("diametro").SetAttribute("value", Tx_diam . Text);
+
+            WB.Document.GetElementById("ConsultaInformesIndexForm").InvokeMember("submit");
         }
     }
 }

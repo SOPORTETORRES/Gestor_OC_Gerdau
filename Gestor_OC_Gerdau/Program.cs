@@ -1,4 +1,5 @@
-﻿using Gestor_OC_Gerdau.Tools;
+﻿using Gestor_OC_Gerdau.Calidad;
+using Gestor_OC_Gerdau.Tools;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,22 +18,28 @@ namespace Gestor_OC_Gerdau
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            //Application.Run(new Frm_WBTmp());
             //Application.Run(new Frm_ppal());
-            //Application.Run(new EnviosAutomaticos());
+            Application.Run(new EnviosAutomaticos());
             //Application.Run(new Facturacion.Frm_VinculaGuiaFactura());
             Application.Run(new Calidad.Frm_RevisaColadas());
+           // Application.Run(new Logistica.Frm_ProcesaGDE());
             //Application.Run(new Facturacion.Frm_RevisionSaldos());
             //Application.Run(new Calidad.Frm_SqlMysql());
             //Application.Run(new Calidad.Frm_WB());
-            //Application.Run(new FrmCambioPrecios());
+           // Application.Run(new FrmCambioPrecios());
 
             //Application.Run(new Frm_CreaMP());
+
+            //     Application.Run(new Importar_NewCodigos());
+
 
             // Application.Run(new Produccion.Frm_IngresaDatos());
 
             //Application.Run(new Produccion.Frm_DescargarArchivos());
 
-            //Application.Run(new Logistica.Frm_BodegaPT()); 
+            //Application.Run(new Logistica.Frm_BodegaPT());
         }
     }
 }

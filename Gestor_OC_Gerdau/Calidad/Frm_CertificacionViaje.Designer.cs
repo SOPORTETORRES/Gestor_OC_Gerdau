@@ -51,6 +51,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.Btn_LoteForzado = new System.Windows.Forms.Button();
+            this.Btn_ObtenerLotesV2 = new System.Windows.Forms.Button();
+            this.Lbl_Msg = new System.Windows.Forms.Label();
+            this.btn_GeneraProducciones = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -268,7 +271,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(656, 77);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(175, 38);
+            this.button1.Size = new System.Drawing.Size(136, 38);
             this.button1.TabIndex = 14;
             this.button1.Text = "Descarga Doc CAP";
             this.button1.UseVisualStyleBackColor = true;
@@ -284,11 +287,44 @@
             this.Btn_LoteForzado.UseVisualStyleBackColor = true;
             this.Btn_LoteForzado.Click += new System.EventHandler(this.Btn_LoteForzado_Click);
             // 
+            // Btn_ObtenerLotesV2
+            // 
+            this.Btn_ObtenerLotesV2.Location = new System.Drawing.Point(173, 90);
+            this.Btn_ObtenerLotesV2.Name = "Btn_ObtenerLotesV2";
+            this.Btn_ObtenerLotesV2.Size = new System.Drawing.Size(99, 25);
+            this.Btn_ObtenerLotesV2.TabIndex = 16;
+            this.Btn_ObtenerLotesV2.Text = "Obtener Lotes V2";
+            this.Btn_ObtenerLotesV2.UseVisualStyleBackColor = true;
+            this.Btn_ObtenerLotesV2.Click += new System.EventHandler(this.Btn_ObtenerLotesV2_Click);
+            // 
+            // Lbl_Msg
+            // 
+            this.Lbl_Msg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.Lbl_Msg.Location = new System.Drawing.Point(295, 92);
+            this.Lbl_Msg.Name = "Lbl_Msg";
+            this.Lbl_Msg.Size = new System.Drawing.Size(257, 23);
+            this.Lbl_Msg.TabIndex = 17;
+            this.Lbl_Msg.Text = " 2612432102";
+            this.Lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btn_GeneraProducciones
+            // 
+            this.btn_GeneraProducciones.Location = new System.Drawing.Point(871, 69);
+            this.btn_GeneraProducciones.Name = "btn_GeneraProducciones";
+            this.btn_GeneraProducciones.Size = new System.Drawing.Size(89, 38);
+            this.btn_GeneraProducciones.TabIndex = 18;
+            this.btn_GeneraProducciones.Text = "Genera Producciones";
+            this.btn_GeneraProducciones.UseVisualStyleBackColor = true;
+            this.btn_GeneraProducciones.Click += new System.EventHandler(this.btn_GeneraProducciones_Click);
+            // 
             // Frm_CertificacionViaje
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1110, 436);
+            this.Controls.Add(this.btn_GeneraProducciones);
+            this.Controls.Add(this.Lbl_Msg);
+            this.Controls.Add(this.Btn_ObtenerLotesV2);
             this.Controls.Add(this.Btn_LoteForzado);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);
@@ -346,5 +382,8 @@
         private System.Windows.Forms.Button Btn_RevisaHD;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button Btn_LoteForzado;
+        private System.Windows.Forms.Button Btn_ObtenerLotesV2;
+        private System.Windows.Forms.Label Lbl_Msg;
+        private System.Windows.Forms.Button btn_GeneraProducciones;
     }
 }

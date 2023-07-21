@@ -19,7 +19,7 @@ namespace Gestor_OC_Gerdau
 
         public void CargaTicket()
         {
-            string Url = "http://cubigest.torresocaranza.cl/GAF/Frm_RevisaBloqueos.aspx";
+            string Url = "http://192.168.1.195:81/Frm_RevisaBloqueos.aspx";
             Uri lURl = new Uri(Url);
             Wb.Url = lURl;
             // mTicket = iTicket;
@@ -34,8 +34,9 @@ namespace Gestor_OC_Gerdau
 
         private void Wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            string lError = ""; String lTx = ""; int lInicio = 0; int lFin = 0;
-            string url = ""; string lPathFin = ""; string lNombreArc = "";
+            string lError = "";
+            //String lTx = ""; int lInicio = 0; int lFin = 0;
+            //string url = ""; string lPathFin = ""; string lNombreArc = "";
           
             try
             {

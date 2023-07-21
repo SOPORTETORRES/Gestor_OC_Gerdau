@@ -150,7 +150,7 @@
             this.groupBox1.Controls.Add(this.Dtg_Envios);
             this.groupBox1.Location = new System.Drawing.Point(17, 120);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(778, 270);
+            this.groupBox1.Size = new System.Drawing.Size(1137, 344);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Envios Planificados";
@@ -164,13 +164,13 @@
             this.Dtg_Envios.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Envios.Name = "Dtg_Envios";
             this.Dtg_Envios.ReadOnly = true;
-            this.Dtg_Envios.Size = new System.Drawing.Size(772, 251);
+            this.Dtg_Envios.Size = new System.Drawing.Size(1131, 325);
             this.Dtg_Envios.TabIndex = 0;
             // 
             // Tm_Envios
             // 
             this.Tm_Envios.Enabled = true;
-            this.Tm_Envios.Interval = 60000;
+            this.Tm_Envios.Interval = 120000;
             this.Tm_Envios.Tick += new System.EventHandler(this.Tm_Envios_Tick);
             // 
             // Btn_CorrigePreIT
@@ -187,7 +187,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(807, 400);
+            this.ClientSize = new System.Drawing.Size(1166, 474);
             this.Controls.Add(this.Btn_CorrigePreIT);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Btn_EnvioProdTosol);

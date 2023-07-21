@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Net;
@@ -13,11 +14,12 @@ namespace Gestor_OC_Gerdau.Clases
 {
     public class Cls_Lotes
     {
-        private string mCnnMySql = "Database=cubigest;Data Source=localhost;User Id=root;Password=";
-        //private string mCnnMySql = "Database=cubigest;Data Source=localhost;User Id=admin;Password=Heladera9696@";
+        //private string mCnnMySql = "Database=cubigest;Data Source=localhost;User Id=root;Password=";
+         //private string mCnnMySql = "Database=cubigest;Data Source=localhost;User Id=admin;Password=Heladera9696@";
         public DataTable CargarDatos(string lSql)
         {
-            MySqlConnection cnn = new MySqlConnection(this.mCnnMySql);
+            //MySqlConnection cnn = new MySqlConnection(this.mCnnMySql);
+            MySqlConnection cnn = new MySqlConnection(OBtener_MySqlCnn());
             MySqlDataAdapter mda = new MySqlDataAdapter(lSql, cnn);
             DataSet ds = new DataSet(); DataTable lTbl = new DataTable();
             mda.Fill(ds, "MySql");
@@ -25,6 +27,16 @@ namespace Gestor_OC_Gerdau.Clases
                 lTbl = ds.Tables[0].Copy();
 
             return lTbl;
+        }
+
+        private string OBtener_MySqlCnn()
+        {
+            string lCnn = "";string lUser = ""; string lPass = "";
+
+            lUser=ConfigurationManager.AppSettings["MysqlUser"].ToString();
+            lPass = ConfigurationManager.AppSettings["MysqlPass"].ToString();
+            lCnn = string .Concat ("Database=cubigest;Data Source=localhost;User Id=", lUser,"; Password=", lPass,"");
+            return lCnn;
         }
 
         public  string LimpiaTx(string iTx)
@@ -107,6 +119,8 @@ namespace Gestor_OC_Gerdau.Clases
                     lSql = string.Concat(" insert into CertificadosColadas (Lote,Url_Certificado, Url_Informe,PublicacionInforme, PublicacionCertificado , ObsDescarga , FechaInsert ) ");
                     lSql = string.Concat(lSql, " values ('", lLote, "','", lUrlCert, "','", lUrlInf, "','", lPubInf, "','", lPubCert, "','', getdate() )  select @@Identity ");
                     lDts = lPx.ObtenerDatos(lSql);
+                    //MessageBox.Show("Despues de Insertar CertificadosColadas Linea Cls_Lote.PesisteDatos 121 "); 
+
                     if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
                     {
                         lSql = string.Concat(" update  Lotes set Procesado='F' where lote='", lLote, "'");
@@ -206,7 +220,7 @@ namespace Gestor_OC_Gerdau.Clases
                     lSql = " insert into Lotes (Lote, Procesado, Fecha, Respuesta)";
                     lSql = string.Concat(lSql, " values ('", iLote, "','N',now(),'')");
                     lTbl = CargarDatos(lSql);
-
+                    //MessageBox.Show(  lSql);
                 }
             }
 

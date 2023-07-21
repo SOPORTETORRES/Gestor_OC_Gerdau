@@ -9,9 +9,25 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gestor_OC_Gerdau</RootNamespace>
     <AssemblyName>Gestor_OC_Gerdau</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,6 +74,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -105,6 +122,12 @@
     <Compile Include="Calidad\Frm_WB.Designer.cs">
       <DependentUpon>Frm_WB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calidad\Frm_WBTmp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_WBTmp.Designer.cs">
+      <DependentUpon>Frm_WBTmp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calidad\Frm_WB_CAP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +153,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Calidad\Rep_TrazabilidadColada.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Clases\Rep_TrazabilidadColada.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
@@ -187,11 +216,18 @@
     <Compile Include="Frm_WB_EnvAut.Designer.cs">
       <DependentUpon>Frm_WB_EnvAut.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logistica\Cls_Sql.cs" />
     <Compile Include="Logistica\Frm_BodegaPT.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Logistica\Frm_BodegaPT.Designer.cs">
       <DependentUpon>Frm_BodegaPT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logistica\Frm_ProcesaGDE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Logistica\Frm_ProcesaGDE.Designer.cs">
+      <DependentUpon>Frm_ProcesaGDE.cs</DependentUpon>
     </Compile>
     <Compile Include="Logistica\Frm_WBGuiasPendientes.cs">
       <SubType>Form</SubType>
@@ -221,6 +257,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\Px_BedegaPT_Tosol\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\Px_BodegaPT\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,11 +287,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Tools\Frm_CopiaDoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Frm_CopiaDoc.Designer.cs">
+      <DependentUpon>Frm_CopiaDoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\Frm_CreaMP.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Tools\Frm_CreaMP.Designer.cs">
       <DependentUpon>Frm_CreaMP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Importar_NewCodigos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\Importar_NewCodigos.Designer.cs">
+      <DependentUpon>Importar_NewCodigos.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Calidad\Frm_CertificacionViaje.resx">
       <DependentUpon>Frm_CertificacionViaje.cs</DependentUpon>
@@ -267,6 +320,9 @@
     <EmbeddedResource Include="Calidad\Frm_WB.resx">
       <DependentUpon>Frm_WB.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_WBTmp.resx">
+      <DependentUpon>Frm_WBTmp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Frm_WB_CAP.resx">
       <DependentUpon>Frm_WB_CAP.cs</DependentUpon>
     </EmbeddedResource>
@@ -281,6 +337,10 @@
       <LastGenOutput>Rep_CertificadoMan.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Rep_TrazabilidadColada.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_TrazabilidadColada.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Clases\Rep_TrazabilidadColada.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_TrazabilidadColada.cs</LastGenOutput>
     </EmbeddedResource>
@@ -312,6 +372,9 @@
     <EmbeddedResource Include="Logistica\Frm_BodegaPT.resx">
       <DependentUpon>Frm_BodegaPT.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Logistica\Frm_ProcesaGDE.resx">
+      <DependentUpon>Frm_ProcesaGDE.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Logistica\Frm_WBGuiasPendientes.resx">
       <DependentUpon>Frm_WBGuiasPendientes.cs</DependentUpon>
     </EmbeddedResource>
@@ -332,9 +395,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Tools\Frm_CopiaDoc.resx">
+      <DependentUpon>Frm_CopiaDoc.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Tools\Frm_CreaMP.resx">
       <DependentUpon>Frm_CreaMP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\Importar_NewCodigos.resx">
+      <DependentUpon>Importar_NewCodigos.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Calidad\Dts_Informes.xsc">
       <DependentUpon>Dts_Informes.xsd</DependentUpon>
@@ -357,6 +427,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Service References\Px_BedegaPT_Tosol\Gestor_OC_Gerdau.Px_BedegaPT_Tosol.ExecuteResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Px_BedegaPT_Tosol\wsmovexiall.wsdl" />
     <None Include="Service References\Px_BodegaPT\Gestor_OC_Gerdau.Px_BodegaPT.ExecuteResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -469,6 +543,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Px_BedegaPT_Tosol\" />
     <WCFMetadataStorage Include="Service References\Px_BodegaPT\" />
     <WCFMetadataStorage Include="Service References\WsCrud\" />
     <WCFMetadataStorage Include="Service References\WsFacturacion\" />
@@ -492,6 +567,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\Px_BedegaPT_Tosol\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\Px_BedegaPT_Tosol\configuration.svcinfo" />
+    <None Include="Service References\Px_BedegaPT_Tosol\configuration91.svcinfo" />
     <None Include="Service References\WsCrud\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -528,6 +609,18 @@
       <Project>{76c114fe-eea8-49fb-9cc9-f8f59eba3ca1}</Project>
       <Name>Integracion_INET</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

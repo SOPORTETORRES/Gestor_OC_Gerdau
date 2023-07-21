@@ -25,7 +25,7 @@ namespace Gestor_OC_Gerdau
 
         private void Btn_EnviaPL_Click(object sender, EventArgs e)
         {
-            //EnviarPL("682", "220");
+         //   EnviarPL("772", "500");
             //System.Threading.Thread.Sleep(1000);
             //EnviarPL( "807", "600");
 
@@ -34,6 +34,10 @@ namespace Gestor_OC_Gerdau
         }
 
 
+        public void Desactivar_Timmer()
+        {
+            Tm_Envios.Enabled = false;
+        }
         private void ProcesaEnvio_ProduccionTOSOL(string iDia, string iHora)
         {
             Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
@@ -210,7 +214,7 @@ namespace Gestor_OC_Gerdau
             string lErr = "";string lTitulo = ""; string lPathArc = "";
             try
             {
-                Lbl_Inicio.Text = DateTime.Now.ToLongTimeString();
+                 Lbl_Inicio.Text = DateTime.Now.ToLongTimeString();
                 switch (iTipo.ToUpper())
                 {
                     case "220": //Todos los días 
@@ -770,7 +774,8 @@ namespace Gestor_OC_Gerdau
 
                 //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                 SmtpClient SClient = new SmtpClient();
-                SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                 SClient.Port = 587; // 'Puerto del SMTP de Gmail
                 SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -811,7 +816,8 @@ namespace Gestor_OC_Gerdau
 
                 //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                 SmtpClient SClient = new SmtpClient();
-                SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                 SClient.Port = 587; // 'Puerto del SMTP de Gmail
                 SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -1032,7 +1038,7 @@ namespace Gestor_OC_Gerdau
             {
                 switch  ( lHoraActual)
                  {  
-                    case 7:  
+                    case 9:  
                          mGenerandoArchivo = true;
                         lTipo = "1";
                         if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("BLC_", lTipo)) == false)
@@ -1191,7 +1197,8 @@ namespace Gestor_OC_Gerdau
                             MMessage.IsBodyHtml = true; // 'Formato html;
                                                         // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                             SmtpClient SClient = new SmtpClient();
-                            SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                            //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                             SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                             SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                             SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1267,8 +1274,8 @@ namespace Gestor_OC_Gerdau
 
 
                             lTbl = ObtenerDestinatarios("-1700");
-                            MailMessage MMessage = new MailMessage(); string lSuc = "";
-                            string[] separators = { "-" }; string lPathInforme = "";
+                            MailMessage MMessage = new MailMessage(); 
+                            string[] separators = { "-" };
 
                             //lPathDest = Path.Combine(ipathDestino, lPathSigla);
 
@@ -1287,7 +1294,8 @@ namespace Gestor_OC_Gerdau
 
                                 // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                 SmtpClient SClient = new SmtpClient();
-                                SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                          //  SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                 SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                 SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1378,7 +1386,8 @@ namespace Gestor_OC_Gerdau
 
                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                     SmtpClient SClient = new SmtpClient();
-                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                   // SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1523,7 +1532,7 @@ namespace Gestor_OC_Gerdau
 
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
-                                    SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
+                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1613,6 +1622,7 @@ namespace Gestor_OC_Gerdau
             lSql = String.Concat("  SP_Consultas_WS  192,'", iCodigo, "','','','',',','',''");
             try
             {
+                Desactivar_Timmer();
                 lPathCalidad=string.Concat (ConfigurationManager.AppSettings["Path_Calidad"].ToString());
                 lDts = lPx.ObtenerDatos(lSql);
                 if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
@@ -1626,10 +1636,11 @@ namespace Gestor_OC_Gerdau
                         for (i = 0; i < lTblDetalle.Rows.Count; i++)
                         {
                            // if (EsLoteAza ())
-                            if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
-                                lLote = lTblDetalle.Rows[i]["LoteAza"].ToString();
-                            else
+                            if (lTblDetalle.Rows[i]["Lote"].ToString().Trim().Length > 0)
                                 lLote = lTblDetalle.Rows[i]["Lote"].ToString();
+                            else
+                                lLote = lTblDetalle.Rows[i]["LoteAza"].ToString();
+
                             if (VerificaLotePaquete(lLote, lTblDetalle.Rows[i]["Id"].ToString()) == "N")
                             {
                                 lPuedeSeguir = false;
@@ -1637,12 +1648,12 @@ namespace Gestor_OC_Gerdau
                                 i = lTblDetalle.Rows.Count;
                                
                             }
+
                         }
 
                         if (lPuedeSeguir == true)
                         {
-
-                          
+                      
                             string lSuc = ""; string lPathCertificado = "";
                             string[] separators = { "-" }; string lPathInforme = "";
                             string[] lPartes = iCodigo.Split(separators, StringSplitOptions.RemoveEmptyEntries);
@@ -1658,7 +1669,7 @@ namespace Gestor_OC_Gerdau
                                 lSuc = string.Concat(lTbl.Rows[0]["Sucursal"].ToString(), "\\");
                                 lPathCertificado = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "CertificadoFabricacion.pdf");
                                 lPathInforme = Path.Combine(lPathCalidad, lSuc, lPathSigla, iCodigo.Replace("/", "_"), "TrazabilidadColadas.pdf");
-                               
+
                                 //lPathCertificado = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, iCodigo.Replace("/", "_"), "CertificadoFabricacion.pdf");
                                 //lPathInforme = Path.Combine(@"\\200.29.219.22\Gestion de Calidad\GeneracionDocumentosAutomatico\", lSuc, lPathSigla, iCodigo.Replace("/", "_"), "TrazabilidadColadas.pdf");
 
@@ -1667,13 +1678,15 @@ namespace Gestor_OC_Gerdau
 
                                 //ExisteArchivo(lPathInforme, "TrazabilidadColadas.pdf");
 
+                                new Clases.Cls_EnvioDoc().GeneraDocumentacionEnCarpeta(iCodigo);
+
                                 if ((File.Exists(lPathCertificado) == true) && (File.Exists(lPathInforme) == true))
                                 {
                                     // Siempre deben haber 2  archivos 
                                     for (i = 0; i < lTblDetalle.Rows.Count; i++)
                                     {
-                                        if (lTblDetalle.Rows[i]["LoteAza"].ToString().Trim().Length > 0)
-                                            lLote = string.Concat(lTblDetalle.Rows[i]["LoteAza"].ToString()); //, "_");
+                                        if (lTblDetalle.Rows[i]["Lote"].ToString().Trim().Length > 0)
+                                            lLote = string.Concat(lTblDetalle.Rows[i]["Lote"].ToString()); //, "_");
                                         else
                                             lLote = string.Concat(lTblDetalle.Rows[i]["Lote"].ToString());//, "_");
 
@@ -1759,8 +1772,8 @@ namespace Gestor_OC_Gerdau
 
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
-                                    SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
-
+                                    //SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
+                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion1@gmail.com", "azghaiokqalrqqtc");
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1817,7 +1830,7 @@ namespace Gestor_OC_Gerdau
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
             string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
             Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
-             string lTipo = "";
+ 
 
             lDia = iDia; // lTbl.Rows[0]["Par1"].ToString();
             lHora = Val(iHora); // Val(lTbl.Rows[0]["Par2"].ToString());
@@ -1830,7 +1843,7 @@ namespace Gestor_OC_Gerdau
                 {
                     case 9:
                         mGenerandoArchivo = true;
-                        lTipo = "1";
+                        //lTipo = "1";
                         if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("NotificaCierreTotems_", lHoraActual.ToString ())) == false)
                         {
                             NotificarCierreTotems();
@@ -1840,7 +1853,7 @@ namespace Gestor_OC_Gerdau
                         break;
                     case 21:
                         mGenerandoArchivo = true;
-                        lTipo = "2";
+                        //lTipo = "2";
                         if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("NotificaCierreTotems_", lHoraActual.ToString())) == false)
                         {
                             NotificarCierreTotems();
@@ -1888,7 +1901,7 @@ namespace Gestor_OC_Gerdau
 
                     //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                     SmtpClient SClient = new SmtpClient();
-                    SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                     SClient.Port = 587; // 'Puerto del SMTP de Gmail
                     SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -2004,7 +2017,7 @@ namespace Gestor_OC_Gerdau
 
                         //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                         SmtpClient SClient = new SmtpClient();
-                        SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
+                        SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
                         SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                         SClient.Port = 587; // 'Puerto del SMTP de Gmail
                         SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -2026,86 +2039,180 @@ namespace Gestor_OC_Gerdau
 
 
         }
-
-
         private Boolean ProcesaRevisionGuias(string iDia, string iHora)
         {
             Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
             string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
             Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
-             string lResultado = "";
+            string lResultado = "";
 
             lDia = iDia; // lTbl.Rows[0]["Par1"].ToString();
             lHora = Val(iHora); // Val(lTbl.Rows[0]["Par2"].ToString());
             lHoraActual = DateTime.Now.Hour;
             lDiaActual = DateTime.Now.ToString("dddd");
 
-            if (iDia .ToUpper().Equals("T") && (lHora == lHoraActual))
+            if (iDia.ToUpper().Equals("T") && (lHora == lHoraActual))
             {
-                if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("Guias_IC" )) == false)
+                if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("Guias_IC")) == false)
                 {
                     //RevisaLC(lTipo);
                     lResultado = lPx.RevisionGuias_C_I();
-                    lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("Guias_IC"),"");
+                    lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("Guias_IC"), "");
                 }
+            }
+            return lRes;
+        }
+
+        private Boolean ProcesaRevisionGuias_Escaneadas(string iDia, string iHora)
+        {
+            Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+            string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
+            Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
+            string lResultado = "";
+
+            lDia = iDia; // lTbl.Rows[0]["Par1"].ToString();
+            lHora = Val(iHora); // Val(lTbl.Rows[0]["Par2"].ToString());
+            lHoraActual = DateTime.Now.Hour;
+            lDiaActual = DateTime.Now.ToString("dddd");
+
+            if (iDia.ToUpper().Equals("T") && (lHora == lHoraActual))
+            {
+                if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("Guias_Scan")) == false)
+                {
+                    
+                    lResultado = Procesa_GuiasEscaneadas();
+                    lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("Guias_Scan"), "");
+                }
+            }
+            return lRes;
+        }
+
+        private string Procesa_GuiasEscaneadas( )
+        {
+            string  lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();  string lSql = "";
+
+            try
+            {
+
+
+                lSql = "  select convert(date,a.atefchdoc)  atefchdoc ,  (Select Par1 from   to_parametros where subtabla like '%TiposGuiaINET%' and par2= doccod ), ";
+                lSql = String.Concat(lSql, "   (select Count(1) from  GuiasRecibidas g  where g.Doccod=a.doccod and NroGuiaInet=a.atenum   ), ");
+                lSql = String.Concat(lSql, "  * from   Tocaranza.dbo.ateclien a where a.atefchdoc> '01/06/2022' and doccod between 300 and 400   ");
+                lSql = String.Concat(lSql, "   and    not exists  ( select 1 from  GuiasRecibidas where  NroGuiaInet=a.atenum ) ");
+                lSql = String.Concat(lSql, "  Order by   a.atenum ");
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    for (i = 0; i < lTbl.Rows.Count; i++)
+                    {
+                        lSql = " Insert into GuiasRecibidas (NroGuiaInet,FechaProceso,NombreArchivo, Estado, FechaGuiaInet, DocCod) Values (";
+                        lSql = String.Concat(lSql, Val(lTbl.Rows[i]["atenum"].ToString()), ",Getdate(),'','I','", lTbl.Rows[i]["atefchdoc"].ToString());
+                        lSql = String.Concat(lSql, "',", lTbl.Rows[i]["doccod"].ToString(), ")");
+                        lPx.ObtenerDatos(lSql);
+                    }
+
+                }
+                // ahora Invocamos el formulario que procesa.
+                Logistica.Frm_ProcesaGDE lFrm = new Logistica.Frm_ProcesaGDE();
+                lFrm.CargaDatos();
+                lFrm.ProcesaDatos();
 
                
-                //switch (lHoraActual)
-                //{
-                //    case 7:
-                //        mGenerandoArchivo = true;
-                //        lTipo = "1";
-                //        if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("BLC_", lTipo)) == false)
-                //        {
-                //            RevisaLC(lTipo);
-                //            lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("BLC_", lTipo), "");
-                //        }
-
-                //        mGenerandoArchivo = false;
-                //        break;
-                //    case 13:
-                //        mGenerandoArchivo = true;
-                //        lTipo = "2";
-                //        if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("BLC_", lTipo)) == false)
-                //        {
-                //            RevisaLC(lTipo);
-                //            lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("BLC_", lTipo), "");
-                //        }
-
-                //        mGenerandoArchivo = false;
-                //        break;
-                //    case 19:
-                //        mGenerandoArchivo = true;
-                //        lTipo = "3";
-                //        if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("BLC_", lTipo)) == false)
-                //        {
-                //            RevisaLC(lTipo);
-                //            lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("BLC_", lTipo), "");
-                //        }
-
-                //        mGenerandoArchivo = false;
-                //        break;
-                //    case 1:
-                //        mGenerandoArchivo = true;
-                //        lTipo = "4";
-                //        if (lLN_EnvioDoc.ArchivoFueEnviado(string.Concat("BLC_", lTipo)) == false)
-                //        {
-                //            RevisaLC(lTipo);
-                //            lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("BLC_", lTipo), "");
-                //        }
-
-                //        mGenerandoArchivo = false;
-                //        break;
-                //}
-
-
+                mGenerandoArchivo = false;
+                Envia_Guias_Pendientes_Entrega_Camion();
+                mGenerandoArchivo = true;
+                lRes = "OK";
             }
+            catch (Exception iEx)
+            {
+                lRes = iEx.Message.ToString();
+            }
+
+
 
 
             return lRes;
         }
 
+        private Boolean ProcesaPT(string iDia, string iHora)
+        {
+            Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+            string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
+            Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
+             
+
+            lDia = iDia; // lTbl.Rows[0]["Par1"].ToString();
+           // lHora = Val(iHora); // Val(lTbl.Rows[0]["Par2"].ToString());
+            lHoraActual = DateTime.Now.Hour;
+            lDiaActual = DateTime.Now.ToString("dddd");
+
+            if (iDia .ToUpper().Equals("C") && (iHora == "1"))
+            {
+                if (lLN_EnvioDoc.CreacionPT_Procesado(string.Concat("Creacion_PT" )) == false)
+                {
+                    //Primero Calama
+                    Logistica.Frm_BodegaPT lForm = new Logistica.Frm_BodegaPT();
+                    lForm.mSucursal = "1";
+                    lForm.ShowDialog();
+                    System.Threading.Thread.Sleep(2000);
+
+                    //Luego Coronel
+                    lForm = new Logistica.Frm_BodegaPT();
+                    lForm.mSucursal = "14";
+                    lForm.ShowDialog();
+                    System.Threading.Thread.Sleep(2000);
+
+                    //Luego santiago
+                    lForm = new Logistica.Frm_BodegaPT();
+                    lForm.mSucursal = "4";
+                    lForm.ShowDialog();
+
+                    ////Luego Concepción
+                    //lForm = new Logistica.Frm_BodegaPT();
+                    //lForm.mSucursal = "16";
+                    //lForm.ShowDialog();
+                    lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("Creacion_PT"),"");
+                }
+
+               
+            }
+            return lRes;
+        }
+
+        private void  Procesa_Certificados_Calidad()
+        {
+            Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
+            string lDia = ""; int lHora = 0; int lHoraActual = 0;  int lMinActual = 0;
+            Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
+
+
+            lMinActual = DateTime.Now.Minute;
+                
+            if ((lMinActual>10) && (lMinActual < 40))
+            {
+                if (lLN_EnvioDoc.CreacionPT_Procesado(string.Concat("Creacion_PT")) == false)
+                {
+                    //Procesamos la generación de los certificados de calidad
+                    Logistica.Frm_BodegaPT lForm = new Logistica.Frm_BodegaPT();
+                    lForm.mSucursal = "1";
+                    lForm.ShowDialog();
+                    System.Threading.Thread.Sleep(2000);
+                    //Luego Coronel
+           
+
+                    lLN_EnvioDoc.GrabarEnvioArchivo(string.Concat("Creacion_PT"), "");
+                }
+
+
+            }
+          
+        }
 
 
         #endregion
@@ -2149,7 +2256,8 @@ namespace Gestor_OC_Gerdau
                 Dtg_Envios.Columns["Vermantenedor"].Visible = false;
                 Dtg_Envios.Columns["Par3"].Visible = false;
             }
-
+            mGenerandoArchivo = false;
+            ProcesaEnvios();
         }
 
  
@@ -2164,52 +2272,23 @@ namespace Gestor_OC_Gerdau
         private void EnviarArhivo(string iCod, string iDia, string iHora)
         {
 
-            switch (iCod )
+        switch (iCod )
             {
                 case "e_PL": //Todos los días 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioPL(iDia, iHora, "682", "220");
-                    mGenerandoArchivo = false;
-
                     //mGenerandoArchivo = true;
-                    //ProcesaEnvioPL(iDia, iHora, "772", "500");
+                    //ProcesaEnvioPL(iDia, iHora, "682", "220");
                     //mGenerandoArchivo = false;
-
                     //mGenerandoArchivo = true;
-                    //ProcesaEnvioPL(iDia, iHora, "803", "400");
+                    //ProcesaEnvioPL(iDia, iHora, "807", "600");
                     //mGenerandoArchivo = false;
-
-
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioPL(iDia, iHora, "807", "600");
-                    mGenerandoArchivo = false;
-
-                    //mGenerandoArchivo = true;
-                    //ProcesaEnvioPL(iDia, iHora, "806", "470");
-                    //mGenerandoArchivo = false;
-
-
                     break;
 
                 case "BOM": //Todos los días 
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora, "682", "220");
-                    mGenerandoArchivo = false;
-
                     //mGenerandoArchivo = true;
-                    //ProcesaEnvioBOM(iDia, iHora, "772", "500");
+                    //ProcesaEnvioBOM(iDia, iHora, "682", "220");
                     //mGenerandoArchivo = false;
-
                     //mGenerandoArchivo = true;
-                    //ProcesaEnvioBOM(iDia, iHora, "803", "400");
-                    //mGenerandoArchivo = false;
-
-                    mGenerandoArchivo = true;
-                    ProcesaEnvioBOM(iDia, iHora, "807", "600");
-                    mGenerandoArchivo = false;
-
-                    //mGenerandoArchivo = true;
-                    //ProcesaEnvioBOM(iDia, iHora, "806", "470");
+                    //ProcesaEnvioBOM(iDia, iHora, "807", "600");
                     //mGenerandoArchivo = false;
 
                     break;
@@ -2224,6 +2303,7 @@ namespace Gestor_OC_Gerdau
                     //break;
 
                 case "BL_LC": //Todos los días 
+
                     mGenerandoArchivo = true;
                     ProcesaRevisionBloqueos_LC(iDia, iHora);
                     mGenerandoArchivo = false;
@@ -2246,18 +2326,26 @@ namespace Gestor_OC_Gerdau
                     //Envia_DocumentosCalidad( );
                     //mGenerandoArchivo = false;
                     break;
-                case "Guias_Escaneadas": //Todos los días  Revision de las guias INET Cubigest
-           
+                case "Guias_Scan": //Todos los días  Revision de las guias INET Cubigest
+                    ProcesaRevisionGuias_Escaneadas(iDia, iHora);
                     break;
 
+                case "PT": //Todos los días cada una hora se procesa el producto Terminado
+                    // Abrimos Formulario 
+                    mGenerandoArchivo = true;
+                    ProcesaPT(iDia, iHora);
+                    mGenerandoArchivo = false;
+                    break;
                 //case "BOM_5": //Todos los días 
                 //    mGenerandoArchivo = true;
                 //    ProcesaEnvioBOM_5(iDia, iHora);
                 //    mGenerandoArchivo = false;
                 //    break;
-                default:
-
-                    break;
+            //    default:
+            //        mGenerandoArchivo = true;
+            //        ProcesaPT(iDia, iHora);
+            //        mGenerandoArchivo = false;
+            //        break;
             }
 
         }
@@ -2272,6 +2360,7 @@ namespace Gestor_OC_Gerdau
                 EnviarArhivo(lCod,Dtg_Envios.Rows[i].Cells["Par1"].Value.ToString(), Dtg_Envios.Rows[i].Cells["Par2"].Value.ToString());
                 PintaFila(i, Color.LightGreen);
             }
+            //CargaEnvios();
 
         }
 

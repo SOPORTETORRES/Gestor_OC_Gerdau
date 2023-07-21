@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="www.informat.cl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns1="http://www.informat.cl/ws" xmlns:wsdlns="www.informat.cl" name="wsmovexiall" targetNamespace="www.informat.cl" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <document>
+    <URL>http://192.168.1.195:8080/wstsoldables/servlet/HLP_Pwsmovexiall.htm</URL>
+    <line> </line>
+  </document>
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="www.informat.cl">
+      <xsd:import namespace="http://www.informat.cl/ws" />
+      <xsd:element name="wsmovexiall.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Intrasnporte" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="wsmovexiall.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Outtansporte" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="wsmovexiall.ExecuteSoapIn">
+    <part name="parameters" element="wsdlns:wsmovexiall.Execute" />
+  </message>
+  <message name="wsmovexiall.ExecuteSoapOut">
+    <part name="parameters" element="wsdlns:wsmovexiall.ExecuteResponse" />
+  </message>
+  <portType name="wsmovexiallSoapPort">
+    <operation name="Execute">
+      <input message="wsdlns:wsmovexiall.ExecuteSoapIn" />
+      <output message="wsdlns:wsmovexiall.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="wsmovexiallSoapBinding" type="wsdlns:wsmovexiallSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="www.informat.claction/AWSMOVEXIALL.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="wsmovexiall">
+    <port name="wsmovexiallSoapPort" binding="wsdlns:wsmovexiallSoapBinding">
+      <soap:address location="http://192.168.1.195:8080/wstsoldables/servlet/awsmovexiall" />
+    </port>
+  </service>
+</definitions>

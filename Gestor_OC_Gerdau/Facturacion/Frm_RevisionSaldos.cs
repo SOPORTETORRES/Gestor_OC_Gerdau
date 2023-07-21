@@ -418,7 +418,7 @@ namespace Gestor_OC_Gerdau.Facturacion
         private void button2_Click(object sender, EventArgs e)
         {
             DataTable lTblLC = new DataTable(); DataTable lTblDani = new DataTable();
-            DataView lVista = null; int i = 0;string lRUT = ""; int lCont = 0;
+            int i = 0;string lRUT = ""; int lCont = 0;
             Clases.Cls_Comun lCom = new Clases.Cls_Comun();
             //list 
             lTblDani = (DataTable)Dtg_ArcDAni.DataSource;

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gestor_OC_Gerdau.Calidad {
+namespace Gestor_OC_Gerdau.Clases {
     using System;
     using System.ComponentModel;
     using CrystalDecisions.Shared;
@@ -16,14 +16,14 @@ namespace Gestor_OC_Gerdau.Calidad {
     using CrystalDecisions.CrystalReports.Engine;
     
     
-    public class Rep_trazabilidadColadaV2 : ReportClass {
+    public class Rep_TrazabilidadColada : ReportClass {
         
-        public Rep_trazabilidadColadaV2() {
+        public Rep_TrazabilidadColada() {
         }
         
         public override string ResourceName {
             get {
-                return "Rep_trazabilidadColadaV2.rpt";
+                return "Rep_TrazabilidadColada.rpt";
             }
             set {
                 // Do nothing
@@ -41,7 +41,7 @@ namespace Gestor_OC_Gerdau.Calidad {
         
         public override string FullResourceName {
             get {
-                return "Gestor_OC_Gerdau.Calidad.Rep_trazabilidadColadaV2.rpt";
+                return "Gestor_OC_Gerdau.Clases.Rep_TrazabilidadColada.rpt";
             }
             set {
                 // Do nothing
@@ -90,9 +90,9 @@ namespace Gestor_OC_Gerdau.Calidad {
     }
     
     [System.Drawing.ToolboxBitmapAttribute(typeof(CrystalDecisions.Shared.ExportOptions), "report.bmp")]
-    public class CachedRep_trazabilidadColadaV2 : Component, ICachedReport {
+    public class CachedRep_TrazabilidadColada : Component, ICachedReport {
         
-        public CachedRep_trazabilidadColadaV2() {
+        public CachedRep_TrazabilidadColada() {
         }
         
         [Browsable(false)]
@@ -129,7 +129,7 @@ namespace Gestor_OC_Gerdau.Calidad {
         }
         
         public virtual CrystalDecisions.CrystalReports.Engine.ReportDocument CreateReport() {
-            Rep_trazabilidadColadaV2 rpt = new Rep_trazabilidadColadaV2();
+            Rep_TrazabilidadColada rpt = new Rep_TrazabilidadColada();
             rpt.Site = this.Site;
             return rpt;
         }

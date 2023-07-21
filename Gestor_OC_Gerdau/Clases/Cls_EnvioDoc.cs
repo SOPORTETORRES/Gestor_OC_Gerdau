@@ -20,7 +20,7 @@ namespace Gestor_OC_Gerdau.Clases
 
             lSql = String.Concat(" SP_CRUD_ENVIO_DOCUMENTOS  0, '','", iArchivo, "','", iPathArchivo,"','','','',1");
             lDts = lPx.ObtenerDatos(lSql);
-            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+           if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
             {
                 //lTbl = lDts.Tables[0].Copy();
                 //if (lTbl.Rows.Count > 0)
@@ -56,13 +56,40 @@ namespace Gestor_OC_Gerdau.Clases
                     else
                         lRes = true;
                 }
-
-             
+            
             }
 
             return lRes;
         }
 
+        public Boolean CreacionPT_Procesado(string iArchivo)
+        {
+            string lSql = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); Boolean lRes = false;
+            string lFechaIni = string.Concat(DateTime.Now.ToShortDateString(), " 00:00:01");
+            string lfechaFin = string.Concat(DateTime.Now.ToShortDateString(), " 23:59:59");
+            lSql = String.Concat(" SP_CRUD_ENVIO_DOCUMENTOS  0, '','Creacion_PT','','','','',4");
+            Clases.Cls_Comun lCom = new Cls_Comun(); 
+
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                lTbl = lDts.Tables[0].Copy();
+                if (lTbl.Rows.Count > 0)
+                {
+                    if (lCom.Val_INT64 (lTbl.Rows[0]["Dif"].ToString ())>60)
+                         lRes = false;
+                    else
+                        lRes = true ;
+                }    
+                    else
+                        lRes = true;
+                
+
+            }
+
+            return lRes;
+        }
 
 
         public string  ObtenerUltimoEnvio(string iCodArchivo)
@@ -279,16 +306,6 @@ namespace Gestor_OC_Gerdau.Clases
             string lPathColadas = ""; string lPathDestino = ""; string lSuc = ""; string lPathCalidad = "";
 
             lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
-            ////1.- Por viaje Obtener Certificado e Informe
-            //lSql = "  select distinct    Lote ,   s.nombre sucursal   from viaje v, DetallePaquetesPieza d   , it , sucursal s  , EtiquetasVinculadas e , EtiquetaAZA ea   ";
-            //lSql = string.Concat(lSql, "   where  v.id =d.IdViaje and  v.idit=it.id and it.idsucursal=s.id    and e.IdQR =ea.id and e.IdEtiquetaTO =d.id ");
-            //lSql = string.Concat(lSql, " and  v.codigo='", iViaje, "'");
-            //lDts = lPx.ObtenerDatos(lSql);
-
-
-            //if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
-            //{
-            // lTbl = lDts.Tables[0].Copy();  // tabla con los lotes del viaje 
             lTbl = ObtenerTablaConLotes(iViaje);
                 for (i = 0; i < lTbl.Rows.Count; i++)
                 {
@@ -361,7 +378,7 @@ namespace Gestor_OC_Gerdau.Clases
                     lRes = lRes.Substring(0, lRes.Length - 1);
 
             }
-            return lRes;
+                                             return lRes;
         }
 
 
@@ -395,8 +412,8 @@ namespace Gestor_OC_Gerdau.Clases
 
         public  void ImprimeCertificadoManofactura(string iviaje, string IdObra, string iNombreObra, string iKilos, string iNroGuiaINET, string iConstructora, string iPathDestino)
         {
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; string lRes = "";
-            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); string lTmp = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; 
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); 
             Dts_Informes.CertificadoManDataTable lTbl = new Dts_Informes.CertificadoManDataTable();
             Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;
             Dts_Informes.Cabecera_CertManDataTable lTblCap = new Dts_Informes.Cabecera_CertManDataTable();
@@ -484,7 +501,7 @@ namespace Gestor_OC_Gerdau.Clases
                     }
                     else
                     {
-                        lRes = string.Concat("NO se encontro la Path: ", lPathInfLote, "   -  ", lPathCertLote);
+                       lRes = string.Concat("NO se encontro la Path: ", lPathInfLote, "   -  ", lPathCertLote);
                         i = lTblColadas.Rows.Count;
                     }
                 }
@@ -602,8 +619,8 @@ namespace Gestor_OC_Gerdau.Clases
         public  void ImprimeResumenTrazabilidad_V2(string iPathDestino, string iviaje)
         {
             DataTable lTblTmp = new DataTable();
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; string lRes = "";
-            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); string lTmp = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; 
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador();
             Dts_Informes.CabeceraTrazColadasDataTable lTblCab = new Dts_Informes.CabeceraTrazColadasDataTable();
             Dts_Informes.DetalleTrazColadasDataTable lTblDet = new Dts_Informes.DetalleTrazColadasDataTable();
             Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;

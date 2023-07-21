@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Btn_CargaTablaMySql = new System.Windows.Forms.Button();
             this.Btn_CargaDatos = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -61,6 +61,10 @@
             this.Btn_MailColadas = new System.Windows.Forms.Button();
             this.Btn_ProcesaCAP = new System.Windows.Forms.Button();
             this.Btn_GuiasNO_Escaneadas = new System.Windows.Forms.Button();
+            this.Btn_CopiaAlServer = new System.Windows.Forms.Button();
+            this.Lbl_Avance = new System.Windows.Forms.Label();
+            this.PB_Avance = new System.Windows.Forms.ProgressBar();
+            this.Btn_Path = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Datos)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -93,9 +97,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.Dtg_Datos);
-            this.groupBox1.Location = new System.Drawing.Point(11, 97);
+            this.groupBox1.Location = new System.Drawing.Point(11, 121);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(988, 351);
+            this.groupBox1.Size = new System.Drawing.Size(988, 327);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
@@ -106,9 +110,9 @@
             this.Dtg_Datos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Dtg_Datos.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Datos.Name = "Dtg_Datos";
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.Dtg_Datos.Size = new System.Drawing.Size(982, 332);
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Dtg_Datos.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.Dtg_Datos.Size = new System.Drawing.Size(982, 308);
             this.Dtg_Datos.TabIndex = 0;
             this.Dtg_Datos.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Datos_CellClick);
             this.Dtg_Datos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Datos_CellContentClick);
@@ -381,7 +385,7 @@
             // 
             // Btn_GuiasNO_Escaneadas
             // 
-            this.Btn_GuiasNO_Escaneadas.Location = new System.Drawing.Point(244, -5);
+            this.Btn_GuiasNO_Escaneadas.Location = new System.Drawing.Point(339, -6);
             this.Btn_GuiasNO_Escaneadas.Name = "Btn_GuiasNO_Escaneadas";
             this.Btn_GuiasNO_Escaneadas.Size = new System.Drawing.Size(94, 43);
             this.Btn_GuiasNO_Escaneadas.TabIndex = 25;
@@ -389,11 +393,51 @@
             this.Btn_GuiasNO_Escaneadas.UseVisualStyleBackColor = true;
             this.Btn_GuiasNO_Escaneadas.Click += new System.EventHandler(this.Btn_GuiasNO_Escaneadas_Click);
             // 
+            // Btn_CopiaAlServer
+            // 
+            this.Btn_CopiaAlServer.Location = new System.Drawing.Point(222, -6);
+            this.Btn_CopiaAlServer.Name = "Btn_CopiaAlServer";
+            this.Btn_CopiaAlServer.Size = new System.Drawing.Size(111, 43);
+            this.Btn_CopiaAlServer.TabIndex = 26;
+            this.Btn_CopiaAlServer.Text = "Copia Documentos al Server";
+            this.Btn_CopiaAlServer.UseVisualStyleBackColor = true;
+            this.Btn_CopiaAlServer.Click += new System.EventHandler(this.Btn_CopiaAlServer_Click);
+            // 
+            // Lbl_Avance
+            // 
+            this.Lbl_Avance.AutoSize = true;
+            this.Lbl_Avance.Location = new System.Drawing.Point(30, 102);
+            this.Lbl_Avance.Name = "Lbl_Avance";
+            this.Lbl_Avance.Size = new System.Drawing.Size(35, 13);
+            this.Lbl_Avance.TabIndex = 27;
+            this.Lbl_Avance.Text = "label3";
+            // 
+            // PB_Avance
+            // 
+            this.PB_Avance.Location = new System.Drawing.Point(456, 102);
+            this.PB_Avance.Name = "PB_Avance";
+            this.PB_Avance.Size = new System.Drawing.Size(506, 13);
+            this.PB_Avance.TabIndex = 28;
+            // 
+            // Btn_Path
+            // 
+            this.Btn_Path.Location = new System.Drawing.Point(222, 102);
+            this.Btn_Path.Name = "Btn_Path";
+            this.Btn_Path.Size = new System.Drawing.Size(75, 23);
+            this.Btn_Path.TabIndex = 29;
+            this.Btn_Path.Text = "Verifica Path";
+            this.Btn_Path.UseVisualStyleBackColor = true;
+            this.Btn_Path.Click += new System.EventHandler(this.Btn_Path_Click);
+            // 
             // Frm_RevisaColadas
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 450);
+            this.Controls.Add(this.Btn_Path);
+            this.Controls.Add(this.PB_Avance);
+            this.Controls.Add(this.Lbl_Avance);
+            this.Controls.Add(this.Btn_CopiaAlServer);
             this.Controls.Add(this.Btn_GuiasNO_Escaneadas);
             this.Controls.Add(this.Btn_ProcesaCAP);
             this.Controls.Add(this.Btn_CargaDatos);
@@ -467,5 +511,9 @@
         private System.Windows.Forms.Button Btn_MailColadas;
         private System.Windows.Forms.Button Btn_ProcesaCAP;
         private System.Windows.Forms.Button Btn_GuiasNO_Escaneadas;
+        private System.Windows.Forms.Button Btn_CopiaAlServer;
+        private System.Windows.Forms.Label Lbl_Avance;
+        private System.Windows.Forms.ProgressBar PB_Avance;
+        private System.Windows.Forms.Button Btn_Path;
     }
 }

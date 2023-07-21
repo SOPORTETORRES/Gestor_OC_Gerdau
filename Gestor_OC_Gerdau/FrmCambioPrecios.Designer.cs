@@ -32,7 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Btn_Grabar = new System.Windows.Forms.Button();
-            this.Tx_Precio = new System.Windows.Forms.TextBox();
+            this.Tx_PrecioTri = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.Btn_Buscar = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -42,6 +42,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Rb_Concepcion = new System.Windows.Forms.RadioButton();
             this.Rb_Coronel = new System.Windows.Forms.RadioButton();
             this.Rb_Calama = new System.Windows.Forms.RadioButton();
             this.Rb_Santiago = new System.Windows.Forms.RadioButton();
@@ -53,6 +54,8 @@
             this.PB = new System.Windows.Forms.ProgressBar();
             this.Lbl_msgPB = new System.Windows.Forms.Label();
             this.Dtg_Resultado = new System.Windows.Forms.DataGridView();
+            this.Tx_PrecioFi = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -76,14 +79,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(10, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(944, 105);
+            this.groupBox1.Size = new System.Drawing.Size(1068, 105);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Datos del Cambio de Precio";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(565, 7);
+            this.button1.Location = new System.Drawing.Point(666, 11);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(66, 23);
             this.button1.TabIndex = 7;
@@ -94,12 +97,14 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.Tx_PrecioFi);
+            this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.Btn_Grabar);
-            this.groupBox4.Controls.Add(this.Tx_Precio);
+            this.groupBox4.Controls.Add(this.Tx_PrecioTri);
             this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Location = new System.Drawing.Point(659, 17);
+            this.groupBox4.Location = new System.Drawing.Point(738, 15);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(253, 72);
+            this.groupBox4.Size = new System.Drawing.Size(324, 72);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Nuevo Precio";
@@ -107,7 +112,7 @@
             // Btn_Grabar
             // 
             this.Btn_Grabar.Enabled = false;
-            this.Btn_Grabar.Location = new System.Drawing.Point(126, 17);
+            this.Btn_Grabar.Location = new System.Drawing.Point(242, 15);
             this.Btn_Grabar.Name = "Btn_Grabar";
             this.Btn_Grabar.Size = new System.Drawing.Size(66, 45);
             this.Btn_Grabar.TabIndex = 6;
@@ -115,25 +120,25 @@
             this.Btn_Grabar.UseVisualStyleBackColor = true;
             this.Btn_Grabar.Click += new System.EventHandler(this.Btn_Grabar_Click);
             // 
-            // Tx_Precio
+            // Tx_PrecioTri
             // 
-            this.Tx_Precio.Location = new System.Drawing.Point(51, 27);
-            this.Tx_Precio.Name = "Tx_Precio";
-            this.Tx_Precio.Size = new System.Drawing.Size(48, 20);
-            this.Tx_Precio.TabIndex = 3;
+            this.Tx_PrecioTri.Location = new System.Drawing.Point(118, 16);
+            this.Tx_PrecioTri.Name = "Tx_PrecioTri";
+            this.Tx_PrecioTri.Size = new System.Drawing.Size(48, 20);
+            this.Tx_PrecioTri.TabIndex = 3;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 29);
+            this.label5.Location = new System.Drawing.Point(17, 19);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 13);
+            this.label5.Size = new System.Drawing.Size(84, 13);
             this.label5.TabIndex = 1;
-            this.label5.Text = "P.U.";
+            this.label5.Text = "Precio Tributario";
             // 
             // Btn_Buscar
             // 
-            this.Btn_Buscar.Location = new System.Drawing.Point(565, 36);
+            this.Btn_Buscar.Location = new System.Drawing.Point(666, 40);
             this.Btn_Buscar.Name = "Btn_Buscar";
             this.Btn_Buscar.Size = new System.Drawing.Size(66, 45);
             this.Btn_Buscar.TabIndex = 5;
@@ -148,7 +153,7 @@
             this.groupBox3.Controls.Add(this.Tx_Year);
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Location = new System.Drawing.Point(296, 19);
+            this.groupBox3.Location = new System.Drawing.Point(401, 15);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(259, 72);
             this.groupBox3.TabIndex = 4;
@@ -200,20 +205,31 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Rb_Concepcion);
             this.groupBox2.Controls.Add(this.Rb_Coronel);
             this.groupBox2.Controls.Add(this.Rb_Calama);
             this.groupBox2.Controls.Add(this.Rb_Santiago);
-            this.groupBox2.Location = new System.Drawing.Point(174, 9);
+            this.groupBox2.Location = new System.Drawing.Point(177, 9);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(116, 88);
+            this.groupBox2.Size = new System.Drawing.Size(197, 88);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Sucursal";
             // 
+            // Rb_Concepcion
+            // 
+            this.Rb_Concepcion.AutoSize = true;
+            this.Rb_Concepcion.Location = new System.Drawing.Point(106, 48);
+            this.Rb_Concepcion.Name = "Rb_Concepcion";
+            this.Rb_Concepcion.Size = new System.Drawing.Size(82, 17);
+            this.Rb_Concepcion.TabIndex = 6;
+            this.Rb_Concepcion.Text = "Concepción";
+            this.Rb_Concepcion.UseVisualStyleBackColor = true;
+            // 
             // Rb_Coronel
             // 
             this.Rb_Coronel.AutoSize = true;
-            this.Rb_Coronel.Location = new System.Drawing.Point(20, 61);
+            this.Rb_Coronel.Location = new System.Drawing.Point(106, 19);
             this.Rb_Coronel.Name = "Rb_Coronel";
             this.Rb_Coronel.Size = new System.Drawing.Size(61, 17);
             this.Rb_Coronel.TabIndex = 5;
@@ -223,7 +239,7 @@
             // Rb_Calama
             // 
             this.Rb_Calama.AutoSize = true;
-            this.Rb_Calama.Location = new System.Drawing.Point(20, 39);
+            this.Rb_Calama.Location = new System.Drawing.Point(20, 49);
             this.Rb_Calama.Name = "Rb_Calama";
             this.Rb_Calama.Size = new System.Drawing.Size(60, 17);
             this.Rb_Calama.TabIndex = 4;
@@ -282,7 +298,7 @@
             this.groupBox5.Controls.Add(this.Dtg_Resultado);
             this.groupBox5.Location = new System.Drawing.Point(4, 119);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(958, 349);
+            this.groupBox5.Size = new System.Drawing.Size(1082, 349);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Resultados";
@@ -325,20 +341,36 @@
             this.Dtg_Resultado.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Resultado.Name = "Dtg_Resultado";
             this.Dtg_Resultado.ReadOnly = true;
-            this.Dtg_Resultado.Size = new System.Drawing.Size(952, 329);
+            this.Dtg_Resultado.Size = new System.Drawing.Size(1076, 329);
             this.Dtg_Resultado.TabIndex = 0;
             this.Dtg_Resultado.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Resultado_CellContentDoubleClick);
+            // 
+            // Tx_PrecioFi
+            // 
+            this.Tx_PrecioFi.Location = new System.Drawing.Point(118, 42);
+            this.Tx_PrecioFi.Name = "Tx_PrecioFi";
+            this.Tx_PrecioFi.Size = new System.Drawing.Size(48, 20);
+            this.Tx_PrecioFi.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 45);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Precio Financiero";
             // 
             // FrmCambioPrecios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(966, 469);
+            this.ClientSize = new System.Drawing.Size(1090, 469);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmCambioPrecios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Formulario de Cambio de Precios (Versión 1.0.5)";
+            this.Text = "Formulario de Cambio de Precios (Versión 1.0.7)";
             this.Load += new System.EventHandler(this.FrmCambioPrecios_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -361,7 +393,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button Btn_Grabar;
-        private System.Windows.Forms.TextBox Tx_Precio;
+        private System.Windows.Forms.TextBox Tx_PrecioTri;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button Btn_Buscar;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -383,5 +415,8 @@
         private System.Windows.Forms.Label Lbl_msgPB;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RadioButton Rb_Coronel;
+        private System.Windows.Forms.RadioButton Rb_Concepcion;
+        private System.Windows.Forms.TextBox Tx_PrecioFi;
+        private System.Windows.Forms.Label label4;
     }
 }

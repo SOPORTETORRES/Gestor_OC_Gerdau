@@ -71,6 +71,9 @@ namespace Gestor_OC_Gerdau
             if (Rb_Coronel .Checked == true)
                 lSucursal = "3";
 
+            if (Rb_Concepcion .Checked == true)
+                lSucursal = "4";
+
             //else
             //    lSucursal = "2";
 
@@ -101,22 +104,6 @@ namespace Gestor_OC_Gerdau
             DataTable lTbl = new DataTable();
             int i = 0; int lNroReg = 0;
 
-            //    if (Rb_Santiago.Checked == true)
-            //        lSucursal = "1";
-            //    else
-            //        lSucursal = "2";
-
-            //if (Rb_TO.Checked == true)
-            //{
-            //    lsql = string.Concat(" SP_CambioPreciosINET 1,'", lSucursal, "','", iYear, "','", iMes, "','','',''");
-            //    lDts = lPx.ObtenerDatos(lsql);
-            //}
-            //else
-            //{
-            //    lsql = string.Concat(" SP_CambioPreciosINET 3,'", lSucursal, "','", iYear, "','", iMes, "','','',''");
-            //    lDts = lPx.ObtenerDatos(lsql);
-            //}
-
             lTbl = ObtenerDatos(iYear, iMes);
             if (lTbl.Rows .Count > 0)
                 {
@@ -141,7 +128,7 @@ namespace Gestor_OC_Gerdau
                 if (MesEstaCerrado(iYear, iMes, lEmp) == true)
                 {
                     Btn_Grabar.Enabled = false;
-                    MessageBox.Show("El Mes Seleccionado se encuentra Abierto, No se puede realizar ninguna Operación ", "Avisos Sistema", MessageBoxButtons.OK);
+                    MessageBox.Show("El Mes Seleccionado se encuentra Cerrado, No se puede realizar ninguna Operación ", "Avisos Sistema", MessageBoxButtons.OK);
                 }
                 else
                     Btn_Grabar.Enabled = true;
@@ -194,9 +181,8 @@ namespace Gestor_OC_Gerdau
             return lRes;
 
         }
-
-
-        private string EnvioCorreoPorCambioPrecio(string iEmp, string iSuc, string iYear, string iMes, string iNewPrecio, DataTable iTbl)
+        
+        private string EnvioCorreoPorCambioPrecio(string iEmp, string iSuc, string iYear, string iMes, string iNewPrecio, DataTable iTbl, string iPrecioFI)
         {
              WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
@@ -205,10 +191,11 @@ namespace Gestor_OC_Gerdau
 
             lRes = string.Concat(" Señores:  ", "  <br> ", "  <br> ");
             lRes = string.Concat(lRes, " Se ha realizado un cambio de precios con los siguientes datos", "  <br> ", "  <br> ");
-            lRes = string.Concat(lRes, " Empresa            :", iEmp, "  <br> ");
-            lRes = string.Concat(lRes, " Sucursal           :", iSuc  , "  <br> ");
-            lRes = string.Concat(lRes, " Periodo            :", iMes, "-", iYear,"  <br> ");
-            lRes = string.Concat(lRes, " Nuevo Precio       :", iNewPrecio, "  <br> ");
+            lRes = string.Concat(lRes, " Empresa                 :", iEmp, "  <br> ");
+            lRes = string.Concat(lRes, " Sucursal                :", iSuc  , "  <br> ");
+            lRes = string.Concat(lRes, " Periodo                 :", iMes, "-", iYear,"  <br> ");
+            lRes = string.Concat(lRes, " Nuevo Precio Tributario :", iNewPrecio, "  <br> ");
+            lRes = string.Concat(lRes, " Nuevo Precio Financiero :", iPrecioFI, "  <br> ");
 
             //**********************************************************
             lRes = string.Concat(lRes, "  <br> ", " El Detalle es el Siguiente: ", "  <br> <br> ");
@@ -272,7 +259,8 @@ namespace Gestor_OC_Gerdau
 
             if (Rb_Coronel .Checked == true)
                 lSucursal = "3";
-
+            if (Rb_Concepcion .Checked == true)
+                lSucursal = "4";
 
 
             lYear = Tx_Year.Text;
@@ -299,14 +287,14 @@ namespace Gestor_OC_Gerdau
                 if (Rb_TO.Checked == true)
                     {
                         lFila["Empresa"] = "TO"; 
-                         lsql = string.Concat(" SP_CambioPreciosINET 6,'", lSucursal, "','", lYear, "','", lMes, "','", Dtg_Resultado.Rows[i].Cells ["Codigo"].Value.ToString ().Trim (),"','",Tx_Precio .Text ,"',''");
+                         lsql = string.Concat(" SP_CambioPreciosINET 6,'", lSucursal, "','", lYear, "','", lMes, "','", Dtg_Resultado.Rows[i].Cells ["Codigo"].Value.ToString ().Trim (),"','",Tx_PrecioTri .Text ,"','", Tx_PrecioFi .Text ,"'");
                         lDts = lPx.ObtenerDatos(lsql);
                     }
                     else
                     {
                         lFila["Empresa"] = "TOSOL";
-                        lsql = string.Concat(" SP_CambioPreciosINET 8,'", lSucursal, "','", lYear, "','", lMes, "','", Dtg_Resultado.Rows[i].Cells["Codigo"].Value.ToString().Trim (), "','", Tx_Precio.Text, "',''");
-                        lDts = lPx.ObtenerDatos(lsql);
+                        lsql = string.Concat(" SP_CambioPreciosINET 8,'", lSucursal, "','", lYear, "','", lMes, "','", Dtg_Resultado.Rows[i].Cells["Codigo"].Value.ToString().Trim (), "','", Tx_PrecioTri.Text, "','", Tx_PrecioFi.Text, "'");
+                    lDts = lPx.ObtenerDatos(lsql);
                     }
                     if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows .Count  > 0))
                     {
@@ -338,6 +326,18 @@ namespace Gestor_OC_Gerdau
                     Application.DoEvents();
                     lTbl.Rows.Add(lFila);
                 }
+            //***************sE DEBE AGREGAR 
+            //A los códigos “63ZUNCHO” y “63PREARMADO”"63PREPARACION" se les debe colocar el valor $1 en todos los caso
+            //  SOLO PARA EL MES QUE ESTAMOS PROCESANDO
+            // para TO
+            lsql = string.Concat(" SP_CambioPreciosINET 12,'", lSucursal, "','", lYear, "','", lMes, "','','1',''");
+            lDts = lPx.ObtenerDatos(lsql);
+            // para TOSOL
+            lsql = string.Concat(" SP_CambioPreciosINET 13,'", lSucursal, "','", lYear, "','", lMes, "','','1',''");
+            lDts = lPx.ObtenerDatos(lsql);
+            // DEBE SER PARA EL CASO DE TO Y TOSOL
+            //*********************************************
+
             return lTbl;
         }
 
@@ -345,26 +345,26 @@ namespace Gestor_OC_Gerdau
         private Boolean ValidaDatos()
         {
             Boolean lRes = true; string lMgs = "";
-            if (EsNumero(Tx_Precio.Text) == false)
+            if (EsNumero(Tx_PrecioTri.Text) == false)
             {
                 lMgs = "Debe indicar un Valor numerico mayor que cero en el campo Precio";
                 lRes = false;
-                Tx_Precio.Focus();
+                Tx_PrecioTri.Focus();
             }
             else
             {
-                if (int.Parse(Tx_Precio.Text) == 0)
+                if (int.Parse(Tx_PrecioTri.Text) == 0)
                 {
                     lMgs = "Debe indicar un Valor numerico mayor que cero en el campo Precio";
                     lRes = false;
-                    Tx_Precio.Focus();
+                    Tx_PrecioTri.Focus();
                 }
             }
 
             if (lRes == false)
             {
                 MessageBox.Show(lMgs, "Avisos Sistema", MessageBoxButtons.OK);
-                Tx_Precio.Focus();
+                Tx_PrecioTri.Focus();
             }
 
 
@@ -409,7 +409,7 @@ namespace Gestor_OC_Gerdau
 //@Mes Varchar(5),                      //@Par1 Varchar(50),                    //@Par2 Varchar(50),
 //@Par3 Varchar(50)
 
-            lsql = string.Concat(" SP_CambioPreciosINET 9,'", iSuc, "','", iYear, "','", iMes, "','", iEmp, "','", Tx_Precio.Text, "',''");
+            lsql = string.Concat(" SP_CambioPreciosINET 9,'", iSuc, "','", iYear, "','", iMes, "','", iEmp, "','", Tx_PrecioTri.Text, "',''");
             lDts = lPx.ObtenerDatos(lsql);
 
         }
@@ -457,7 +457,7 @@ namespace Gestor_OC_Gerdau
             string lMsg = "";DataTable lTblRes = new DataTable();
             if (ValidaDatos() == true)
             {
-                lMsg = string.Concat("¿ Esta Seguro que desea cambiar el precio de los productos a :",Tx_Precio .Text ," pesos ?");
+                lMsg = string.Concat("¿ Esta Seguro que desea cambiar el precio de los productos a :",Tx_PrecioTri .Text ," y ", Tx_PrecioFi .Text ," respectivamente pesos ?");
                 if (MessageBox.Show(lMsg, "Confirmación Sistema", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     lTblRes=CambiarPrecio();
@@ -476,16 +476,18 @@ namespace Gestor_OC_Gerdau
 
                     if (Rb_Coronel.Checked == true)
                         lSuc = "3";
+                    if (Rb_Concepcion .Checked == true)
+                        lSuc = "4";
                     //-------------------------------
                     lYear = Tx_Year.Text;
                     lMes = Cmb_Mes.Text;
 
                     MuestraMensaje(true, " . . . GRABANDO DATOS EN LOG DE TRANSACCIONES . . . ");
-                    RegistraLog(lEmp, lSuc, lYear, lMes, Tx_Precio.Text);
+                    RegistraLog(lEmp, lSuc, lYear, lMes, Tx_PrecioTri.Text);
 
                     // envio de correo
                     MuestraMensaje(true, " . . . ENVIANDO CORREO DE NOTIFICACIÓN A USUARIOS . . . ");
-                    EnvioCorreoPorCambioPrecio(lEmp, lSuc, lYear, lMes, Tx_Precio.Text, lTblRes);
+                    EnvioCorreoPorCambioPrecio(lEmp, lSuc, lYear, lMes, Tx_PrecioTri.Text, lTblRes,Tx_PrecioFi.Text  );
                     // ocultar Panel
                     MuestraMensaje(false , " ");
                     // refrescar pantalla.

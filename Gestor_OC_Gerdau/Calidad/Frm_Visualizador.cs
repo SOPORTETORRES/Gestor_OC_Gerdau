@@ -131,10 +131,7 @@ namespace Gestor_OC_Gerdau.Calidad
                             mReport.Dispose();
                         }
 
-
-
-                    }
-                   
+                    }                  
                 }
                 catch (Exception exc)
                 {
@@ -142,9 +139,7 @@ namespace Gestor_OC_Gerdau.Calidad
                     throw exc;
                     //Application.Restart();
                 }
-
             }
-
         }
 
 

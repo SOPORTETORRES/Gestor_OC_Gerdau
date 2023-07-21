@@ -77,7 +77,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
 
                 lTblDest = ObtenerDestinatarios("-1900"); // Santiago
-                //                  lTblDest = ObtenerDestinatarios("-1910"); ==> Calama
+                //  lTblDest = ObtenerDestinatarios("-1910"); ==> Calama
                 if (lTblDest.Rows.Count > 0)
                 {
                     MailMessage MMessage = new MailMessage();
@@ -145,11 +145,13 @@ namespace Gestor_OC_Gerdau.Calidad
             DataTable lTbl = new DataTable();
 
             lSql = "  select * from sucursal ";
+
             lDts = lPx.ObtenerDatos(lSql);
             if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
             {
                 lTbl = lDts.Tables[0].Copy();
-                Cmb_Suc.DataSource = lTbl;
+                Cmb_Suc.DataSource = lTbl; 
+
                 Cmb_Suc.ValueMember = "Id";
                 Cmb_Suc.DisplayMember = "Nombre";
             }
@@ -169,7 +171,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
-        private void CargaViajes()
+        public  void CargaViajes()
         {
             DataSet lDts = new DataSet(); WS_Gerdau.WS_IntegracionGerdauSoapClient lPx = new WS_Gerdau.WS_IntegracionGerdauSoapClient();
             DataTable lTbl = new DataTable(); int i = 0; int lKgsCert = 0; int lKgsProd = 0; int lDif = 0;
@@ -212,7 +214,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void ObtenerRegistrosColadasCetificados()
         {
-            string lRes = "OK"; int i = 0;Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
+            int i = 0;Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
             string lSql = string.Concat(" Select * from Lotes where procesado='S' order by id DESC ");
             DataTable lTbl = new DataTable();
             lTbl = lLot.CargarDatos(lSql);
@@ -288,7 +290,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void ActualizaCetificados()
         {
             DataTable lTbl = new DataTable(); int i = 0; int lCont = 0;
-            string lSql = ""; string lRes = ""; string lDato = "";
+            string lSql = "";  string lDato = "";
             Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
 
             // string[] separatingStrings = { "}," };
@@ -392,14 +394,10 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
-
-
-
-
-        private void DescargaPdfs_WB()
+         private void DescargaPdfs_WB()
         {
             DataTable lTbl = new DataTable(); int i = 0; string lPathFin = "";
-            string lRes = ""; string lLote = ""; string url = "";
+             string lLote = ""; string url = "";
             Calidad.Frm_WB lFrm = new Frm_WB(); string lLlave = ""; string lNombreArc = "";
 
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
@@ -469,10 +467,10 @@ namespace Gestor_OC_Gerdau.Calidad
             string lNombreArc = "";
 
             DataSet lDts = new DataSet(); Clases.Cls_EnvioDoc lN = new Clases.Cls_EnvioDoc();
-            string lViaje = ""; string lViajesProcesados = ""; DataTable lTbl = new DataTable();
-            DataView lVista = null; string lPathArchivo = @"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\\";
-            string lPathDest = ""; DataTable lTblViajes = new DataTable(); DataView lVista2 = null;
-            string lSucursal = "Calama";
+            //string lViaje = ""; string lViajesProcesados = ""; DataTable lTbl = new DataTable();
+            string lPathArchivo = @"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\\";
+            string lPathDest = ""; DataTable lTblViajes = new DataTable(); 
+            //string lSucursal = "Calama";
 
             lPathArchivo = @"C:\TMP\Calidad\Calama\";
             lPathIni = @"C:\Roberto Becerra\TO\Requerimientos\2019\Calidad\Docs\";
@@ -533,10 +531,7 @@ namespace Gestor_OC_Gerdau.Calidad
                 MessageBox.Show("FIN");
             }
         }
-  
-
-
-      
+    
 
         private void PesisteDatosReProcesa(string iLote, string iUrlCert, string iUrlInf, string iPubInf, string iPubCert)
         {
@@ -704,7 +699,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void CopiarCertificados()
         {
             int i = 0; string lCodigo = ""; DataTable lTNl = new DataTable();
-            string lSucursal = "Calama";
+  
 
             for (i = 0; i < Dtg_Datos.RowCount; i++)
             {
@@ -849,10 +844,14 @@ namespace Gestor_OC_Gerdau.Calidad
                 Application.DoEvents();
                 for (i = 0; i < lTbl.Rows.Count; i++)
                 {
-                    lCom.GeneraDocumentacionEnCarpeta(lTbl.Rows[i]["Codigo"].ToString());
-                    Lbl_Msg.Text = string.Concat("Procesando ", i, " de ", lTbl.Rows.Count, " Viaje: ", lTbl.Rows[i]["Codigo"].ToString());
-                    System.Threading.Thread.Sleep(1000);
-                    k = k++;
+                    if (new Frm_CertificacionViaje().Revisa_ArchivosEnServidor(lTbl.Rows[i]["Codigo"].ToString(),"") == true)
+                    {
+                        lCom.GeneraDocumentacionEnCarpeta(lTbl.Rows[i]["Codigo"].ToString());
+                        Lbl_Msg.Text = string.Concat("Procesando ", i, " de ", lTbl.Rows.Count, " Viaje: ", lTbl.Rows[i]["Codigo"].ToString());
+                        System.Threading.Thread.Sleep(1000);
+                        k = k++;
+                    }
+                    
                 }
 
             }
@@ -1358,8 +1357,17 @@ namespace Gestor_OC_Gerdau.Calidad
             //3.-  Sino  ==> se procesa, doble click 
 
 
-            for (i = 0; i < Dtg_Datos.RowCount; i++)
+                for (i = 0; i < Dtg_Datos.RowCount; i++)
             {
+
+                
+             Lbl_Avance.Text = string.Concat("Procesando registro ", i + 1, " de ", Dtg_Datos.RowCount);
+                PB_Avance.Maximum = Dtg_Datos.RowCount;
+                PB_Avance.Minimum = 0;
+                PB_Avance.Value = i;
+                Lbl_Avance.Refresh();
+                PB_Avance.Refresh();
+                this.Refresh();
                 if (Dtg_Datos.Rows[i].Cells["Codigo"].Value!=null)
                 { }
                 lViaje = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
@@ -1386,7 +1394,12 @@ namespace Gestor_OC_Gerdau.Calidad
                 {
                     if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
                     {   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
-                        CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                        //CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                        Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                        lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                        // lFrm.ActualizaRegistros();
+                        lFrm.ShowDialog();
+                        System.Threading.Thread.Sleep(1000);
                     }
                     else    //3.-  Sino  ==> se procesa, doble click
                     {
@@ -1398,10 +1411,18 @@ namespace Gestor_OC_Gerdau.Calidad
                         System.Threading.Thread.Sleep(1000);
                     }
                     //else
-                    if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
-                    {   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
-                        CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
-                    }
+                    //if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
+                    //{   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
+                    //    //CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                    //    string lSoloVer = ""; string lCodigo = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
+                    //    if (Chk_SoloVer.Checked == true)
+                    //        lSoloVer = "S";
+                    //    else
+                    //        lSoloVer = "N";
+                    //    Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                    //    lFrm.Inicialida(lCodigo, lSoloVer);
+                    //    lFrm.ShowDialog();
+                    //}
                 }
 
             }
@@ -1738,6 +1759,7 @@ namespace Gestor_OC_Gerdau.Calidad
             int  lIndex = e.RowIndex;string lSoloVer = "";
             string lUsaQr = Dtg_Datos.Rows[lIndex].Cells["UsaQR"].Value.ToString();
             string lCodigo = Dtg_Datos.Rows[lIndex].Cells["Codigo"].Value.ToString();
+            string lIdObra = Dtg_Datos.Rows[lIndex].Cells["IdObra"].Value.ToString();
 
             if (Chk_SoloVer.Checked == true)
                 lSoloVer = "S";
@@ -1800,6 +1822,60 @@ namespace Gestor_OC_Gerdau.Calidad
             lFrm.mGenerandoArchivo = false;
             lFrm.Envia_Guias_Pendientes_Entrega_Camion();
 
+        }
+
+        private void Btn_CopiaAlServer_Click(object sender, EventArgs e)
+        {
+            // 1 Calama, 2 Bodega FE en Punta LC, 3 Santiago , 4 Concepción,5 Coronel
+            string lPathLocal = @"C:\TMP\Calidad\Certificacion Automatica\SANTIAGO\"; string lPathDirIT = ""; string lPathDirITServer = "";
+            string lPathServer = @"R:\SANTIAGO\"; string lDir_IT = "";string lPathFinal = "";
+            string lPathFinalLoc = "";
+
+            List<string> dirs = new List<string>(Directory.EnumerateDirectories(lPathLocal));
+            foreach (var dir in dirs)
+            {
+                lPathServer = @"R:\SANTIAGO\";
+                lPathLocal= @"C:\TMP\Calidad\Certificacion Automatica\SANTIAGO\";
+                string[] separatingStrings2 = { "\\" };
+                string[] lpartes2 = dir.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                lDir_IT = lpartes2[lpartes2.Length - 1];
+                lPathDirIT = Path.Combine(lPathLocal, lDir_IT);
+                lPathDirITServer = Path.Combine(lPathServer, lDir_IT);
+                lPathServer = Path.Combine(lPathServer, lDir_IT);
+                lPathServer = string.Concat(lPathServer, "\\");
+                if (Directory.Exists(lPathServer) == false)
+                    Directory.CreateDirectory(lPathServer);
+
+                List<string> dirs_x_IT = new List<string>(Directory.EnumerateDirectories(lPathDirIT));
+                foreach (var SubDir in dirs_x_IT)
+                {
+
+                    lpartes2 = SubDir.Split(separatingStrings2, System.StringSplitOptions.RemoveEmptyEntries);
+                    lPathFinal = Path.Combine(lPathDirITServer, lpartes2[lpartes2.Length - 1]);
+                    lPathFinalLoc = Path.Combine(lPathDirIT, lpartes2[lpartes2.Length - 1]);
+                    DirectoryInfo di = new DirectoryInfo(SubDir);
+                    if (Directory.Exists(lPathFinal) == false)
+                        Directory.CreateDirectory(lPathFinal);
+
+                    lPathServer = lPathFinal;
+                    lPathLocal = lPathFinalLoc;
+                    foreach (var fi in di.GetFiles())
+                    {
+                        lPathFinal = Path.Combine(lPathServer, fi.ToString ());
+                        lPathFinalLoc = Path.Combine(lPathLocal, fi.ToString());
+                        if (File.Exists(lPathFinal) == false)
+                             File.Copy(lPathFinalLoc, lPathFinal, true);
+                    }
+                }
+            }
+        }
+
+        private void Btn_Path_Click(object sender, EventArgs e)
+        {
+            string lPath = @"R:\SANTIAGO";
+            lPath = @"\\192.168.1.193\One Drive\OneDrive - Torres Ocaranza Ltda\GeneracionDocumentosAutomatico\SANTIAGO";
+            if (Directory.Exists(lPath) == true)
+                MessageBox.Show("OK");
         }
     }
 

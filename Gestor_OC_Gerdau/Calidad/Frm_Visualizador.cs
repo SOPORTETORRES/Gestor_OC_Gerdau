@@ -130,7 +130,6 @@ namespace Gestor_OC_Gerdau.Calidad
                             mReport.Close();
                             mReport.Dispose();
                         }
-
                     }                  
                 }
                 catch (Exception exc)

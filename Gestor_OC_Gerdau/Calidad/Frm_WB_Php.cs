@@ -35,8 +35,8 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Wb_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
         {
-            string lError = ""; String lTx = ""; int lInicio = 0; int lFin = 0;
-            string url = ""; string lPathFin = ""; string lNombreArc = "";
+            string lError = "";   int lInicio = 0; 
+           
             //HtmlDocument doc = this.WB.Document;
             //doc.GetElementById("tickerLookUp").SetAttribute("Value", "Gec");
             //if (mTbl.Rows.Count == 0)

@@ -44,6 +44,7 @@
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.Tm_Envios = new System.Windows.Forms.Timer(this.components);
             this.Btn_CorrigePreIT = new System.Windows.Forms.Button();
+            this.Btn_Prueba = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Dtg_Envios)).BeginInit();
             this.SuspendLayout();
@@ -183,11 +184,22 @@
             this.Btn_CorrigePreIT.UseVisualStyleBackColor = true;
             this.Btn_CorrigePreIT.Click += new System.EventHandler(this.Btn_CorrigePreIT_Click);
             // 
+            // Btn_Prueba
+            // 
+            this.Btn_Prueba.Location = new System.Drawing.Point(1037, 34);
+            this.Btn_Prueba.Name = "Btn_Prueba";
+            this.Btn_Prueba.Size = new System.Drawing.Size(75, 47);
+            this.Btn_Prueba.TabIndex = 12;
+            this.Btn_Prueba.Text = "Prueba";
+            this.Btn_Prueba.UseVisualStyleBackColor = true;
+            this.Btn_Prueba.Click += new System.EventHandler(this.Btn_Prueba_Click);
+            // 
             // EnviosAutomaticos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1166, 474);
+            this.Controls.Add(this.Btn_Prueba);
             this.Controls.Add(this.Btn_CorrigePreIT);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Btn_EnvioProdTosol);
@@ -228,5 +240,6 @@
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Timer Tm_Envios;
         private System.Windows.Forms.Button Btn_CorrigePreIT;
+        private System.Windows.Forms.Button Btn_Prueba;
     }
 }

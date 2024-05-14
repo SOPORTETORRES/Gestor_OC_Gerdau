@@ -290,7 +290,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void ActualizaCetificados()
         {
             DataTable lTbl = new DataTable(); int i = 0; int lCont = 0;
-            string lSql = "";  string lDato = "";
+            string lDato = "";
             Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
 
             // string[] separatingStrings = { "}," };
@@ -348,7 +348,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void DescargaPdfs()
         {
             DataTable lTbl = new DataTable(); int i = 0; string lPathFin = "";
-            string lRes = ""; string lLote = ""; string url = "";
+              string lLote = ""; string url = "";
 
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet();
@@ -844,7 +844,7 @@ namespace Gestor_OC_Gerdau.Calidad
                 Application.DoEvents();
                 for (i = 0; i < lTbl.Rows.Count; i++)
                 {
-                    if (new Frm_CertificacionViaje().Revisa_ArchivosEnServidor(lTbl.Rows[i]["Codigo"].ToString(),"") == true)
+                    if (new Frm_CertificacionViaje().Revisa_ArchivosEnServidor(lTbl.Rows[i]["Codigo"].ToString(),"") == "S")
                     {
                         lCom.GeneraDocumentacionEnCarpeta(lTbl.Rows[i]["Codigo"].ToString());
                         Lbl_Msg.Text = string.Concat("Procesando ", i, " de ", lTbl.Rows.Count, " Viaje: ", lTbl.Rows[i]["Codigo"].ToString());
@@ -922,10 +922,10 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void ClasificaViajes()
         {
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); 
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
             DataSet lDtsTmp = new DataSet();
-            string lCodigo = ""; DataTable lTNl = new DataTable(); string UsaQR = "";
+            string lCodigo = ""; DataTable lTNl = new DataTable(); 
             int KgsIt = 0; int kgsProd = 0; int kgsCert = 0; Clases.Cls_EnvioDoc lCom = new Clases.Cls_EnvioDoc();
             int lDif = 0;
 
@@ -1150,7 +1150,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private void ReprocesaColadas( )
         {
 
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
             int k = 0;
             string lViaje = "";
@@ -1357,7 +1357,7 @@ namespace Gestor_OC_Gerdau.Calidad
             //3.-  Sino  ==> se procesa, doble click 
 
 
-                for (i = 0; i < Dtg_Datos.RowCount; i++)
+            for (i = 0; i < Dtg_Datos.RowCount; i++)
             {
 
                 

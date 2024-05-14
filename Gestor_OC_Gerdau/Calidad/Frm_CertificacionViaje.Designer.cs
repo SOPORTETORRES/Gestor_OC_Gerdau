@@ -66,9 +66,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.Dtg_Datos);
-            this.groupBox1.Location = new System.Drawing.Point(8, 113);
+            this.groupBox1.Location = new System.Drawing.Point(8, 132);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1092, 321);
+            this.groupBox1.Size = new System.Drawing.Size(1092, 358);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Detalle";
@@ -79,13 +79,13 @@
             this.Dtg_Datos.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Dtg_Datos.Location = new System.Drawing.Point(3, 16);
             this.Dtg_Datos.Name = "Dtg_Datos";
-            this.Dtg_Datos.Size = new System.Drawing.Size(1086, 302);
+            this.Dtg_Datos.Size = new System.Drawing.Size(1086, 339);
             this.Dtg_Datos.TabIndex = 0;
             this.Dtg_Datos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Datos_CellContentClick);
             // 
             // Btn_Refresh
             // 
-            this.Btn_Refresh.Location = new System.Drawing.Point(11, 49);
+            this.Btn_Refresh.Location = new System.Drawing.Point(8, 45);
             this.Btn_Refresh.Name = "Btn_Refresh";
             this.Btn_Refresh.Size = new System.Drawing.Size(75, 38);
             this.Btn_Refresh.TabIndex = 1;
@@ -95,7 +95,7 @@
             // 
             // Btn_ActualizaLote
             // 
-            this.Btn_ActualizaLote.Location = new System.Drawing.Point(92, 49);
+            this.Btn_ActualizaLote.Location = new System.Drawing.Point(92, 9);
             this.Btn_ActualizaLote.Name = "Btn_ActualizaLote";
             this.Btn_ActualizaLote.Size = new System.Drawing.Size(75, 38);
             this.Btn_ActualizaLote.TabIndex = 2;
@@ -106,7 +106,7 @@
             // Lbl_Lote
             // 
             this.Lbl_Lote.AutoSize = true;
-            this.Lbl_Lote.Location = new System.Drawing.Point(89, 90);
+            this.Lbl_Lote.Location = new System.Drawing.Point(97, 62);
             this.Lbl_Lote.Name = "Lbl_Lote";
             this.Lbl_Lote.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Lote.TabIndex = 3;
@@ -126,6 +126,7 @@
             // 
             this.groupBox2.Controls.Add(this.Btn_RevisaHD);
             this.groupBox2.Controls.Add(this.Btn_ActualizaPorViaje);
+            this.groupBox2.Controls.Add(this.Btn_ObtenerLotesV2);
             this.groupBox2.Controls.Add(this.Tx_Codigo);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Location = new System.Drawing.Point(173, 1);
@@ -157,7 +158,7 @@
             // 
             // Tx_Codigo
             // 
-            this.Tx_Codigo.Location = new System.Drawing.Point(58, 35);
+            this.Tx_Codigo.Location = new System.Drawing.Point(58, 16);
             this.Tx_Codigo.Name = "Tx_Codigo";
             this.Tx_Codigo.Size = new System.Drawing.Size(99, 20);
             this.Tx_Codigo.TabIndex = 1;
@@ -165,7 +166,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 35);
+            this.label1.Location = new System.Drawing.Point(21, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(30, 13);
             this.label1.TabIndex = 0;
@@ -206,7 +207,7 @@
             // Lbl_IdPaquete
             // 
             this.Lbl_IdPaquete.AutoSize = true;
-            this.Lbl_IdPaquete.Location = new System.Drawing.Point(558, 59);
+            this.Lbl_IdPaquete.Location = new System.Drawing.Point(558, 53);
             this.Lbl_IdPaquete.Name = "Lbl_IdPaquete";
             this.Lbl_IdPaquete.Size = new System.Drawing.Size(70, 13);
             this.Lbl_IdPaquete.TabIndex = 9;
@@ -215,7 +216,7 @@
             // Lbl_Diam
             // 
             this.Lbl_Diam.AutoSize = true;
-            this.Lbl_Diam.Location = new System.Drawing.Point(558, 74);
+            this.Lbl_Diam.Location = new System.Drawing.Point(558, 68);
             this.Lbl_Diam.Name = "Lbl_Diam";
             this.Lbl_Diam.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Diam.TabIndex = 10;
@@ -224,7 +225,7 @@
             // Lbl_Kgs
             // 
             this.Lbl_Kgs.AutoSize = true;
-            this.Lbl_Kgs.Location = new System.Drawing.Point(558, 87);
+            this.Lbl_Kgs.Location = new System.Drawing.Point(558, 81);
             this.Lbl_Kgs.Name = "Lbl_Kgs";
             this.Lbl_Kgs.Size = new System.Drawing.Size(70, 13);
             this.Lbl_Kgs.TabIndex = 11;
@@ -269,9 +270,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(656, 77);
+            this.button1.Location = new System.Drawing.Point(981, 74);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(136, 38);
+            this.button1.Size = new System.Drawing.Size(116, 26);
             this.button1.TabIndex = 14;
             this.button1.Text = "Descarga Doc CAP";
             this.button1.UseVisualStyleBackColor = true;
@@ -289,7 +290,7 @@
             // 
             // Btn_ObtenerLotesV2
             // 
-            this.Btn_ObtenerLotesV2.Location = new System.Drawing.Point(173, 90);
+            this.Btn_ObtenerLotesV2.Location = new System.Drawing.Point(24, 52);
             this.Btn_ObtenerLotesV2.Name = "Btn_ObtenerLotesV2";
             this.Btn_ObtenerLotesV2.Size = new System.Drawing.Size(99, 25);
             this.Btn_ObtenerLotesV2.TabIndex = 16;
@@ -300,9 +301,9 @@
             // Lbl_Msg
             // 
             this.Lbl_Msg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Lbl_Msg.Location = new System.Drawing.Point(295, 92);
+            this.Lbl_Msg.Location = new System.Drawing.Point(11, 94);
             this.Lbl_Msg.Name = "Lbl_Msg";
-            this.Lbl_Msg.Size = new System.Drawing.Size(257, 23);
+            this.Lbl_Msg.Size = new System.Drawing.Size(851, 37);
             this.Lbl_Msg.TabIndex = 17;
             this.Lbl_Msg.Text = " 2612432102";
             this.Lbl_Msg.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -321,10 +322,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1110, 436);
+            this.ClientSize = new System.Drawing.Size(1110, 492);
             this.Controls.Add(this.btn_GeneraProducciones);
             this.Controls.Add(this.Lbl_Msg);
-            this.Controls.Add(this.Btn_ObtenerLotesV2);
             this.Controls.Add(this.Btn_LoteForzado);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox3);

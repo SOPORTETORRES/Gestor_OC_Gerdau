@@ -221,59 +221,90 @@ namespace Gestor_OC_Gerdau.Calidad
             int i = 0; string[] lPartes = null; DataRow lFila = null; int cont = 0; string lIdDoc = "";
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";int lCont = 0;
             string[] stringSeparators = new string[] { "TD" }; string lUrlArchivo = "";
-            DataTable lTbl = new DataTable();
+            DataTable lTbl = new DataTable(); DataView lVista = null;
             DataSet lDts = new DataSet(); //DataTable lTbl = new DataTable();
 
-            lTbl.Columns.Add("IdDocumento", Type.GetType("System.String"));
-            lTbl.Columns.Add("TipoDocumento", Type.GetType("System.String"));
-            lTbl.Columns.Add("Lote", Type.GetType("System.String"));
-            lTbl.Columns.Add("FechaProduccion", Type.GetType("System.String"));
-            lTbl.Columns.Add("FechaFirma", Type.GetType("System.String"));
-            lTbl.Columns.Add("UrlArchivo", Type.GetType("System.String"));
 
-            if (iPartes.Length > 0)
+            try
             {
-                for (i = 0; i < iPartes.Length; i++)
-                {
-                    if ((iPartes[i].ToString().Length > 10) && (iPartes[i].ToString().IndexOf ("No hay informes que coincidan") <0))
-                    {
-                        lPartes = iPartes[i].Split(stringSeparators, StringSplitOptions.None);
-                        lIdDoc = LimpiaCaracteres(lPartes[1], false);
-                        if ((lIdDoc.ToString().Length >4))
-                        {
-                            lSql = String.Concat("  select  1 from  certificadoscoladasCap where IdDocumento='",lIdDoc,"'" );
-                            lDts = lPx.ObtenerDatos(lSql);
-                            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0)) //Ya exsite 
-                            {
+                lTbl.Columns.Add("IdDocumento", Type.GetType("System.String"));
+                lTbl.Columns.Add("TipoDocumento", Type.GetType("System.String"));
+                lTbl.Columns.Add("Lote", Type.GetType("System.String"));
+                lTbl.Columns.Add("FechaProduccion", Type.GetType("System.String"));
+                lTbl.Columns.Add("FechaFirma", Type.GetType("System.DateTime"));
+                lTbl.Columns.Add("UrlArchivo", Type.GetType("System.String"));
 
-                            }
-                            else  // Es Nuevo
+                if (iPartes.Length > 0)
+                {
+                    for (i = 0; i < iPartes.Length; i++)
+                    {
+                        if ((iPartes[i].ToString().Length > 10) && (iPartes[i].ToString().IndexOf("No hay informes que coincidan") < 0))
+                        {
+                            lPartes = iPartes[i].Split(stringSeparators, StringSplitOptions.None);
+                            lIdDoc = LimpiaCaracteres(lPartes[1], false);
+                            if ((lIdDoc.ToString().Length > 4))
                             {
-                                if (lCont < 2)
+                                lSql = String.Concat("  select  1 from  certificadoscoladasCap where IdDocumento='", lIdDoc, "'");
+                                lDts = lPx.ObtenerDatos(lSql);
+                                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0)) //Ya exsite 
                                 {
-                                    lSql = String.Concat("  Insert into certificadoscoladasCap (Lote, IdDocumento, TipoDocumento, FechaProduccion, ");
-                                    lSql = String.Concat(lSql, "  FechaFirma, UrlDocumento, Estado ) Values ('", LimpiaCaracteres(lPartes[5], false), "','");
-                                    lSql = String.Concat(lSql, lIdDoc, "','", LimpiaCaracteres(lPartes[3], false), "','", LimpiaCaracteres(lPartes[9], false), "','", LimpiaCaracteres(lPartes[11], false));
-                                    lSql = String.Concat(lSql, "','", LimpiaCaracteres(lPartes[13], true), "','OK')");
-                                    lDts = lPx.ObtenerDatos(lSql);
-                                    lCont++;
+
                                 }
-                            
+                                else  // Es Nuevo
+                                {
+                                    //if (lCont < 2)
+                                    //{
+                                    lFila = lTbl.NewRow();
+                                    lFila["IdDocumento"] = lIdDoc;
+                                    lFila["TipoDocumento"] = LimpiaCaracteres(lPartes[3], false); ;
+                                    lFila["Lote"] = LimpiaCaracteres(lPartes[5], false);
+                                    lFila["FechaProduccion"] = LimpiaCaracteres(lPartes[9], false);
+                                    lFila["FechaFirma"] = LimpiaCaracteres(lPartes[11], false);
+                                    lUrlArchivo = LimpiaCaracteres(lPartes[13], true);
+                                    lFila["UrlArchivo"] = lUrlArchivo;
+                                    lTbl.Rows.Add(lFila);
+
+
+
+
+
+                                    //}
+
+                                }
+                                //   lFila = lTbl.NewRow();
+                                //lFila["IdDocumento"] = lIdDoc;
+                                //lFila["TipoDocumento"] = LimpiaCaracteres(lPartes[3], false); ;
+                                //lFila["Lote"] = LimpiaCaracteres(lPartes[5], false);
+                                //lFila["FechaProduccion"] = LimpiaCaracteres(lPartes[9], false);
+                                //lFila["FechaFirma"] = LimpiaCaracteres(lPartes[11], false);
+                                //lUrlArchivo = LimpiaCaracteres(lPartes[13], true);
+                                //lFila["UrlArchivo"] = lUrlArchivo;
+                                //lTbl.Rows.Add(lFila);
+                                ////url = string.Concat("http://intranet.idiem.cl/cap/cake/ConsultaInformes/bajar/1826693/33863/32" );
                             }
-                            //   lFila = lTbl.NewRow();
-                            //lFila["IdDocumento"] = lIdDoc;
-                            //lFila["TipoDocumento"] = LimpiaCaracteres(lPartes[3], false); ;
-                            //lFila["Lote"] = LimpiaCaracteres(lPartes[5], false);
-                            //lFila["FechaProduccion"] = LimpiaCaracteres(lPartes[9], false);
-                            //lFila["FechaFirma"] = LimpiaCaracteres(lPartes[11], false);
-                            //lUrlArchivo = LimpiaCaracteres(lPartes[13], true);
-                            //lFila["UrlArchivo"] = lUrlArchivo;
-                            //lTbl.Rows.Add(lFila);
-                            ////url = string.Concat("http://intranet.idiem.cl/cap/cake/ConsultaInformes/bajar/1826693/33863/32" );
+                        }
+                    }
+                    lVista = new DataView(lTbl, "", "FechaFirma desc", DataViewRowState.CurrentRows);
+                    if ((lVista.Count > 0)) // & (lCont < 2))
+                    {
+                        for (i = 0; i < lVista.Count; i++)
+                        {
+                            if (lCont < 2)
+                            {
+                                lSql = String.Concat("  Insert into certificadoscoladasCap (Lote, IdDocumento, TipoDocumento, FechaProduccion, ");
+                                lSql = String.Concat(lSql, "  FechaFirma, UrlDocumento, Estado ) Values ('", LimpiaCaracteres(lVista[i]["lote"].ToString().Trim (), false), "','");
+                                lSql = String.Concat(lSql, lVista[i]["IdDocumento"].ToString(), "','", LimpiaCaracteres(lVista[i]["TipoDocumento"].ToString(), false), "','", lVista[i]["FechaProduccion"].ToString().Substring (0,10), "','", lVista[i]["FechaFirma"].ToString().Substring(0, 10));
+                                lSql = String.Concat(lSql, "','", lVista[i]["UrlArchivo"].ToString(), "','OK')");
+                                lDts = lPx.ObtenerDatos(lSql);
+                                lCont++;
+                            }
                         }
                     }
                 }
-
+            }
+            catch (Exception iEx)
+            {
+                throw iEx ;
             }
 
         }

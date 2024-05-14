@@ -49,6 +49,7 @@ namespace Gestor_OC_Gerdau.Facturacion
             bool add = false;
             string fechaHoy_yyyyMMdd = DateTime.Now.ToString("yyyyMMdd");
             List<string> listTest_RutBloqueo = obtenerListadoTest_RutBloqueo();
+            Int64 valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, totalLC = 0, totalLCO = 0, totalLCO_UF = 0, porcUtilizadoLC = 0, lMontoExc = 0;
 
             try
             {
@@ -59,7 +60,7 @@ namespace Gestor_OC_Gerdau.Facturacion
                 WsFacturacion.FacturacionSoapClient wsFacturacion = new WsFacturacion.FacturacionSoapClient();
                 WsFacturacion.ListaDataSet lsDs = new WsFacturacion.ListaDataSet();
                 String rutCompleto = "", rut = "", bloqueado = "N";
-                Int64 valor1 = 0, valor2 = 0, valor3 = 0, valor4 = 0, totalLC = 0, totalLCO = 0, totalLCO_UF = 0, porcUtilizadoLC = 0, lMontoExc = 0;
+                
 
 
                 ////    EXEC SP_LINEA_CREDITO '','',0,'RBECERRA','FIN','','LCO','','','','',9

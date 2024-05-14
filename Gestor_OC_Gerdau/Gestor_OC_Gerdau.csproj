@@ -98,6 +98,12 @@
     <Compile Include="Calidad\Frm_CertificacionViaje.Designer.cs">
       <DependentUpon>Frm_CertificacionViaje.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calidad\Frm_ProcesoPorLote.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Calidad\Frm_ProcesoPorLote.Designer.cs">
+      <DependentUpon>Frm_ProcesoPorLote.cs</DependentUpon>
+    </Compile>
     <Compile Include="Calidad\Frm_RevisaColadas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,12 @@
     </Compile>
     <Compile Include="Models\LineaCredito.cs" />
     <Compile Include="Models\ValorUF.cs" />
+    <Compile Include="Pago\Frm_ActualizaArchivos_PDF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pago\Frm_ActualizaArchivos_PDF.Designer.cs">
+      <DependentUpon>Frm_ActualizaArchivos_PDF.cs</DependentUpon>
+    </Compile>
     <Compile Include="Produccion\Frm_DescargarArchivos.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -277,6 +289,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\WS_ClientesWeb\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WS_Gerdau\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -307,6 +324,9 @@
     </Compile>
     <EmbeddedResource Include="Calidad\Frm_CertificacionViaje.resx">
       <DependentUpon>Frm_CertificacionViaje.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Frm_ProcesoPorLote.resx">
+      <DependentUpon>Frm_ProcesoPorLote.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Frm_RevisaColadas.resx">
       <DependentUpon>Frm_RevisaColadas.cs</DependentUpon>
@@ -377,6 +397,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Logistica\Frm_WBGuiasPendientes.resx">
       <DependentUpon>Frm_WBGuiasPendientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pago\Frm_ActualizaArchivos_PDF.resx">
+      <DependentUpon>Frm_ActualizaArchivos_PDF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Produccion\Frm_DescargarArchivos.resx">
       <DependentUpon>Frm_DescargarArchivos.cs</DependentUpon>
@@ -458,6 +481,7 @@
     <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.Viaje.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WS_ClientesWeb\WS_WebClientes.wsdl" />
     <None Include="Service References\WS_Gerdau\Gestor_OC_Gerdau.WS_Gerdau.Detalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -547,6 +571,7 @@
     <WCFMetadataStorage Include="Service References\Px_BodegaPT\" />
     <WCFMetadataStorage Include="Service References\WsCrud\" />
     <WCFMetadataStorage Include="Service References\WsFacturacion\" />
+    <WCFMetadataStorage Include="Service References\WS_ClientesWeb\" />
     <WCFMetadataStorage Include="Service References\WS_Gerdau\" />
     <WCFMetadataStorage Include="Service References\WS_TO\" />
   </ItemGroup>
@@ -567,6 +592,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WS_ClientesWeb\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WS_ClientesWeb\configuration.svcinfo" />
+    <None Include="Service References\WS_ClientesWeb\configuration91.svcinfo" />
+    <None Include="Service References\WS_ClientesWeb\WS_WebClientes.disco" />
     <None Include="Service References\Px_BedegaPT_Tosol\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

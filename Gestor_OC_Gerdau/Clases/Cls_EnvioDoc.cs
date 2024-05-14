@@ -532,6 +532,12 @@ namespace Gestor_OC_Gerdau.Clases
                     }
                     lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteInf);
                     lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteCert);
+
+                    if ((File.Exists(lPathInfLote) == true))
+                    {
+                        lRes = " ";
+                    }
+                    else
                     if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))
                     {
                         lRes = "";
@@ -548,8 +554,8 @@ namespace Gestor_OC_Gerdau.Clases
         private void ImprimeResumenTrazabilidad(string iPathDestino, string iviaje)
         {
             DataTable lTblTmp = new DataTable();
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; string lRes = "";
-            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); string lTmp = "";
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i; 
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador(); 
             Dts_Informes.CabeceraTrazColadasDataTable lTblCab = new Dts_Informes.CabeceraTrazColadasDataTable();
             Dts_Informes.DetalleTrazColadasDataTable lTblDet = new Dts_Informes.DetalleTrazColadasDataTable();
             Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;

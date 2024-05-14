@@ -33,6 +33,17 @@ namespace Gestor_OC_Gerdau
             //ProcesaEnvioBOM();
         }
 
+        public void EscribeArchivoLog(string lLinea, string lpatharchivo)
+        {
+            string rutaArchivo = "miArchivo.txt"; // Define la ruta y el nombre del archivo
+            string contenido = "Hola, ¡este es el contenido de mi archivo!"; // Define el contenido del archivo
+
+            // Crear el archivo con el contenido especificado
+            lLinea = string.Concat(lLinea, Environment.NewLine);
+            File.AppendAllText(lpatharchivo, lLinea);
+            //File.WriteAllText(lpatharchivo, lLinea);
+
+        }
 
         public void Desactivar_Timmer()
         {
@@ -40,7 +51,7 @@ namespace Gestor_OC_Gerdau
         }
         private void ProcesaEnvio_ProduccionTOSOL(string iDia, string iHora)
         {
-            Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
             string lDia = ""; int lHora = 0; int lHoraActual = 0; string lDiaActual = "";
             Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc(); string lPathArchivo = "";
@@ -352,7 +363,7 @@ namespace Gestor_OC_Gerdau
 
         private string GeneraPlElectronico(string iIdObra, string iTipo)
         {
-            string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
             string lPathBase = ""; string lPathArchivo = ""; string lSql = "";
 
@@ -472,9 +483,9 @@ namespace Gestor_OC_Gerdau
 
         private string Genera_InformeLC( )
         {
-            string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+          WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
-            string lPathBase = ""; string lPathArchivo = "";Boolean lArchivoOK = false;
+            string lPathBase = ""; string lPathArchivo = ""; 
             string lMes = ""; string  lDia = ""; string lTxFecha = "";
 
             try
@@ -562,7 +573,7 @@ namespace Gestor_OC_Gerdau
 
         private string GeneraProduccionTOSOL()
         {
-            string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+       WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
             string lPathBase = ""; string lPathArchivo = ""; string lFecha = "";
             string lLinea = ""; List<string> lListaLineas = new List<string>();
@@ -626,7 +637,7 @@ namespace Gestor_OC_Gerdau
         }
         private string GeneraBOM(string iIdObra, string iTipo)
         {
-            string lRes = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+   WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
             string lPathBase = ""; string lPathArchivo = ""; string lSql = "";
 
@@ -1094,9 +1105,9 @@ namespace Gestor_OC_Gerdau
         {
             Boolean lRes = false; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();
-            string iCodigo = ""; string iObra="";string lSql = "";int i = 0;
+            string lSql = "";int i = 0;
             Clases.Cls_EnvioDoc lLN_EnvioDoc = new Clases.Cls_EnvioDoc();
-            string lTipo = "";
+    
 
             // una Query a los viajes que estan al 100% de su certificación, se envian via mail
             lSql = String.Concat("  SP_ConsultasGenerales  154,'','','','','' ");
@@ -1611,12 +1622,12 @@ namespace Gestor_OC_Gerdau
             return lRes;
         }
 
-        public void EnviaMail_Doc_Calidad_ZIP(string iCodigo, string iObra)
+        public string  EnviaMail_Doc_Calidad_ZIP(string iCodigo, string iObra)
         {
-            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0;
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = ""; int i = 0; string lRes = "";
             DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); string lTx = ""; DataTable lTblDetalle = new DataTable();
             DataTable TblUC = new DataTable(); string lLote = ""; Boolean lPuedeSeguir = true; MailMessage MMessage = new MailMessage();
-            string lPathInfLote = ""; string lPathCertLote = ""; string lLotesEnviados = ""; string lPathZip = ""; string lPathArchs = "";
+           string lLotesEnviados = ""; string lPathZip = ""; string lPathArchs = "";
             DataTable lTblLotes = new DataTable();string lPathCalidad = "";string lTmp = "";string lLog = "";
             Clases.Cls_EnvioDoc lDoc = new Clases.Cls_EnvioDoc();
             lSql = String.Concat("  SP_Consultas_WS  192,'", iCodigo, "','','','',',','',''");
@@ -1802,6 +1813,7 @@ namespace Gestor_OC_Gerdau
                         }
                     }
                 }
+                lRes = lLog;
             }
             catch (Exception iex)
             {
@@ -1811,7 +1823,7 @@ namespace Gestor_OC_Gerdau
                 lDts = lPx.ObtenerDatos(lSql);
                 PersisteLog_EnviosCalidad(iCodigo, string.Concat (iex .Message .ToString (), " Traza: ",iex .StackTrace .ToString ()), "E");
             }
-
+            return lLog;
         }
 
         private void PersisteLog_EnviosCalidad(string iCodigo, string iMsg, string  iEstado)
@@ -2448,6 +2460,16 @@ namespace Gestor_OC_Gerdau
             {
 
             }
+        }
+
+        private void Btn_Prueba_Click(object sender, EventArgs e)
+        {
+            WS_ClientesWeb.WS_WebClientesSoapClient lWeb = new WS_ClientesWeb.WS_WebClientesSoapClient();
+            DataSet lDts = new DataSet();
+            lDts = lWeb.ObtenerObras();
+
+
+
         }
     }
 }

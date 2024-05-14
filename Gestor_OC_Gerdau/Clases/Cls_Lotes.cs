@@ -131,7 +131,7 @@ namespace Gestor_OC_Gerdau.Clases
                 else
                 {
                     lSql = string.Concat("  Update  CertificadosColadas set Url_Certificado='", lUrlCert, "', Url_Informe='", lUrlInf, "',");
-                    lSql = string.Concat(lSql, " PublicacionInforme='", lPubInf, "', PublicacionCertificado='", lPubCert, "'");
+                    lSql = string.Concat(lSql, " PublicacionInforme='", lPubInf, "', PublicacionCertificado='", lPubCert, "', FechaInsert =getdate() ");
                     lSql = string.Concat(lSql, " Where lote='", lLote, "'");
                     //, PublicacionInforme, PublicacionCertificado ) ");
                     lDts = lPx.ObtenerDatos(lSql);

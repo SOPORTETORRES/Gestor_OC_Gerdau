@@ -532,10 +532,13 @@ namespace Gestor_OC_Gerdau.Clases
                     }
                     lPathInfLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteInf);
                     lPathCertLote = Path.Combine(lPathCalidad, iSuc, iPathSigla, iCodigo.Replace("/", "_"), lNomLoteCert);
-
+                    FileInfo lInfoArch = new FileInfo(lPathInfLote);
                     if ((File.Exists(lPathInfLote) == true))
                     {
-                        lRes = " ";
+                        // Obtenrmos el tamaño de una Archivo                    
+                        if ((lInfoArch.Length / 1000) < 50)
+                            lRes=string.Concat("Parece que el archivo esta Malo:", lPathInfLote);
+                        
                     }
                     else
                     if ((File.Exists(lPathInfLote) == true) && (File.Exists(lPathCertLote) == true))

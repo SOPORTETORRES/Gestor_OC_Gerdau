@@ -43,7 +43,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
 
 
-                if (Dtg_Datos.RowCount>0)
+           if (Dtg_Datos.RowCount>0)
             { 
             //1.-  Verificacamos la Actualizar Certificados Paquete
             if (Dtg_Datos.Rows[0].Cells["Id"].Style.BackColor == Color.Yellow)
@@ -230,7 +230,6 @@ namespace Gestor_OC_Gerdau.Calidad
                     {
                         lTbl = lDts.Tables[0].Copy();
                         lPathCert =lTbl.Rows[0]["UrlDocumento"].ToString();
-
                     }
         
                 }
@@ -652,7 +651,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
         }
 
-        private void DescargaPdfs_WB(string iLote)
+        public void DescargaPdfs_WB(string iLote)
         {
             DataTable lTbl = new DataTable(); int i = 0; string lPathFin = "";string lPathCertificados = "";
             string lLote = ""; string url = "";
@@ -696,7 +695,11 @@ namespace Gestor_OC_Gerdau.Calidad
                             cliente = new WebClient();
                             //cliente.Headers.Add("ContentLength", "900000");
                             cliente.DownloadFile(url, lPathFin);
-                            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
+                            System.Threading.Thread.Sleep(200);
+                            // Obtenrmos el tamaño de una Archivo
+                            FileInfo lInfoArch = new FileInfo(lPathFin);
+                            if ((lInfoArch.Length / 1000) < 50 )
+                                MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
                         }
                         System.Threading.Thread.Sleep(200);
 
@@ -712,7 +715,11 @@ namespace Gestor_OC_Gerdau.Calidad
                             cliente = new WebClient();
                             //cliente.Headers.Add("ContentLength", "900000");
                             cliente.DownloadFile(url, lPathFin);
-                            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
+                            System.Threading.Thread.Sleep(200);
+                            // Obtenrmos el tamaño de una Archivo
+                            FileInfo lInfoArch = new FileInfo(lPathFin);
+                            if ((lInfoArch.Length / 1000) < 50)
+                                MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
                         }
 
                         //cliente = new WebClient();

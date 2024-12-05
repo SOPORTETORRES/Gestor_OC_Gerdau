@@ -89,7 +89,8 @@ namespace Gestor_OC_Gerdau.Calidad
                 lTbl = lDts.Tables[0].Copy();
             }
 
-            if (lTbl.Rows.Count > 0)
+
+                if (lTbl.Rows.Count > 0)
             {
                 lMsg = String.Concat(" Hola estimad@s   <br>  Se ha recepcionado la Guía de Materia Prima. <br>  Los datos son los siguinetes: <br>");
                 lMsg = String.Concat(lMsg, "  No. Guía Despacho: ", lTbl.Rows[0]["NroGuiaDespacho"].ToString(), "   <br>  Fecha Guía Despacho: ", lTbl.Rows[0]["FechaGuiaDespacho"].ToString());
@@ -201,76 +202,109 @@ namespace Gestor_OC_Gerdau.Calidad
             DataSet lDts = new DataSet(); WebClient cliente = null;
             Clases.Cls_Lotes lLot = new Clases.Cls_Lotes();
 
-            string lSql = string.Concat("  select * from CertificadosColadas  where  lote='", iLote, "'");
-            //lSql = string.Concat(lSql, " publicacionInforme is not  null  and estado is null ");
-            lDts = lPx.ObtenerDatos(lSql);
-            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
-            {
-                try
+            //string lSql = string.Concat("  select * from CertificadosColadas  where  lote='", iLote, "'");
+            ////lSql = string.Concat(lSql, " publicacionInforme is not  null  and estado is null ");
+            //lDts = lPx.ObtenerDatos(lSql);
+            //if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            //{
+            Frm_CertificacionViaje lDescargaPdf = new Frm_CertificacionViaje();
+            try
                 {
-                    lTbl = lDts.Tables[0].Copy();
-                    //MessageBox.Show(string.Concat("Comienza la descarga del certiticado:", iLote));
 
-                    lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
-
-                    //PB.Maximum = lTbl.Rows.Count; PB.Minimum = 0; PB.Value = 0;
-                    for (i = 0; i < lTbl.Rows.Count; i++)
-                    {
-                        // 1.- Certificado Url_Certificado
-                        url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Certificado"].ToString().Replace("verifica", "docs"));
-                        lLote = lTbl.Rows[i]["lote"].ToString();
-
-
-
-                        lNombreArc = string.Concat(lLote, "_C.pdf");
-
-                        lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
-                        //lLlave = lLot.ObtieneLlave(url);
-                        //url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
-
-
-                        // revisamos si esta en el directorio de los certificados
-                        if (File.Exists(lPathFin) == false)
-                        {
-                            cliente = new WebClient();
-                            //cliente.Headers.Add("ContentLength", "900000");
-                            cliente.DownloadFile(url, lPathFin);
-                            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
-                        }
-                        System.Threading.Thread.Sleep(200);
-
-                        //2.- Informe
-                        lNombreArc = string.Concat(lLote, "_I.pdf");
-                        url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Informe"].ToString().Replace("verifica", "docs"));
-
-                        lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
-                        //lLlave = lLot.ObtieneLlave(url);
-                        //url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
-                        if (File.Exists(lPathFin) == false)
-                        {
-                            cliente = new WebClient();
-                            //cliente.Headers.Add("ContentLength", "900000");
-                            cliente.DownloadFile(url, lPathFin);
-                            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
-                        }
-
-                        //cliente = new WebClient();
-                        //    //cliente.Headers.Add("ContentLength", "0");
-                        //    cliente.DownloadFile(url, lPathFin);
-
-                        //Persistimos los datos procesado 
-                        lSql = string.Concat("  Update  CertificadosColadas   set  estado='OK' where lote='", lLote, "'");
-                        lDts = lPx.ObtenerDatos(lSql);
-                    }
-
+                lDescargaPdf.DescargaPdfs_WB(iLote);
+                lNombreArc = string.Concat(iLote, "_C.pdf");
+                lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
+                lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
+                if (File.Exists(lPathFin) == false)
+                    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
+                else
+                {
+                    FileInfo lInfoArch = new FileInfo(lPathFin);
+                    if ((lInfoArch.Length / 1000) < 50)
+                        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
                 }
+
+                lNombreArc = string.Concat(iLote, "_I.pdf");
+                lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
+                lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
+                if (File.Exists(lPathFin) == false)
+                    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
+                else
+                {
+                    FileInfo lInfoArch = new FileInfo(lPathFin);
+                    if ((lInfoArch.Length / 1000) < 50)
+                        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
+                }
+
+                //lTbl = lDts.Tables[0].Copy();
+                //MessageBox.Show(string.Concat("Comienza la descarga del certiticado:", iLote));
+
+                //lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
+
+                //PB.Maximum = lTbl.Rows.Count; PB.Minimum = 0; PB.Value = 0;
+                //for (i = 0; i < lTbl.Rows.Count; i++)
+                //    {
+                //        // 1.- Certificado Url_Certificado
+                //        url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Certificado"].ToString().Replace("http", "https"));
+                //        //url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Certificado"].ToString());
+                //        lLote = lTbl.Rows[i]["lote"].ToString();
+
+
+
+                //        lNombreArc = string.Concat(lLote, "_C.pdf");
+
+                //        lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
+                //        //lLlave = lLot.ObtieneLlave(url);
+                //        //url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
+
+
+                //        // revisamos si esta en el directorio de los certificados
+                //        if (File.Exists(lPathFin) == false)
+                //        {
+                //            lDescargaPdf.DescargaPdfs_WB(iLote);
+
+                //            cliente = new WebClient();
+                //            //cliente.Headers.Add("ContentLength", "900000");
+                //            cliente.DownloadFile(url, lPathFin);
+                //            FileInfo lInfoArch = new FileInfo(lPathFin);
+                //            if ((lInfoArch.Length / 1000) < 50)
+                //                MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
+
+                //            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
+                //        }
+                //        System.Threading.Thread.Sleep(200);
+
+                //        //2.- Informe
+                //        lNombreArc = string.Concat(lLote, "_I.pdf");
+                //        url = System.IO.Path.Combine(lTbl.Rows[i]["Url_Informe"].ToString().Replace("http", "https"));
+
+                //        lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
+                //        //lLlave = lLot.ObtieneLlave(url);
+                //        //url = string.Concat("http://www.idiem.cl/intranet/modulos/firma/archivo.php?doc_key=", lLlave);
+                //        if (File.Exists(lPathFin) == false)
+                //        {
+                //            cliente = new WebClient();
+                //            //cliente.Headers.Add("ContentLength", "900000");
+                //            cliente.DownloadFile(url, lPathFin);
+                //            FileInfo lInfoArch = new FileInfo(lPathFin);
+                //            if ((lInfoArch.Length / 1000) < 50)
+                //                MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
+
+                //            //MessageBox.Show(string.Concat("Certificado descargado :", lPathFin));
+                //        }
+                //        //Persistimos los datos procesado 
+                //        lSql = string.Concat("  Update  CertificadosColadas   set  estado='OK' where lote='", lLote, "'");
+                //        lDts = lPx.ObtenerDatos(lSql);
+                //}
+
+            }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Problem: " + ex.Message);
 
                 }
 
-            }
+          //  }
 
             //  MessageBox.Show("FIN");
 

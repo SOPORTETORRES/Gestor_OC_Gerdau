@@ -1410,19 +1410,7 @@ namespace Gestor_OC_Gerdau.Calidad
                         lFrm.Dispose();
                         System.Threading.Thread.Sleep(1000);
                     }
-                    //else
-                    //if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
-                    //{   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
-                    //    //CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
-                    //    string lSoloVer = ""; string lCodigo = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
-                    //    if (Chk_SoloVer.Checked == true)
-                    //        lSoloVer = "S";
-                    //    else
-                    //        lSoloVer = "N";
-                    //    Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
-                    //    lFrm.Inicialida(lCodigo, lSoloVer);
-                    //    lFrm.ShowDialog();
-                    //}
+
                 }
 
             }

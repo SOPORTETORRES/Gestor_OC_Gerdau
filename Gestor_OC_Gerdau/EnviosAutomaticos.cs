@@ -25,11 +25,11 @@ namespace Gestor_OC_Gerdau
 
         private void Btn_EnviaPL_Click(object sender, EventArgs e)
         {
-         //   EnviarPL("772", "500");
+            //   EnviarPL("772", "500");
             //System.Threading.Thread.Sleep(1000);
             //EnviarPL( "807", "600");
-
-
+            EnviarPL_Centinela("3655");
+            EnviarPL_Centinela("3654");
             //ProcesaEnvioBOM();
         }
 
@@ -218,6 +218,51 @@ namespace Gestor_OC_Gerdau
             return lPathArc;
         }
 
+        private string EnviarPL_Centinela( string iIdObra)
+        {
+            string lMsg = ""; string lRes = ""; DataTable lTblDest = new DataTable();
+            string lErr = ""; string lTitulo = ""; string lPathArc = "";
+            try
+            {
+                Lbl_Inicio.Text = DateTime.Now.ToLongTimeString();                                         
+                lTitulo = string.Concat("Packing List electrónico Centinela  ", DateTime.Now.ToShortDateString());
+                
+                // 1.- Generar el documentos e PL
+                lPathArc = GeneraPlElectronico_Centinela(iIdObra, "");
+                                              
+                
+                //2.- Obtener los destinatarios
+                lTblDest = ObtenerDestinatarios("-200");
+                if (lTblDest.Rows.Count > 0)
+                {
+                    //3.- Envio de PL..
+                    lMsg = " Señores  Bechtel : <br>   <br> ";
+                    lMsg = string.Concat(lMsg, " Según lo solicitado,  les adjuntamos  ", lTitulo);
+                    lMsg = string.Concat(lMsg, "  <Br>   <Br>   Saludos   <Br> ");
+                    lMsg = string.Concat(lMsg, "  Torres Ocaranza  <Br> ");
+                    lMsg = string.Concat(lMsg, " Favor NO responder a este correo, ya que ha sido generado de forma Automatica  <Br> ");
+
+                    lRes = EnviarArchivo(lMsg, lTitulo, lPathArc, lTblDest);
+
+    
+                    Lbl_Estado.Text = lRes;
+                    Lbl_Fin.Text = DateTime.Now.ToLongTimeString();
+                }
+                lErr = "";
+
+            }
+            catch (Exception iex)
+            {
+                //lErr = String.Concat(" Ha Ocurrido el Siguiente Error <Br>EnviarPL IdObra: ", iIdObra, " Tipo:", iTipo, " PathArchivo: ", lPathArc, " < Br> Detalle Error:", iex.Message.ToString(), " <Br> Traza: ", iex.StackTrace.ToString());
+                //RegistraError(lErr, "Error Al enviar PL Electronico");
+            }
+            finally
+            {
+
+            }
+            return lPathArc;
+        }
+
 
         private string  EnviarPL(string iIdObra, string iTipo)
         {
@@ -389,6 +434,14 @@ namespace Gestor_OC_Gerdau
                         lSql = String.Concat(" SP_ConsultasInformes  28, '", iIdObra, "',' ','','',''");
                         lPathArchivo = String.Concat(lPathBase, "Plantilla_ePL_500.xlsx");
                         break;
+                    case "3654":
+                        lSql = String.Concat(" SP_ConsultasInformes  36, '", iIdObra, "',' ','','',''");
+                        lPathArchivo = String.Concat(lPathBase, "Planilla_TLRebar.xlsx");
+                        break;
+                    case "3655":
+                        lSql = String.Concat(" SP_ConsultasInformes  36, '", iIdObra, "',' ','','',''");
+                        lPathArchivo = String.Concat(lPathBase, "Planilla_TLRebar.xlsx");
+                        break;
                     default:
 
                         break;
@@ -423,36 +476,36 @@ namespace Gestor_OC_Gerdau
                         Pb_Avance.Value = Pb_Avance.Value - 1;
 
                         Application.DoEvents();
-                    lHoja.Cells[19 + i, "A"] = i + 1; lHoja.Cells[19 + i, "B"] = "Torres Ocaranza Ltda";
-                    lHoja.Cells[19 + i, "C"] = lTbl.Rows[i]["PO Number"].ToString();
-                    lHoja.Cells[19 + i, "D"] = lTbl.Rows[i]["PO Line Item # "].ToString();
-                    lHoja.Cells[19 + i, "E"] = "NA";  //'PO Equipment or Tag # (Numero de Equipo de etiqueta)
-                    lHoja.Cells[19 + i, "F"] = lTbl.Rows[i]["ESP"].ToString();
-                    lHoja.Cells[19 + i, "G"] = lTbl.Rows[i]["Number (numero de parte del vendedor)"].ToString();
-                    lHoja.Cells[19 + i, "H"] = lTbl.Rows[i]["Material Description"].ToString();
-                    lHoja.Cells[19 + i, "I"] = lTbl.Rows[i]["Qty"].ToString();
-                    lHoja.Cells[19 + i, "J"] = "CU";
-                    lHoja.Cells[19 + i, "K"] = "NA";
-                    lHoja.Cells[19 + i, "L"] = "NA";
-                    lHoja.Cells[19 + i, "M"] = "NA";
-                    lHoja.Cells[19 + i, "N"] = "NA";
-                    lHoja.Cells[19 + i, "O"] = lTbl.Rows[i]["Package/ Crate/ Bundle/ Box Number /GSE BOL NO"].ToString(); 
-                    lHoja.Cells[19 + i, "P"] = "NA";
-                    lHoja.Cells[19 + i, "Q"] = "NA";
-                    lHoja.Cells[19 + i, "R"] = lTbl.Rows[i][" Length"].ToString();
-                    lHoja.Cells[19 + i, "S"] = "MTS";
-                    lHoja.Cells[19 + i, "T"] = "NA";
-                    lHoja.Cells[19 + i, "U"] = "NA";
-                    lHoja.Cells[19 + i, "V"] = "NA";
-                    lHoja.Cells[19 + i, "W"] = lTbl.Rows[i]["Total Package Weight"].ToString();
-                    lHoja.Cells[19 + i, "X"] = "NA";
-                    lHoja.Cells[19 + i, "Y"] = "NA";
-                    lHoja.Cells[19 + i, "Z"] = "NA";
-                    lHoja.Cells[19 + i, "AA"] = lTbl.Rows[i]["SCN Number"].ToString();
-                    lHoja.Cells[19 + i, "AB"] = lTbl.Rows[i]["N GD"].ToString();
-                    lHoja.Cells[19 + i, "AC"] = lTbl.Rows[i]["Fecha GD"].ToString();
-                    lHoja.Cells[19 + i, "AD"] = lTbl.Rows[i]["Codigo"].ToString();
-                    lHoja.Cells[19 + i, "AE"] = lTbl.Rows[i]["TipoIT"].ToString();
+                    lHoja.Cells[1 + i, "A"] = i + 1; lHoja.Cells[1 + i, "B"] = "Torres Ocaranza Ltda";
+                    lHoja.Cells[1 + i, "C"] = lTbl.Rows[i]["PO Number"].ToString();
+                    lHoja.Cells[1 + i, "D"] = lTbl.Rows[i]["PO Line Item # "].ToString();
+                    lHoja.Cells[1 + i, "E"] = "NA";  //'PO Equipment or Tag # (Numero de Equipo de etiqueta)
+                    lHoja.Cells[1 + i, "F"] = lTbl.Rows[i]["ESP"].ToString();
+                    lHoja.Cells[1 + i, "G"] = lTbl.Rows[i]["Number (numero de parte del vendedor)"].ToString();
+                    lHoja.Cells[1 + i, "H"] = lTbl.Rows[i]["Material Description"].ToString();
+                    lHoja.Cells[1 + i, "I"] = lTbl.Rows[i]["Qty"].ToString();
+                    lHoja.Cells[1 + i, "J"] = "CU";
+                    lHoja.Cells[1 + i, "K"] = "NA";
+                    lHoja.Cells[1 + i, "L"] = "NA";
+                    lHoja.Cells[1 + i, "M"] = "NA";
+                    lHoja.Cells[1 + i, "N"] = "NA";
+                    lHoja.Cells[1 + i, "O"] = lTbl.Rows[i]["Package/ Crate/ Bundle/ Box Number /GSE BOL NO"].ToString(); 
+                    lHoja.Cells[1 + i, "P"] = "NA";
+                    lHoja.Cells[1 + i, "Q"] = "NA";
+                    lHoja.Cells[1 + i, "R"] = lTbl.Rows[i][" Length"].ToString();
+                    lHoja.Cells[1 + i, "S"] = "MTS";
+                    lHoja.Cells[1 + i, "T"] = "NA";
+                    lHoja.Cells[1 + i, "U"] = "NA";
+                    lHoja.Cells[1 + i, "V"] = "NA";
+                    lHoja.Cells[1 + i, "W"] = lTbl.Rows[i]["Total Package Weight"].ToString();
+                    lHoja.Cells[1 + i, "X"] = "NA";
+                    lHoja.Cells[1 + i, "Y"] = "NA";
+                    lHoja.Cells[1 + i, "Z"] = "NA";
+                    lHoja.Cells[1 + i, "AA"] = lTbl.Rows[i]["SCN Number"].ToString();
+                    lHoja.Cells[1 + i, "AB"] = lTbl.Rows[i]["N GD"].ToString();
+                    lHoja.Cells[1 + i, "AC"] = lTbl.Rows[i]["Fecha GD"].ToString();
+                    lHoja.Cells[1 + i, "AD"] = lTbl.Rows[i]["Codigo"].ToString();
+                    lHoja.Cells[1 + i, "AE"] = lTbl.Rows[i]["TipoIT"].ToString();
 
                         //'N GD'
                         //'Material Description
@@ -479,6 +532,162 @@ namespace Gestor_OC_Gerdau
 
 
             return lPathArchivo;
+        }
+
+        private string GeneraPlElectronico_Centinela(string iIdObra, string iTipo)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();string lTmp = "";
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
+            string lPathBase = ""; string lPathArchivo = ""; string lSql = "";
+
+            try
+            {
+                lPathBase = ConfigurationManager.AppSettings["Path_ePL"].ToString();
+                switch (iIdObra)
+                {                    
+                    case "3654":
+                        lSql = String.Concat(" SP_ConsultasInformes  36, '", iIdObra, "',' ','','',''");
+                        lPathArchivo = String.Concat(lPathBase, "Planilla_TLRebar.xlsx");
+                        break;
+                    case "3655":
+                        lSql = String.Concat(" SP_ConsultasInformes  36, '", iIdObra, "',' ','','',''");
+                        lPathArchivo = String.Concat(lPathBase, "Planilla_TLRebar.xlsx");
+                        break;
+                    default:
+
+                        break;
+                }
+               
+                Microsoft.Office.Interop.Excel.Application lApp = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel.Workbook lLibro = lApp.Workbooks.Open(lPathArchivo, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                Microsoft.Office.Interop.Excel.Worksheet lHoja = (Microsoft.Office.Interop.Excel.Worksheet)lLibro.Worksheets.Item[1];
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    //lPathBase = ConfigurationManager.AppSettings["Path_ePL"].ToString();
+                    //lPathArchivo = String.Concat(lPathBase, "Plantilla_ePL.xlsx");
+
+                    //lApp = new Microsoft.Office.Interop.Excel.Application();
+                    //lLibro = lApp.Workbooks.Open(lPathArchivo);
+                    Pb_Avance.Maximum = lTbl.Rows.Count;
+                    Pb_Avance.Minimum = 0; Pb_Avance.Value = 0;
+                    for (i = 0; i < lTbl.Rows.Count; i++)
+                    {
+
+                        Lbl_Estado.Text = string.Concat(i, " de ", lTbl.Rows.Count);
+                        Lbl_Estado.Refresh();
+
+                        if (Pb_Avance.Value < Pb_Avance.Maximum)
+                            Pb_Avance.Value = Pb_Avance.Value + 1;
+                        else
+                            Pb_Avance.Value = Pb_Avance.Value - 1;
+
+                        Application.DoEvents();
+                        lHoja.Cells[2 + i, "A"] = i + 1;
+                        //lHoja.Cells[2 + i, "B"] = ObtenerDatos("W", lTbl.Rows[i][" SUB ELEMENT DESCRIPTION"].ToString());
+                        lHoja.Cells[2 + i, "C"] = ObtenerDatos("C", lTbl.Rows[i][" SUB ELEMENT DESCRIPTION"].ToString());
+                        lTmp= ObtenerDatos("C", lTbl.Rows[i][" SUB ELEMENT DESCRIPTION"].ToString()); ;
+                        lHoja.Cells[2 + i, "B"] = lTmp.Replace("_", "");
+                        lHoja.Cells[2 + i, "D"] = lTbl.Rows[i]["CONSTRUCTION ELEMENT DESCRIPTION"].ToString();
+                        lHoja.Cells[2 + i, "E"] = lTbl.Rows[i][" SUB ELEMENT DESCRIPTION"].ToString();
+                        lHoja.Cells[2 + i, "F"] = lTbl.Rows[i]["CWP"].ToString();
+                        lHoja.Cells[2 + i, "G"] = lTbl.Rows[i]["PREFABRICADO (PREF)/ IN SITUS (INSI)"].ToString();
+                        lHoja.Cells[2 + i, "H"] =string .Concat (lTmp.Replace ("_",""), lTbl.Rows[i]["Marca"].ToString());
+                        lHoja.Cells[2 + i, "I"] = lTbl.Rows[i]["ELEMENT DESCRIPTION"].ToString();
+                        lHoja.Cells[2 + i, "J"] = lTbl.Rows[i]["TIPO DE BARRA"].ToString();
+                        lHoja.Cells[2 + i, "K"] = lTbl.Rows[i]["QUANTITY"].ToString();
+                        lHoja.Cells[2 + i, "L"] = lTbl.Rows[i]["UOM"].ToString();
+                        lHoja.Cells[2 + i, "M"] = lTbl.Rows[i]["UNIT WEIGHT(KG)"].ToString();
+                        lHoja.Cells[2 + i, "N"] = lTbl.Rows[i]["TOTAL WEIGHT"].ToString();
+                        lHoja.Cells[2 + i, "O"] = lTbl.Rows[i]["RECEIPT PO NUMBER"].ToString();
+                        lHoja.Cells[2 + i, "P"] = lTbl.Rows[i]["DIAMETRO"].ToString();
+                        lHoja.Cells[2 + i, "Q"] = lTbl.Rows[i]["a"].ToString();
+                        lHoja.Cells[2 + i, "R"] = lTbl.Rows[i]["b"].ToString();
+                        lHoja.Cells[2 + i, "S"] = lTbl.Rows[i]["c"].ToString();
+                        lHoja.Cells[2 + i, "T"] = lTbl.Rows[i]["d"].ToString();
+                        lHoja.Cells[2 + i, "U"] = lTbl.Rows[i]["e"].ToString();
+                        lHoja.Cells[2 + i, "V"] = lTbl.Rows[i]["f"].ToString();
+                        lHoja.Cells[2 + i, "W"] = lTbl.Rows[i]["g"].ToString();
+                        lHoja.Cells[2 + i, "X"] = lTbl.Rows[i]["h"].ToString();
+                        lHoja.Cells[2 + i, "Y"] = lTbl.Rows[i]["i"].ToString();
+                        lHoja.Cells[2 + i, "Z"] = lTbl.Rows[i]["j"].ToString();
+                        lHoja.Cells[2 + i, "AA"] = lTbl.Rows[i]["K"].ToString();
+                        lHoja.Cells[2 + i, "AB"] = lTbl.Rows[i]["L"].ToString();
+                        lHoja.Cells[2 + i, "AC"] = lTbl.Rows[i]["M"].ToString();
+                        lHoja.Cells[2 + i, "AD"] = lTbl.Rows[i]["N"].ToString();
+                        lHoja.Cells[2 + i, "AE"] = lTbl.Rows[i][" DETAILING OR FABRICATION DRAWING "].ToString();
+                        lHoja.Cells[2 + i, "AF"] = lTbl.Rows[i]["DETAILING OR FABRICATION DRAWING NAME"].ToString();
+                        lHoja.Cells[2 + i, "AG"] = lTbl.Rows[i]["N° GUIA"].ToString();
+                        //'N GD'
+                        //'Material Description
+                    }
+                    lPathArchivo = String.Concat(lPathBase, "E_PL_", iIdObra, "_", DateTime.Now.ToShortDateString().Replace("/", "-"), ".xlsx");
+                    if (System.IO.File.Exists(lPathArchivo) == true)
+                        System.IO.File.Delete(lPathArchivo);
+
+
+                    lLibro.SaveAs(lPathArchivo);
+                    lLibro.Close();
+                    lApp.Quit();
+
+                    ReleaseObject(lApp);
+                    ReleaseObject(lLibro);
+                    ReleaseObject(lHoja);
+
+                }
+            }
+            catch (Exception iex)
+            {
+                throw iex;
+            }
+
+
+            return lPathArchivo;
+        }
+
+        private string ObtenerDatos(string iTipo, string iDato)
+        {
+            string lres = ""; string[] separators = { " " };string lTmpTx = "";
+            if (iTipo.Equals("W"))
+            {
+                string[] lPartes = iDato.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                lTmpTx = lPartes[lPartes.Length - 1].ToString();
+                if (TieneNumeros(lTmpTx) == true)
+                    lres = lPartes[lPartes.Length - 1].ToString().Replace("_", ""); 
+                else
+                    lres = lPartes[0].ToString().Replace ("_","");
+
+                
+               // lres = string.Concat(lTmpTx.Substring(0, 4));
+            }
+            if (iTipo.Equals("C"))
+            {
+               string[] lPartes = iDato.Split(separators, StringSplitOptions.RemoveEmptyEntries);
+                lTmpTx = lPartes[lPartes.Length - 1].ToString();
+                if ((TieneNumeros(lTmpTx )==true ) && (lTmpTx.Length >5 ))
+                    lres = string.Concat(lTmpTx.Substring(0, 4), "_", lTmpTx.Substring(4, 1), "_", lTmpTx.Substring(5, lTmpTx.Length - 5));
+                else
+                    lres = lPartes[0].ToString();
+            }
+            return lres;
+        }
+
+        private Boolean TieneNumeros(string iDato)
+        {
+             int i = 0;Boolean lTieneNumeros = false;
+
+            foreach (char c in iDato)
+            {
+                if (char.IsDigit(c))
+                {
+                    lTieneNumeros= true; // Si encontramos un número, retornamos verdadero
+                }
+
+            }
+
+
+            return lTieneNumeros;
         }
 
         private string Genera_InformeLC( )
@@ -785,7 +994,8 @@ namespace Gestor_OC_Gerdau
 
                 //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                 SmtpClient SClient = new SmtpClient();
-                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
+                //"cubenotificacion1@gmail.com", "wjrgtkfhvghyudtk"
                 //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                 SClient.Port = 587; // 'Puerto del SMTP de Gmail
@@ -828,7 +1038,7 @@ namespace Gestor_OC_Gerdau
                 //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                 SmtpClient SClient = new SmtpClient();
                 //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
-                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                 SClient.Port = 587; // 'Puerto del SMTP de Gmail
                 SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -1208,7 +1418,7 @@ namespace Gestor_OC_Gerdau
                             MMessage.IsBodyHtml = true; // 'Formato html;
                                                         // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                             SmtpClient SClient = new SmtpClient();
-                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                             //SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                             SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                             SClient.Port = 587;  // 'Puerto del SMTP de Gmail
@@ -1305,7 +1515,7 @@ namespace Gestor_OC_Gerdau
 
                                 // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                 SmtpClient SClient = new SmtpClient();
-                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                            SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                           //  SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                                 SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                 SClient.Port = 587;  // 'Puerto del SMTP de Gmail
@@ -1397,7 +1607,7 @@ namespace Gestor_OC_Gerdau
 
                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                     SmtpClient SClient = new SmtpClient();
-                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                    // SClient.Credentials = new System.Net.NetworkCredential("notificaciones@smtyo.cl", "ADM_OC.SSGT.2013");
                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
@@ -1543,7 +1753,7 @@ namespace Gestor_OC_Gerdau
 
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
-                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1585,7 +1795,7 @@ namespace Gestor_OC_Gerdau
                 lRes = false;
 
             lTmp = string.Concat("00000", iLote);
-            if (iLote.IndexOf("00000") > -1)  // si el lote del tipo 0000054321
+            if (iLote.IndexOf("000000") > -1)  // si el lote del tipo 0000054321
                 lRes = false;
 
 
@@ -1757,7 +1967,7 @@ namespace Gestor_OC_Gerdau
                                     // Cargamos en copia oculta a los destinatarios de Calidad y TI.
                                     TblUC = ObtenerDestinatarios("-1700");
                                     for (i = 0; i < TblUC.Rows.Count; i++)
-                                        MMessage.Bcc.Add (TblUC.Rows[i]["MailDest"].ToString());
+                                        MMessage.Bcc.Add(TblUC.Rows[i]["MailDest"].ToString());
 
                                     lTbl = ObtenerDestinatarios(iObra);
                                     //lTbl.Merge(TblUC);
@@ -1784,7 +1994,7 @@ namespace Gestor_OC_Gerdau
                                     // '    //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                                     SmtpClient SClient = new SmtpClient();
                                     //SClient.Credentials = new System.Net.NetworkCredential("Calidad@smtyo.cl", "1ToiZfb0Br");
-                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion1@gmail.com", "azghaiokqalrqqtc");
+                                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion1@gmail.com", "wjrgtkfhvghyudtk");
                                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                                     SClient.Port = 587;  // 'Puerto del SMTP de Gmail
                                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
@@ -1913,7 +2123,7 @@ namespace Gestor_OC_Gerdau
 
                     //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                     SmtpClient SClient = new SmtpClient();
-                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                    SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                     SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                     SClient.Port = 587; // 'Puerto del SMTP de Gmail
                     SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -2029,7 +2239,7 @@ namespace Gestor_OC_Gerdau
 
                         //'Definimos nuestras credenciales para el unvio de emails a traves de Gmail
                         SmtpClient SClient = new SmtpClient();
-                        SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "cbnkfhxfmoxthxsq");
+                        SClient.Credentials = new System.Net.NetworkCredential("cubenotificacion@gmail.com", "hkhzjtpfxlvvnltq");
                         SClient.Host = "smtp.gmail.com";  //'Servidor SMTP de Gmail
                         SClient.Port = 587; // 'Puerto del SMTP de Gmail
                         SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
@@ -2345,6 +2555,7 @@ namespace Gestor_OC_Gerdau
                 case "PT": //Todos los días cada una hora se procesa el producto Terminado
                     // Abrimos Formulario 
                     mGenerandoArchivo = true;
+
                     ProcesaPT(iDia, iHora);
                     mGenerandoArchivo = false;
                     break;
@@ -2374,7 +2585,7 @@ namespace Gestor_OC_Gerdau
             }
             //CargaEnvios();
 
-        }
+       }
 
         private void PintaFila(int iFila, Color iColor)
         {

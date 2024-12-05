@@ -346,7 +346,7 @@ namespace Gestor_OC_Gerdau.Logistica
                         lMovNumdoc = Integrar_BodegaPT(string.Concat ("Integración Automatica: ", lTblRes.Rows[i]["IT"].ToString()), lCodActual, lKgsFinal.ToString(), lPrecio);
                         break;
                     case "TOSOL":
-                        lMovNumdoc = Integrar_BodegaPT_TOSOL("Integración Automatica", lCodActual, lKgsFinal.ToString(), lPrecio);
+                        //lMovNumdoc = Integrar_BodegaPT_TOSOL("Integración Automatica", lCodActual, lKgsFinal.ToString(), lPrecio);
                         break;
 
                 }

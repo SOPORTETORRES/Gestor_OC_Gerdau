@@ -1358,9 +1358,7 @@ namespace Gestor_OC_Gerdau.Calidad
 
 
             for (i = 0; i < Dtg_Datos.RowCount; i++)
-            {
-
-                
+            {                
              Lbl_Avance.Text = string.Concat("Procesando registro ", i + 1, " de ", Dtg_Datos.RowCount);
                 PB_Avance.Maximum = Dtg_Datos.RowCount;
                 PB_Avance.Minimum = 0;

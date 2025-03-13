@@ -1479,7 +1479,7 @@ namespace Gestor_OC_Gerdau.Calidad
                             {
                                 lPuedeSeguir = false;
                                 i = lTblDetalle.Rows.Count-1;
-                                lLog = string .Concat ("lEnv.VerificaLotePaquete=N - IdPaq=", lTblDetalle.Rows[i]["Id"].ToString(),Environment .NewLine);
+                                 lLog = string .Concat ("lEnv.VerificaLotePaquete=N - IdPaq=", lTblDetalle.Rows[i]["Id"].ToString(),Environment .NewLine);
                             }
                         }
 

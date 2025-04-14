@@ -356,6 +356,10 @@ namespace Gestor_OC_Gerdau.Calidad
                                                 {
                                                     lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
                                                 }
+                                                if (lPartesColada.Length == 10)
+                                                {
+                                                    lLot.PesisteDatos(iLote, lPartesColada[6].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString(), lPartesColada[8].ToString());
+                                                }
                                             }
                                         }
                                     }

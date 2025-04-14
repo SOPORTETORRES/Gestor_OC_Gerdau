@@ -32,6 +32,8 @@ namespace Gestor_OC_Gerdau.Calidad {
         
         private DetalleTrazColadasDataTable tableDetalleTrazColadas;
         
+        private CalidadPiloteDataTable tableCalidadPilote;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -71,6 +73,9 @@ namespace Gestor_OC_Gerdau.Calidad {
                 }
                 if ((ds.Tables["DetalleTrazColadas"] != null)) {
                     base.Tables.Add(new DetalleTrazColadasDataTable(ds.Tables["DetalleTrazColadas"]));
+                }
+                if ((ds.Tables["CalidadPilote"] != null)) {
+                    base.Tables.Add(new CalidadPiloteDataTable(ds.Tables["CalidadPilote"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -127,6 +132,16 @@ namespace Gestor_OC_Gerdau.Calidad {
         public DetalleTrazColadasDataTable DetalleTrazColadas {
             get {
                 return this.tableDetalleTrazColadas;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public CalidadPiloteDataTable CalidadPilote {
+            get {
+                return this.tableCalidadPilote;
             }
         }
         
@@ -209,6 +224,9 @@ namespace Gestor_OC_Gerdau.Calidad {
                 if ((ds.Tables["DetalleTrazColadas"] != null)) {
                     base.Tables.Add(new DetalleTrazColadasDataTable(ds.Tables["DetalleTrazColadas"]));
                 }
+                if ((ds.Tables["CalidadPilote"] != null)) {
+                    base.Tables.Add(new CalidadPiloteDataTable(ds.Tables["CalidadPilote"]));
+                }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
                 this.Namespace = ds.Namespace;
@@ -266,6 +284,12 @@ namespace Gestor_OC_Gerdau.Calidad {
                     this.tableDetalleTrazColadas.InitVars();
                 }
             }
+            this.tableCalidadPilote = ((CalidadPiloteDataTable)(base.Tables["CalidadPilote"]));
+            if ((initTable == true)) {
+                if ((this.tableCalidadPilote != null)) {
+                    this.tableCalidadPilote.InitVars();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -284,6 +308,8 @@ namespace Gestor_OC_Gerdau.Calidad {
             base.Tables.Add(this.tableCabeceraTrazColadas);
             this.tableDetalleTrazColadas = new DetalleTrazColadasDataTable();
             base.Tables.Add(this.tableDetalleTrazColadas);
+            this.tableCalidadPilote = new CalidadPiloteDataTable();
+            base.Tables.Add(this.tableCalidadPilote);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -307,6 +333,12 @@ namespace Gestor_OC_Gerdau.Calidad {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializeDetalleTrazColadas() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        private bool ShouldSerializeCalidadPilote() {
             return false;
         }
         
@@ -376,6 +408,9 @@ namespace Gestor_OC_Gerdau.Calidad {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void DetalleTrazColadasRowChangeEventHandler(object sender, DetalleTrazColadasRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public delegate void CalidadPiloteRowChangeEventHandler(object sender, CalidadPiloteRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -1702,6 +1737,498 @@ namespace Gestor_OC_Gerdau.Calidad {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class CalidadPiloteDataTable : global::System.Data.TypedTableBase<CalidadPiloteRow> {
+            
+            private global::System.Data.DataColumn columnFecha;
+            
+            private global::System.Data.DataColumn columnCodigo;
+            
+            private global::System.Data.DataColumn columnProcedencia;
+            
+            private global::System.Data.DataColumn columnOperador;
+            
+            private global::System.Data.DataColumn columnMaquina;
+            
+            private global::System.Data.DataColumn columnAmperaje;
+            
+            private global::System.Data.DataColumn columnVoltaje;
+            
+            private global::System.Data.DataColumn columnAmperaje1;
+            
+            private global::System.Data.DataColumn columnVoltaje1;
+            
+            private global::System.Data.DataColumn columnAmperaje2;
+            
+            private global::System.Data.DataColumn columnVoltaje2;
+            
+            private global::System.Data.DataColumn columnMRT;
+            
+            private global::System.Data.DataColumn columnMDE;
+            
+            private global::System.Data.DataColumn columnPasoEspiral;
+            
+            private global::System.Data.DataColumn columnPasoEspiral1;
+            
+            private global::System.Data.DataColumn columnPasoEspira2;
+            
+            private global::System.Data.DataColumn columnAprobacion;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteDataTable() {
+                this.TableName = "CalidadPilote";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal CalidadPiloteDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected CalidadPiloteDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FechaColumn {
+                get {
+                    return this.columnFecha;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn CodigoColumn {
+                get {
+                    return this.columnCodigo;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ProcedenciaColumn {
+                get {
+                    return this.columnProcedencia;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn OperadorColumn {
+                get {
+                    return this.columnOperador;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn MaquinaColumn {
+                get {
+                    return this.columnMaquina;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn AmperajeColumn {
+                get {
+                    return this.columnAmperaje;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn VoltajeColumn {
+                get {
+                    return this.columnVoltaje;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Amperaje1Column {
+                get {
+                    return this.columnAmperaje1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Voltaje1Column {
+                get {
+                    return this.columnVoltaje1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Amperaje2Column {
+                get {
+                    return this.columnAmperaje2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn Voltaje2Column {
+                get {
+                    return this.columnVoltaje2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn MRTColumn {
+                get {
+                    return this.columnMRT;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn MDEColumn {
+                get {
+                    return this.columnMDE;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PasoEspiralColumn {
+                get {
+                    return this.columnPasoEspiral;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PasoEspiral1Column {
+                get {
+                    return this.columnPasoEspiral1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PasoEspira2Column {
+                get {
+                    return this.columnPasoEspira2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn AprobacionColumn {
+                get {
+                    return this.columnAprobacion;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteRow this[int index] {
+                get {
+                    return ((CalidadPiloteRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event CalidadPiloteRowChangeEventHandler CalidadPiloteRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event CalidadPiloteRowChangeEventHandler CalidadPiloteRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event CalidadPiloteRowChangeEventHandler CalidadPiloteRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public event CalidadPiloteRowChangeEventHandler CalidadPiloteRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void AddCalidadPiloteRow(CalidadPiloteRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteRow AddCalidadPiloteRow(
+                        string Fecha, 
+                        string Codigo, 
+                        string Procedencia, 
+                        string Operador, 
+                        string Maquina, 
+                        string Amperaje, 
+                        string Voltaje, 
+                        string Amperaje1, 
+                        string Voltaje1, 
+                        string Amperaje2, 
+                        string Voltaje2, 
+                        string MRT, 
+                        string MDE, 
+                        string PasoEspiral, 
+                        string PasoEspiral1, 
+                        string PasoEspira2, 
+                        string Aprobacion) {
+                CalidadPiloteRow rowCalidadPiloteRow = ((CalidadPiloteRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Fecha,
+                        Codigo,
+                        Procedencia,
+                        Operador,
+                        Maquina,
+                        Amperaje,
+                        Voltaje,
+                        Amperaje1,
+                        Voltaje1,
+                        Amperaje2,
+                        Voltaje2,
+                        MRT,
+                        MDE,
+                        PasoEspiral,
+                        PasoEspiral1,
+                        PasoEspira2,
+                        Aprobacion};
+                rowCalidadPiloteRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowCalidadPiloteRow);
+                return rowCalidadPiloteRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                CalidadPiloteDataTable cln = ((CalidadPiloteDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new CalidadPiloteDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal void InitVars() {
+                this.columnFecha = base.Columns["Fecha"];
+                this.columnCodigo = base.Columns["Codigo"];
+                this.columnProcedencia = base.Columns["Procedencia"];
+                this.columnOperador = base.Columns["Operador"];
+                this.columnMaquina = base.Columns["Maquina"];
+                this.columnAmperaje = base.Columns["Amperaje"];
+                this.columnVoltaje = base.Columns["Voltaje"];
+                this.columnAmperaje1 = base.Columns["Amperaje1"];
+                this.columnVoltaje1 = base.Columns["Voltaje1"];
+                this.columnAmperaje2 = base.Columns["Amperaje2"];
+                this.columnVoltaje2 = base.Columns["Voltaje2"];
+                this.columnMRT = base.Columns["MRT"];
+                this.columnMDE = base.Columns["MDE"];
+                this.columnPasoEspiral = base.Columns["PasoEspiral"];
+                this.columnPasoEspiral1 = base.Columns["PasoEspiral1"];
+                this.columnPasoEspira2 = base.Columns["PasoEspira2"];
+                this.columnAprobacion = base.Columns["Aprobacion"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            private void InitClass() {
+                this.columnFecha = new global::System.Data.DataColumn("Fecha", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFecha);
+                this.columnCodigo = new global::System.Data.DataColumn("Codigo", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnCodigo);
+                this.columnProcedencia = new global::System.Data.DataColumn("Procedencia", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProcedencia);
+                this.columnOperador = new global::System.Data.DataColumn("Operador", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOperador);
+                this.columnMaquina = new global::System.Data.DataColumn("Maquina", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMaquina);
+                this.columnAmperaje = new global::System.Data.DataColumn("Amperaje", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmperaje);
+                this.columnVoltaje = new global::System.Data.DataColumn("Voltaje", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVoltaje);
+                this.columnAmperaje1 = new global::System.Data.DataColumn("Amperaje1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmperaje1);
+                this.columnVoltaje1 = new global::System.Data.DataColumn("Voltaje1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVoltaje1);
+                this.columnAmperaje2 = new global::System.Data.DataColumn("Amperaje2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAmperaje2);
+                this.columnVoltaje2 = new global::System.Data.DataColumn("Voltaje2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVoltaje2);
+                this.columnMRT = new global::System.Data.DataColumn("MRT", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMRT);
+                this.columnMDE = new global::System.Data.DataColumn("MDE", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMDE);
+                this.columnPasoEspiral = new global::System.Data.DataColumn("PasoEspiral", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPasoEspiral);
+                this.columnPasoEspiral1 = new global::System.Data.DataColumn("PasoEspiral1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPasoEspiral1);
+                this.columnPasoEspira2 = new global::System.Data.DataColumn("PasoEspira2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPasoEspira2);
+                this.columnAprobacion = new global::System.Data.DataColumn("Aprobacion", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAprobacion);
+                this.columnAmperaje1.Caption = "Amperaje";
+                this.columnVoltaje1.Caption = "Voltaje";
+                this.columnAmperaje2.Caption = "Amperaje";
+                this.columnVoltaje2.Caption = "Voltaje";
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteRow NewCalidadPiloteRow() {
+                return ((CalidadPiloteRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new CalidadPiloteRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(CalidadPiloteRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.CalidadPiloteRowChanged != null)) {
+                    this.CalidadPiloteRowChanged(this, new CalidadPiloteRowChangeEvent(((CalidadPiloteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.CalidadPiloteRowChanging != null)) {
+                    this.CalidadPiloteRowChanging(this, new CalidadPiloteRowChangeEvent(((CalidadPiloteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.CalidadPiloteRowDeleted != null)) {
+                    this.CalidadPiloteRowDeleted(this, new CalidadPiloteRowChangeEvent(((CalidadPiloteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.CalidadPiloteRowDeleting != null)) {
+                    this.CalidadPiloteRowDeleting(this, new CalidadPiloteRowChangeEvent(((CalidadPiloteRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void RemoveCalidadPiloteRow(CalidadPiloteRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                Dts_Informes ds = new Dts_Informes();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "CalidadPiloteDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class Cabecera_CertManRow : global::System.Data.DataRow {
@@ -2552,6 +3079,497 @@ namespace Gestor_OC_Gerdau.Calidad {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class CalidadPiloteRow : global::System.Data.DataRow {
+            
+            private CalidadPiloteDataTable tableCalidadPilote;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            internal CalidadPiloteRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableCalidadPilote = ((CalidadPiloteDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Fecha {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.FechaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Fecha\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.FechaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Codigo {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.CodigoColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Codigo\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.CodigoColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Procedencia {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.ProcedenciaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Procedencia\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.ProcedenciaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Operador {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.OperadorColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Operador\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.OperadorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Maquina {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.MaquinaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Maquina\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.MaquinaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Amperaje {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.AmperajeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Amperaje\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.AmperajeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Voltaje {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.VoltajeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Voltaje\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.VoltajeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Amperaje1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.Amperaje1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Amperaje1\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.Amperaje1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Voltaje1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.Voltaje1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Voltaje1\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.Voltaje1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Amperaje2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.Amperaje2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Amperaje2\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.Amperaje2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Voltaje2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.Voltaje2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Voltaje2\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.Voltaje2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string MRT {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.MRTColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'MRT\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.MRTColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string MDE {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.MDEColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'MDE\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.MDEColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PasoEspiral {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.PasoEspiralColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'PasoEspiral\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.PasoEspiralColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PasoEspiral1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.PasoEspiral1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'PasoEspiral1\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.PasoEspiral1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PasoEspira2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.PasoEspira2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'PasoEspira2\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.PasoEspira2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Aprobacion {
+                get {
+                    try {
+                        return ((string)(this[this.tableCalidadPilote.AprobacionColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Aprobacion\' de la tabla \'CalidadPilote\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCalidadPilote.AprobacionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFechaNull() {
+                return this.IsNull(this.tableCalidadPilote.FechaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFechaNull() {
+                this[this.tableCalidadPilote.FechaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsCodigoNull() {
+                return this.IsNull(this.tableCalidadPilote.CodigoColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetCodigoNull() {
+                this[this.tableCalidadPilote.CodigoColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsProcedenciaNull() {
+                return this.IsNull(this.tableCalidadPilote.ProcedenciaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetProcedenciaNull() {
+                this[this.tableCalidadPilote.ProcedenciaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsOperadorNull() {
+                return this.IsNull(this.tableCalidadPilote.OperadorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetOperadorNull() {
+                this[this.tableCalidadPilote.OperadorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsMaquinaNull() {
+                return this.IsNull(this.tableCalidadPilote.MaquinaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetMaquinaNull() {
+                this[this.tableCalidadPilote.MaquinaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAmperajeNull() {
+                return this.IsNull(this.tableCalidadPilote.AmperajeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAmperajeNull() {
+                this[this.tableCalidadPilote.AmperajeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsVoltajeNull() {
+                return this.IsNull(this.tableCalidadPilote.VoltajeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetVoltajeNull() {
+                this[this.tableCalidadPilote.VoltajeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAmperaje1Null() {
+                return this.IsNull(this.tableCalidadPilote.Amperaje1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAmperaje1Null() {
+                this[this.tableCalidadPilote.Amperaje1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsVoltaje1Null() {
+                return this.IsNull(this.tableCalidadPilote.Voltaje1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetVoltaje1Null() {
+                this[this.tableCalidadPilote.Voltaje1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAmperaje2Null() {
+                return this.IsNull(this.tableCalidadPilote.Amperaje2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAmperaje2Null() {
+                this[this.tableCalidadPilote.Amperaje2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsVoltaje2Null() {
+                return this.IsNull(this.tableCalidadPilote.Voltaje2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetVoltaje2Null() {
+                this[this.tableCalidadPilote.Voltaje2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsMRTNull() {
+                return this.IsNull(this.tableCalidadPilote.MRTColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetMRTNull() {
+                this[this.tableCalidadPilote.MRTColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsMDENull() {
+                return this.IsNull(this.tableCalidadPilote.MDEColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetMDENull() {
+                this[this.tableCalidadPilote.MDEColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPasoEspiralNull() {
+                return this.IsNull(this.tableCalidadPilote.PasoEspiralColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPasoEspiralNull() {
+                this[this.tableCalidadPilote.PasoEspiralColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPasoEspiral1Null() {
+                return this.IsNull(this.tableCalidadPilote.PasoEspiral1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPasoEspiral1Null() {
+                this[this.tableCalidadPilote.PasoEspiral1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPasoEspira2Null() {
+                return this.IsNull(this.tableCalidadPilote.PasoEspira2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPasoEspira2Null() {
+                this[this.tableCalidadPilote.PasoEspira2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsAprobacionNull() {
+                return this.IsNull(this.tableCalidadPilote.AprobacionColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetAprobacionNull() {
+                this[this.tableCalidadPilote.AprobacionColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
@@ -2673,6 +3691,40 @@ namespace Gestor_OC_Gerdau.Calidad {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public DetalleTrazColadasRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        public class CalidadPiloteRowChangeEvent : global::System.EventArgs {
+            
+            private CalidadPiloteRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteRowChangeEvent(CalidadPiloteRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public CalidadPiloteRow Row {
                 get {
                     return this.eventRow;
                 }

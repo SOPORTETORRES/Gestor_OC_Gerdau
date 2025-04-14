@@ -27,7 +27,7 @@ namespace Gestor_OC_Gerdau
         {
             //   EnviarPL("772", "500");
             //System.Threading.Thread.Sleep(1000);
-            //EnviarPL( "807", "600");
+           // EnviarPL( "807", "600");
             EnviarPL_Centinela("3655");
             EnviarPL_Centinela("3654");
             //ProcesaEnvioBOM();

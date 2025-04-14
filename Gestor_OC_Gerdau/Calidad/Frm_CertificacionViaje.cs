@@ -1692,7 +1692,7 @@ namespace Gestor_OC_Gerdau.Calidad
                     // actualizamos tabla Mysql para buscar los lotes
                     //ActualizaLoteForzado_V2(iLote);
 
-                    if (ObtenerLoteProcesado(iLote) == "N")
+                     if (ObtenerLoteProcesado(iLote) == "N")
                     {
                         if (lLotes.IndexOf(iLote) == -1)
                         {

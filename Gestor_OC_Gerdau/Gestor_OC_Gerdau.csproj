@@ -87,6 +87,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Calidad\Dts_Informes.cs">
+      <DependentUpon>Dts_Informes.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Calidad\Dts_Informes.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -151,6 +154,12 @@
     </Compile>
     <Compile Include="Calidad\Frm_WB_Ver.Designer.cs">
       <DependentUpon>Frm_WB_Ver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Calidad\Rep_AseguramientoPilote.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_AseguramientoPilote.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Calidad\Rep_CertificadoMan.cs">
       <AutoGen>True</AutoGen>
@@ -351,6 +360,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Frm_WB_Ver.resx">
       <DependentUpon>Frm_WB_Ver.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_AseguramientoPilote.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_AseguramientoPilote.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Rep_CertificadoMan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>

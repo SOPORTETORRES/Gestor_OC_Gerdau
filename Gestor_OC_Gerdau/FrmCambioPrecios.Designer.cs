@@ -31,6 +31,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Tx_PrecioFi = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.Btn_Grabar = new System.Windows.Forms.Button();
             this.Tx_PrecioTri = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,8 +56,6 @@
             this.PB = new System.Windows.Forms.ProgressBar();
             this.Lbl_msgPB = new System.Windows.Forms.Label();
             this.Dtg_Resultado = new System.Windows.Forms.DataGridView();
-            this.Tx_PrecioFi = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -108,6 +108,22 @@
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Nuevo Precio";
+            // 
+            // Tx_PrecioFi
+            // 
+            this.Tx_PrecioFi.Location = new System.Drawing.Point(118, 42);
+            this.Tx_PrecioFi.Name = "Tx_PrecioFi";
+            this.Tx_PrecioFi.Size = new System.Drawing.Size(48, 20);
+            this.Tx_PrecioFi.TabIndex = 8;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 45);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(89, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Precio Financiero";
             // 
             // Btn_Grabar
             // 
@@ -345,22 +361,6 @@
             this.Dtg_Resultado.TabIndex = 0;
             this.Dtg_Resultado.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dtg_Resultado_CellContentDoubleClick);
             // 
-            // Tx_PrecioFi
-            // 
-            this.Tx_PrecioFi.Location = new System.Drawing.Point(118, 42);
-            this.Tx_PrecioFi.Name = "Tx_PrecioFi";
-            this.Tx_PrecioFi.Size = new System.Drawing.Size(48, 20);
-            this.Tx_PrecioFi.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 45);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Precio Financiero";
-            // 
             // FrmCambioPrecios
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,7 +370,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmCambioPrecios";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Formulario de Cambio de Precios (Versión 1.0.7)";
+            this.Text = "Formulario de Cambio de Precios (Versión 1.0.8)";
             this.Load += new System.EventHandler(this.FrmCambioPrecios_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

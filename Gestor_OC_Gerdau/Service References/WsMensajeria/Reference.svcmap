@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="795d85e9-8373-40bc-8267-0494dcc45644" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://192.168.1.195/WS/Ws_To.asmx" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Dts_PL.xsd" MetadataType="Schema" ID="b27f0275-5d03-4bbc-b1b2-3866509d34c1" SourceId="1" SourceUrl="http://192.168.1.195/WS/Ws_To.asmx?schema=Dts_PL" />
+    <MetadataFile FileName="Ws_To.wsdl" MetadataType="Wsdl" ID="5b532129-f694-4d56-9cd9-13837066e978" SourceId="1" SourceUrl="http://192.168.1.195/WS/Ws_To.asmx?wsdl" />
+    <MetadataFile FileName="Ws_To.disco" MetadataType="Disco" ID="f9c20ca1-bf8a-4952-a537-6e03b9802b4b" SourceId="1" SourceUrl="http://192.168.1.195/WS/Ws_To.asmx?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

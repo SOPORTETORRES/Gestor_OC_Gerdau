@@ -1723,7 +1723,11 @@ namespace Gestor_OC_Gerdau.Calidad
                 if (lMsg.Trim().Length > 5)
                     Lbl_Msg.Text = lMsg;
                 else
-                    Lbl_Msg.Text = string.Concat(" Finalizado OK.   ");
+                {
+                    new Clases.Cls_EnvioDoc().GeneraDocumentacionExtra_EnCarpeta(Tx_Codigo.Text);
+                        Lbl_Msg.Text = string.Concat(" Finalizado OK.   ");
+                }
+                    
 
                 Lbl_Msg.Refresh(); this.Refresh();
             }

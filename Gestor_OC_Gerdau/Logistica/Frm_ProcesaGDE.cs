@@ -50,7 +50,7 @@ namespace Gestor_OC_Gerdau.Logistica
 
 
 
-            lSql = "  select *      from GuiasRecibidas  where Estado ='I'  and FechaGuiaInet >'01/06/2022 00:00:01' order by nroGuiaInet desc ";
+            lSql = "  select *  , (Select Par1 from   to_parametros where subtabla ='TiposGuiaINET' and par2= doccod )    from GuiasRecibidas  where Estado ='I'  and FechaGuiaInet >'01/06/2022 00:00:01' order by nroGuiaInet desc ";
             lDts = lPx.ObtenerDatos(lSql);
             if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
                 lTbl = lDts.Tables[0].Copy();

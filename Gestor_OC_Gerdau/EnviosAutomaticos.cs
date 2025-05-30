@@ -1005,6 +1005,7 @@ namespace Gestor_OC_Gerdau
 
                 SClient.Send(MMessage);
                 lRes = "Ok";
+                new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
             }
             catch (Exception iex)
             {
@@ -1047,6 +1048,7 @@ namespace Gestor_OC_Gerdau
 
                 SClient.Send(MMessage);
                 lRes = "Ok";
+                new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
             }
             catch (Exception iex)
             {
@@ -1427,7 +1429,7 @@ namespace Gestor_OC_Gerdau
                             SClient.Send(MMessage);
 
 
-
+                            new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
 
                         }
 
@@ -1522,7 +1524,7 @@ namespace Gestor_OC_Gerdau
                                 SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
                                                           // ' //'Capturamos los errores en el envio
                                 SClient.Send(MMessage);
-                             
+                            new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
 
                         }
                     }
@@ -1614,7 +1616,7 @@ namespace Gestor_OC_Gerdau
                     SClient.EnableSsl = true; // ' // 'Habilita el SSL, necesio en Gmail
                                                 // ' //'Capturamos los errores en el envio
                     SClient.Send(MMessage);
-
+                    new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
                 }
             }
             catch (Exception iex)
@@ -1763,6 +1765,7 @@ namespace Gestor_OC_Gerdau
                                     //persistimo el envio para no enviarlo nuevamente
                                     lSql = String.Concat("  Update viaje set mailCalidadEnviado='S' where Codigo='", iCodigo, "' ");
                                     lDts = lPx.ObtenerDatos(lSql);
+                                    new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
                                 }
                                 else
                                 {
@@ -2005,6 +2008,12 @@ namespace Gestor_OC_Gerdau
                                     //persistimo el envio para no enviarlo nuevamente
                                     lSql = String.Concat("  Update viaje set mailCalidadEnviado='S' , FechaMailCalidad=getdate()  where Codigo='", iCodigo, "' ");
                                     lDts = lPx.ObtenerDatos(lSql);
+                                    //Actualizamos el Log de envios de Correo
+                                    new Clases .Cls_Comun().PersisteLog_EnviosMail("cubenotificacion1@gmail.com");
+                                    //lSql = String.Concat("  Inser into Envios_Mail ( CuentaMail, Fecha, NroEnvios) values ('cubenotificacion1@gmail.com', ");
+                                    //lSql = String.Concat( lSql , ""  
+                                    //lDts = lPx.ObtenerDatos(lSql);
+
                                 }
                                 else
                                 {
@@ -2035,6 +2044,8 @@ namespace Gestor_OC_Gerdau
             }
             return lLog;
         }
+
+
 
         private void PersisteLog_EnviosCalidad(string iCodigo, string iMsg, string  iEstado)
         {
@@ -2129,7 +2140,7 @@ namespace Gestor_OC_Gerdau
                     SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
                                               //'Capturamos los errores en el envio
                     SClient.Send(MMessage);
-                   
+                    new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
                 }
                 catch (Exception iex)
                 {
@@ -2245,6 +2256,7 @@ namespace Gestor_OC_Gerdau
                         SClient.EnableSsl = true; // 'Habilita el SSL, necesio en Gmail
                                                   //'Capturamos los errores en el envio
                         SClient.Send(MMessage);
+                        new Clases.Cls_Comun().PersisteLog_EnviosMail("cubenotificacion@gmail.com");
                     }
                     catch (Exception iex)
                     {

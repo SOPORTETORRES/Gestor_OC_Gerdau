@@ -48,6 +48,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommonLibrary, Version=1.0.0.19058, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,6 +164,12 @@
       <DependentUpon>Rep_AseguramientoPilote.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Calidad\Rep_CertificadoFab_Tosol.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_CertificadoFab_Tosol.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Calidad\Rep_CertificadoMan.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -171,6 +180,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Rep_TrazabilidadColada.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Calidad\Rep_TrazabilidadCol_TOSOL.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_TrazabilidadCol_TOSOL.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Clases\Rep_TrazabilidadColada.cs">
@@ -298,6 +313,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\WsMensajeria\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\WS_ClientesWeb\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -365,6 +385,10 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_AseguramientoPilote.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_CertificadoFab_Tosol.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_CertificadoFab_Tosol.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Calidad\Rep_CertificadoMan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_CertificadoMan.cs</LastGenOutput>
@@ -372,6 +396,10 @@
     <EmbeddedResource Include="Calidad\Rep_TrazabilidadColada.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_TrazabilidadColada.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_TrazabilidadCol_TOSOL.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_TrazabilidadCol_TOSOL.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Clases\Rep_TrazabilidadColada.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -494,6 +522,80 @@
     <None Include="Service References\WsFacturacion\Gestor_OC_Gerdau.WsFacturacion.Viaje.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WsMensajeria\Dts_PL.xsd" />
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Dts_PL.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.GrabaImagenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.GrabarImagenesLayoutResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.GrabarImagenFormaOriginalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.GrabarImagenFormaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Objeto_WsINET.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.ObtenerImagenOriginalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.ObtenerImagenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.ObtenerImgResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.ObtenerImg_PorIdPiezaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.PiezaTipoB.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoActaEntrega.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoColada.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoDetalleCotas.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoDetalleFormaConHilos.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoDetallePaquetesPieza.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoEntregas_OC.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoForma.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoMov.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.TipoOC.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Tipo_Hd.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Tipo_IT.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Tipo_Obra.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Gestor_OC_Gerdau.WsMensajeria.Tipo_Pieza.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WsMensajeria\Ws_To.wsdl" />
     <None Include="Service References\WS_ClientesWeb\WS_WebClientes.wsdl" />
     <None Include="Service References\WS_Gerdau\Gestor_OC_Gerdau.WS_Gerdau.Detalle.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -584,6 +686,7 @@
     <WCFMetadataStorage Include="Service References\Px_BodegaPT\" />
     <WCFMetadataStorage Include="Service References\WsCrud\" />
     <WCFMetadataStorage Include="Service References\WsFacturacion\" />
+    <WCFMetadataStorage Include="Service References\WsMensajeria\" />
     <WCFMetadataStorage Include="Service References\WS_ClientesWeb\" />
     <WCFMetadataStorage Include="Service References\WS_Gerdau\" />
     <WCFMetadataStorage Include="Service References\WS_TO\" />
@@ -605,6 +708,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\WsMensajeria\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\WsMensajeria\configuration.svcinfo" />
+    <None Include="Service References\WsMensajeria\configuration91.svcinfo" />
+    <None Include="Service References\WsMensajeria\Ws_To.disco" />
     <None Include="Service References\WS_ClientesWeb\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -662,6 +772,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Desarrollos Externos\EP\EstadosdePagos20170914\EstadosdePagos\EstadosdePagos.csproj">
+      <Project>{050299cd-7885-4389-b95a-d5f5c8aab4e8}</Project>
+      <Name>EstadosdePagos</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Metalurgia\Metalurgia\app\Integracion_INET\Integracion_INET\Integracion_INET.vbproj">
       <Project>{76c114fe-eea8-49fb-9cc9-f8f59eba3ca1}</Project>
       <Name>Integracion_INET</Name>

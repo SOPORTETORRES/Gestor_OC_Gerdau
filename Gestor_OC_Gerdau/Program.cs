@@ -31,7 +31,7 @@ namespace Gestor_OC_Gerdau
             Application.Run(new Calidad.Frm_RevisaColadas());
             
 
-            // Application.Run(new Logistica.Frm_ProcesaGDE());
+             Application.Run(new Logistica.Frm_ProcesaGDE());
             //Application.Run(new Facturacion.Frm_RevisionSaldos());
             //Application.Run(new Calidad.Frm_SqlMysql());
             //Application.Run(new Calidad.Frm_WB());

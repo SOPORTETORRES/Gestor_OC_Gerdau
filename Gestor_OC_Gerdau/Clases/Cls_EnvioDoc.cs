@@ -358,6 +358,88 @@ namespace Gestor_OC_Gerdau.Clases
                 lSql = string.Concat(" Update viaje set CarpetaOK='S' where codigo='", iViaje, "'");
                 lDts = lPx.ObtenerDatos(lSql);
             }
+
+            // si es de TOSOL se debe imprimir ImprimeAseguramientoPilote
+            //Verificamos que la It Sea de TOSOL                       
+            lSql = string.Concat(lSql, " select  Empresa    from viaje v, it, Obras o   where v.idit=it.id and it.idobra=o.id and codigo='", iViaje, "'");
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0) && (lDts.Tables[0].Rows[0][0].ToString ().ToUpper ().Equals ("TOSOL")))
+            {
+                ImprimeAseguramientoPilote(lPathDestino, iViaje);
+            }
+
+
+                
+        }
+
+        private string ObtenerExtensionarchivo(string iArchivo)
+        {
+            string lRes = "";
+            string[] split = iArchivo.Split(new Char[] { '.' });
+
+            if (split.Length > 1)
+                lRes = split[1].ToString();
+
+            return lRes;
+        }
+        public void GeneraDocumentacionExtra_EnCarpeta(string iViaje)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";string lSuc;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable();string lPathCalidad = "";
+            string lNroGDE = ""; string lPathDestino = ""; string lPath_GDE = ""; string lPathDest = "";
+            string lRes = ""; string lExtensionFile = ""; ; string lArchivo = "";string lPathOrigen = "";
+
+            // generamos El PL de despacho
+            lPathCalidad = ConfigurationManager.AppSettings["Path_Calidad"].ToString();
+            lTbl = ObtenerTablaConLotes(iViaje);
+            lSuc = string.Concat(lTbl.Rows[0]["Sucursal"].ToString(), "\\");
+            lPathDestino = Path.Combine(lPathCalidad, lSuc);
+                 EstadosdePagos.Utils lEP = new EstadosdePagos.Utils();
+            string[] separators = { "-" };
+            string[] lPartes = iViaje.Split(separators, StringSplitOptions.RemoveEmptyEntries); string lPathSigla = "";
+            lPathSigla = lPartes[0].ToString();
+            lPathDestino = Path.Combine(lPathDestino, lPathSigla); //, iViaje.Replace("/", "_"));        
+            lEP.CreaInforme_Autom(iViaje, true, lPathDestino);
+
+
+            //Revisamos las GDE, si existe lo guardamos en el Directorio
+            lPathDestino = string.Concat(lPathDestino,  "\\", iViaje.Replace("/", "_"), "\\");
+
+            lSql = string.Concat("Select NroGuiaINET from viaje where codigo='", iViaje,"'");
+
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count >0 ))
+            {
+                lPath_GDE = @"T:\";
+                lNroGDE = lDts.Tables[0].Rows[0][0].ToString();
+                DirectoryInfo lFolder = new DirectoryInfo(lPath_GDE);
+                foreach (var fi in lFolder.GetFiles())
+                {
+                    if ((fi.Name.ToString().IndexOf(lNroGDE) > -1) && (lRes != "OK"))
+                    {
+                        //*******************************************
+                        try
+                        {
+                            lExtensionFile = ObtenerExtensionarchivo(fi.Name);
+                            lArchivo = fi.Name.ToString(); // string.Concat(iNroGDE, ".", lExtensionFile);
+                            if (Directory.Exists(lPathDestino) == true)
+                            {
+                                lPathOrigen = Path.Combine(lPath_GDE, lArchivo);
+                                lPathDest = Path.Combine(lPathDestino, lArchivo);
+                                File.Copy(lPathOrigen, lPathDest, true);
+                                //lError = string.Concat("Finalizado, OK: ", lPathDest);
+                                lRes = "OK";
+                            }
+                        }
+                        catch (Exception iEx)
+                        {
+                            //lError = string.Concat("Error: ", iEx.Message.ToString());
+                            //MessageBox.Show(lError);
+                        }
+
+                    }
+                }
+            }
         }
 
         public  string Obtener_ProcedenciasPorViaje(string iViaje)
@@ -419,6 +501,64 @@ namespace Gestor_OC_Gerdau.Clases
             Dts_Informes.Cabecera_CertManDataTable lTblCap = new Dts_Informes.Cabecera_CertManDataTable();
             DataSet lDtsTablas = new DataSet();
 
+            string lSql = ""; string lEmpresa = "";
+
+            lDtsTablas = lPx.ObtenerDiametrosPorViaje(iviaje);
+            if (lDtsTablas.Tables.Count > 0)
+            {
+                for (i = 0; i < lDtsTablas.Tables[0].Rows.Count; i++)
+                {
+                    lFila = dtsPl.CertificadoMan.NewCertificadoManRow();
+                    lFila["Nro"] = i + 1;
+                    lFila["Viaje"] = iviaje;
+                    lFila["Diametro"] = lDtsTablas.Tables[0].Rows[i]["Diametro"].ToString();
+                    lFila["Kilos"] = lDtsTablas.Tables[0].Rows[i]["KilosDesp"].ToString();
+                    lFila["Colada"] = Obtener_NroColadasPorDiametro(iviaje, lDtsTablas.Tables[0].Rows[i]["Diametro"].ToString());
+                    //'lFila("Colada") = "" 'lDtsTablas.Tables(0).Rows(i)("Colada")
+                    dtsPl.CertificadoMan.Rows.Add(lFila);
+                }
+
+                lFila = dtsPl.Cabecera_CertMan.NewCabecera_CertManRow();
+                lFila["Viaje"] = iviaje;
+                lFila["NroPedido"] = string.Concat(iviaje, " Nº GD.", iNroGuiaINET);
+                lFila["Peso"] = iKilos; // ' & "Kgs."
+                lFila["NombreObra"] = iNombreObra;
+                lFila["IdObra"] = IdObra.ToString();
+                lFila["Procedencia"] = Obtener_ProcedenciasPorViaje(iviaje);
+                lFila["NombreConstructora"] = iConstructora;
+                dtsPl.Cabecera_CertMan.Rows.Add(lFila);
+
+                frmVisualiza = new Frm_Visualizador();
+                frmVisualiza.InicializaInforme("", dtsPl, iviaje, true);
+                frmVisualiza.VerInforme();
+                lSql = string.Concat(" Select Empresa from  viaje v, it, obras o where v.idit=it.id and o.id=it.idObra and codigo='", iviaje, "'");
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    lEmpresa = lDts.Tables[0].Rows[0][0].ToString();
+
+                if (lEmpresa.ToUpper().Equals("TO"))
+                    frmVisualiza.GeneraPdf_CertificadoFabricacion(iPathDestino, iviaje);
+
+                if (lEmpresa.ToUpper().Equals("TOSOL"))
+                    frmVisualiza.GeneraPdf_CertificadoFabricacion_TOSOL(iPathDestino, iviaje);
+
+                //frmVisualiza.ShowDialog ();
+                frmVisualiza.Close();
+                frmVisualiza.Dispose();
+
+
+            }
+        }
+
+        public void ImprimeCertificadoManofactura_TOSOL(string iviaje, string IdObra, string iNombreObra, string iKilos, string iNroGuiaINET, string iConstructora, string iPathDestino)
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); int i;
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador();
+            Dts_Informes.CertificadoManDataTable lTbl = new Dts_Informes.CertificadoManDataTable();
+            Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;
+            Dts_Informes.Cabecera_CertManDataTable lTblCap = new Dts_Informes.Cabecera_CertManDataTable();
+            DataSet lDtsTablas = new DataSet();
+
             lDtsTablas = lPx.ObtenerDiametrosPorViaje(iviaje);
             if (lDtsTablas.Tables.Count > 0)
             {
@@ -455,6 +595,8 @@ namespace Gestor_OC_Gerdau.Clases
 
             }
         }
+
+
 
         public string  ExisteArchivoEnServer(string iLote, string iSuc, string iPathSigla, string iCodigo, string iIdColada, string iIdEtiquetaTO)
         {
@@ -553,6 +695,78 @@ namespace Gestor_OC_Gerdau.Clases
             }
             return lRes;
         }
+
+
+        private void ImprimeAseguramientoPilote(string iPathDestino, string iviaje)
+        {
+            DataTable lTblTmp = new DataTable();
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            Frm_Visualizador frmVisualiza = new Frm_Visualizador();
+            Dts_Informes.CalidadPiloteDataTable lTblCal = new Dts_Informes.CalidadPiloteDataTable();            
+            Dts_Informes dtsPl = new Dts_Informes(); DataSet lDts = new DataSet(); DataRow lFila = null;
+            DataSet lDtsTablas = new DataSet(); DataTable lTblViajes = new DataTable(); DataSet lDtsViajes = new DataSet();
+            DataSet lDtsDatos = new DataSet();             string lSql = ""; string lMaquina = "";
+
+            try
+            {
+                lSql = string.Concat(" 	select  top 1 (select LOG_TERMINAL  from LOG_PIEZA_PRODUCCION where log_estado= 'O45' and LOG_ETIQUETA_PIEZA =d.id ) ");
+                lSql = string.Concat(lSql , " 	from viaje v, DetallePaquetesPieza d where v.id=d.IdViaje  and codigo='", iviaje,"'  ");
+                lDtsDatos = lPx.ObtenerDatos(lSql);
+                if (lDtsDatos.Tables.Count > 0)
+                        lMaquina = lDtsDatos.Tables[0].Rows[0][0].ToString();
+               
+
+
+
+                    lSql = string.Concat(" select *  from Calidad_Pilotes where cal_codigo='",iviaje ,"'");
+                lDtsDatos = lPx.ObtenerDatos(lSql);
+                if (lDtsDatos.Tables.Count > 0)
+                {
+                    //'   Carga Tabla 
+                    //if (lDtsDatos.Tables.Count > 1)
+                    //{                    //Cal_UsuarioAprueba
+                        lTblTmp = lDtsDatos.Tables[0].Copy();
+                        lFila = lTblCal.NewCalidadPiloteRow();
+                        lFila["Fecha"] = lTblTmp.Rows [0]["Cal_FechaRegistro"];
+                        lFila["Codigo"] = lTblTmp.Rows[0]["Cal_Codigo"];
+                    // Obtenemos las procedencias cuando es materia prima
+                        lFila["Procedencia"] = Obtener_ProcedenciasPorViaje(iviaje);
+
+                    //lFila["Procedencia"] = string.Concat (lFila["Procedencia"],Obtener_ProcedenciasPorViaje(iviaje));
+                    lFila["Operador"] = lTblTmp.Rows[0]["Cal_Usuario"];
+                        lFila["Maquina"] = lMaquina;
+                        lFila["Amperaje"] = lTblTmp.Rows[0]["Cal_Amp1"];
+                        lFila["Voltaje"] = lTblTmp.Rows[0]["Cal_Vol1"];
+                        lFila["Amperaje1"] = lTblTmp.Rows[0]["Cal_Amp2"];
+                        lFila["Voltaje1"] = lTblTmp.Rows[0]["Cal_Vol2"];
+                        lFila["Amperaje2"] = lTblTmp.Rows[0]["Cal_Amp3"];
+                        lFila["Voltaje2"] = lTblTmp.Rows[0]["Cal_Vol3"];
+                        lFila["MRT"] = lTblTmp.Rows[0]["Cal_MRT"];
+                        lFila["MDE"] = lTblTmp.Rows[0]["Cal_MDE"];
+                        lFila["PasoEspiral"] = lTblTmp.Rows[0]["Cal_PE1"];
+                        lFila["PasoEspiral1"] = lTblTmp.Rows[0]["Cal_PE2"];
+                        lFila["PasoEspira2"] = lTblTmp.Rows[0]["Cal_PE3"];
+                        lFila["Aprobacion"] = lTblTmp.Rows[0]["Cal_UsuarioAprueba"];
+                        lTblCal.Rows.Add(lFila);
+                        lDts.Merge(lTblCal);
+
+                        //' Imprimimos y visualizamos
+                        Frm_Visualizador lFrmInf = new Frm_Visualizador();
+                        lFrmInf.InicializaInforme("PL", lDts, "", false);
+                        lFrmInf.VerInforme();
+                        lFrmInf.GeneraPdf_AseguramientoPilote(iPathDestino, iviaje, "PL");
+                        lFrmInf.Close();
+                        lFrmInf.Dispose();
+                    //}
+                }
+            }
+            catch (Exception iex)
+            {
+                
+            }
+        }
+
+
 
         private void ImprimeResumenTrazabilidad(string iPathDestino, string iviaje)
         {

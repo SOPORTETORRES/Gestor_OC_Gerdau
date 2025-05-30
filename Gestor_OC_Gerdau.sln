@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gestor_OC_Gerdau", "Gestor_
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Integracion_INET", "..\..\..\Metalurgia\Metalurgia\app\Integracion_INET\Integracion_INET\Integracion_INET.vbproj", "{76C114FE-EEA8-49FB-9CC9-F8F59EBA3CA1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstadosdePagos", "..\..\..\..\Desarrollos Externos\EP\EstadosdePagos20170914\EstadosdePagos\EstadosdePagos.csproj", "{050299CD-7885-4389-B95A-D5F5C8AAB4E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{76C114FE-EEA8-49FB-9CC9-F8F59EBA3CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76C114FE-EEA8-49FB-9CC9-F8F59EBA3CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C114FE-EEA8-49FB-9CC9-F8F59EBA3CA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{050299CD-7885-4389-B95A-D5F5C8AAB4E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{050299CD-7885-4389-B95A-D5F5C8AAB4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{050299CD-7885-4389-B95A-D5F5C8AAB4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{050299CD-7885-4389-B95A-D5F5C8AAB4E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,6 +20,7 @@ namespace Gestor_OC_Gerdau.Calidad
         private string mDiametro = "";
         private string mIdEtiqueta = "";
         private string mIdObra = "";
+        private string mSucursal = "";
         private DataTable mTblEtViaje = new DataTable();
         private DataTable mTblTotes = new DataTable();
         private DataTable mTblCC = new DataTable();
@@ -239,11 +240,173 @@ namespace Gestor_OC_Gerdau.Calidad
             return lRes;
         }
 
+        private string ObtenerEmpresa(string iCodigo)
+        {
+            string lres = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
+            lSql = String.Concat("  Select empresa from Obras o , It , viaje v where  v.idit=it.id and it.idobra=o.id and codigo='",iCodigo ,"'");
+
+            lDts = lPx.ObtenerDatos(lSql);
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                lres = lDts.Tables[0].Rows[0][0].ToString();
+            }
+                return lres;
+        }
+
         public void CargaDatos()
         {
             WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();            string lSql = "";
-            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0;
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0; string lEmpresa = "";
             string lLotesPr = ""; string lLote = "";string lColadasCap = ""; string lUltimoLote = "";
+            string[] separatingStrings = { "|" }; string[] lPartes = null;
+            EnviosAutomaticos lEnv = new EnviosAutomaticos();
+            lEnv.Desactivar_Timmer();
+            if (Tx_Codigo.Text.Trim().Length > 4)
+                mViaje = Tx_Codigo.Text;
+
+
+            lEmpresa = ObtenerEmpresa(mViaje);
+            if (lEmpresa.ToUpper().Equals("TO"))
+            {
+                lSql = String.Concat("  SP_Consultas_WS  192,'", mViaje, "','','','',',','',''");
+                Tx_Codigo.Text = mViaje;
+                Btn_CorrigueEV.Enabled = false;
+
+                lDts = lPx.ObtenerDatos(lSql);
+                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                {
+                    lTbl = lDts.Tables[0].Copy();
+                    for (i = 0; i < lTbl.Rows.Count; i++)
+                    {
+                        if (lTbl.Rows[i]["LoteAza"].ToString().Length > 0)
+                            lLote = lTbl.Rows[i]["LoteAza"].ToString();
+                        else
+                            lLote = lTbl.Rows[i]["Lote"].ToString();
+
+
+                        if (lEnv.EsLoteAza(lLote) == false)
+                        {
+                            lLote = lLote.Replace("00000", "");
+                            lColadasCap = ObtenerUrl_CAP(lLote);
+                            lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                            if (lLote.ToString() != lUltimoLote)
+                            {
+                                //lColadasCap = ObtenerUrl_CAP(lLote);
+                                //lPartes = lColadasCap.Split(separatingStrings, System.StringSplitOptions.RemoveEmptyEntries);
+                                if (lPartes.Length > 1)
+                                {
+                                    lTbl.Rows[i]["UrlInforme"] = lPartes[0];
+                                    lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
+                                    lUltimoLote = lLote;
+                                }
+                            }
+                            else
+                            {
+                                if ((lPartes != null) && (lPartes.Length > 0))
+                                {
+                                    lTbl.Rows[i]["UrlInforme"] = lPartes[0];
+                                    lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
+                                    lUltimoLote = lTbl.Rows[i]["Lote"].ToString();
+                                }
+                            }
+                        }
+                    }
+
+                    Dtg_Datos.DataSource = lTbl;
+
+                    //********************************               
+                    //****************************************
+                    int iIdColada = 0; int iIdEtiquetaTO = 0; DataTable lTblLotes = new DataTable(); int j = 0;
+                    for (i = 0; i < Dtg_Datos.RowCount - 1; i++)
+                    {
+                        if (Dtg_Datos.Rows[i].Cells["IdColada"].Value.ToString() != "")
+                        {
+                            iIdColada = int.Parse(Dtg_Datos.Rows[i].Cells["IdColada"].Value.ToString());
+                            iIdEtiquetaTO = int.Parse(Dtg_Datos.Rows[i].Cells["Id"].Value.ToString());
+                            //VErificamos si tiene una o varias coladas asociadas
+                            if (iIdColada.ToString().Equals("-1"))
+                            {
+                                lSql = string.Concat(" select distinct Lote  from EtiquetasVinculadas v , EtiquetaAZA e where v.IdQR =e.id  and   IdEtiquetaTO =", iIdEtiquetaTO);
+                                lDts = lPx.ObtenerDatos(lSql);
+                                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                                {
+                                    lTblLotes = lDts.Tables[0].Copy();
+                                    for (j = 0; j < lTblLotes.Rows.Count; j++)
+                                    {
+                                        lLote = lTblLotes.Rows[j]["Lote"].ToString();
+                                        if (lLotesPr.IndexOf(lLote) == -1)
+                                        {
+                                            lLotesPr = string.Concat(lLotesPr, "'", lLote, "',");
+                                        }
+                                    }
+                                }
+
+                            }
+                            else  //HAy solo una colada para la Etiqueta
+                            {
+                                if (Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString().Length > 0)
+                                    lLote = Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString();
+                                else
+                                    lLote = Dtg_Datos.Rows[i].Cells["Lote"].Value.ToString();
+
+                                if (lLotesPr.IndexOf(lLote) == -1)
+                                {
+                                    lLotesPr = string.Concat(lLotesPr, "'", lLote, "',");
+                                }
+                            }
+                            //-------------------------------
+
+
+                        }
+
+                    }
+                    if (lLotesPr.Trim().Length > 0)
+                    {
+                        lLotesPr = lLotesPr.Substring(0, lLotesPr.Length - 1);
+                        ObtenerTblLotes(lLotesPr);
+                    }
+                    for (i = 0; i < Dtg_Datos.RowCount - 1; i++)
+                    {
+
+                        if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["Id"].Value.ToString(), "E") == false)
+                            Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightSalmon;
+                        else
+                            Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightGreen;
+
+                        if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["Id"].Value.ToString(), "CC") == false)
+                            Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.Yellow;
+                        else
+                            Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightGreen;
+
+                        if (Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString().Length > 0)
+                        {
+                            if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString(), "L") == false)
+                                Dtg_Datos.Rows[i].Cells["LoteAza"].Style.BackColor = Color.LightSalmon;
+                            else
+                                Dtg_Datos.Rows[i].Cells["Lote"].Style.BackColor = Color.LightGreen;
+                        }
+                        else
+                            if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["Lote"].Value.ToString(), "L") == false)
+                            Dtg_Datos.Rows[i].Cells["Lote"].Style.BackColor = Color.LightSalmon;
+                        else
+                            Dtg_Datos.Rows[i].Cells["Lote"].Style.BackColor = Color.LightGreen;
+
+
+
+                    }
+                }
+            }
+            else
+                CargaDatos_TOSOL();
+
+        }
+
+        public void CargaDatos_TOSOL()
+        {
+            WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            DataSet lDts = new DataSet(); DataTable lTbl = new DataTable(); int i = 0; 
+            string lLotesPr = ""; string lLote = ""; string lColadasCap = ""; string lUltimoLote = "";
             string[] separatingStrings = { "|" }; string[] lPartes = null;
             EnviosAutomaticos lEnv = new EnviosAutomaticos();
             lEnv.Desactivar_Timmer();
@@ -258,7 +421,7 @@ namespace Gestor_OC_Gerdau.Calidad
             if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
             {
                 lTbl = lDts.Tables[0].Copy();
-                for (i = 0; i < lTbl.Rows .Count ; i++)
+                for (i = 0; i < lTbl.Rows.Count; i++)
                 {
                     if (lTbl.Rows[i]["LoteAza"].ToString().Length > 0)
                         lLote = lTbl.Rows[i]["LoteAza"].ToString();
@@ -284,24 +447,20 @@ namespace Gestor_OC_Gerdau.Calidad
                         }
                         else
                         {
-                            if ((lPartes != null) && (lPartes.Length >0))
+                            if ((lPartes != null) && (lPartes.Length > 0))
                             {
                                 lTbl.Rows[i]["UrlInforme"] = lPartes[0];
                                 lTbl.Rows[i]["UrlCertificado"] = lPartes[1];
                                 lUltimoLote = lTbl.Rows[i]["Lote"].ToString();
-                            }                            
+                            }
                         }
                     }
                 }
 
-                    Dtg_Datos.DataSource = lTbl;
+                Dtg_Datos.DataSource = lTbl;
 
                 //********************************
-               
-
-
-                //****************************************
-                int iIdColada = 0;int iIdEtiquetaTO = 0;DataTable lTblLotes = new DataTable(); int j = 0;
+                int iIdColada = 0; int iIdEtiquetaTO = 0; DataTable lTblLotes = new DataTable(); int j = 0; string lColadasTO = "";
                 for (i = 0; i < Dtg_Datos.RowCount - 1; i++)
                 {
                     if (Dtg_Datos.Rows[i].Cells["IdColada"].Value.ToString() != "")
@@ -325,6 +484,50 @@ namespace Gestor_OC_Gerdau.Calidad
                                     }
                                 }
                             }
+                            else //es una etiqueta de TO, usada como materia Prima en TOSOL
+                            {
+                                lSql = string.Concat(" select * from  EtiquetasVinculadasTOSOL where idetiquetaTosol=", iIdEtiquetaTO);
+                                lDts = lPx.ObtenerDatos(lSql);
+                                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                                {
+                                    for (j = 0; j < lDts.Tables[0].Rows.Count; j++)
+                                    {
+                                        lColadasTO = string.Concat(lColadasTO  , lDts.Tables[0].Rows[j]["IdEtiquetaTO"].ToString(), ",") ;                                        
+                                    }
+                                    if (lColadasTO.Length > 3)
+                                    {
+                                        lColadasTO = lColadasTO.Substring(0, lColadasTO.Length - 1);
+                                        lSql = string.Concat(" select distinct Lote  from EtiquetasVinculadas v , EtiquetaAZA e where v.IdQR =e.id  and   IdEtiquetaTO in (", lColadasTO,")");
+                                        lDts = lPx.ObtenerDatos(lSql);
+                                        lTblLotes = lDts.Tables[0].Copy();
+                                        for (j = 0; j < lTblLotes.Rows.Count; j++)
+                                        {
+                                            lLote = lTblLotes.Rows[j]["Lote"].ToString();
+                                            if (lLotesPr.IndexOf(lLote) == -1)
+                                            {
+                                                lLotesPr = string.Concat(lLotesPr, "'", lLote, "',");
+                                            }
+                                            if (lTblLotes.Rows.Count > 1)
+                                            {
+                                                Dtg_Datos.Rows[i].Cells["IdColada"].Value = "-1";
+                                                Dtg_Datos.Rows[i].Cells["etiquetaVinc"].Value = "S";
+                                                Dtg_Datos.Rows[i].Cells["Lote"].Value = lTblLotes.Rows[0][0].ToString();
+                                                Dtg_Datos.Rows[i].Cells["LoteAza"].Value = lTblLotes.Rows[0][0].ToString();
+                                                lSql = string.Concat(" select * from certificadoscoladas where lote='", lTblLotes.Rows[0][0].ToString(), "'");
+                                                lDts = lPx.ObtenerDatos(lSql);
+                                                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                                                {
+                                                    Dtg_Datos.Rows[i].Cells["UrlCertificado"].Value = lDts.Tables[0].Rows[0]["Url_Certificado"].ToString();
+                                                    Dtg_Datos.Rows[i].Cells["UrlInforme"].Value = lDts.Tables[0].Rows[0]["Url_Informe"].ToString();
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+
+                                 
+                                }
+                            }
 
                         }
                         else  //HAy solo una colada para la Etiqueta
@@ -332,7 +535,46 @@ namespace Gestor_OC_Gerdau.Calidad
                             if (Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString().Length > 0)
                                 lLote = Dtg_Datos.Rows[i].Cells["LoteAza"].Value.ToString();
                             else
+                            {
                                 lLote = Dtg_Datos.Rows[i].Cells["Lote"].Value.ToString();
+                                // al ser tosol, cuando el Lote es "",  puede que haya sido fabricado con MP de TO
+
+                                //lSql = string.Concat(" select * from  EtiquetasVinculadasTOSOL where idetiquetaTo=", iIdColada , " and idetiquetaTosol=", iIdEtiquetaTO);
+                                lSql = string.Concat(" select distinct Lote  from EtiquetasVinculadas v , EtiquetaAZA e where v.IdQR =e.id  and   IdEtiquetaTO =", iIdColada );
+                                lDts = lPx.ObtenerDatos(lSql);
+                                if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                                {
+                                    lTblLotes = lDts.Tables[0].Copy();
+                                    for (j = 0; j < lTblLotes.Rows.Count; j++)
+                                    {
+                                        lLote = lTblLotes.Rows[j]["Lote"].ToString();
+                                        if (lLotesPr.IndexOf(lLote) == -1)
+                                        {
+                                            lLotesPr = string.Concat(lLotesPr, "'", lLote, "',");
+                                        }
+                                    }
+                                }
+                                if (lTblLotes.Rows.Count > 0)
+                                {
+                                    Dtg_Datos.Rows[i].Cells["IdColada"].Value = "-1";
+                                    Dtg_Datos.Rows[i].Cells["etiquetaVinc"].Value = "S";
+                                    Dtg_Datos.Rows[i].Cells["Lote"].Value = lTblLotes.Rows[0][0].ToString();
+                                    Dtg_Datos.Rows[i].Cells["LoteAza"].Value = lTblLotes.Rows[0][0].ToString();
+                                    lSql = string.Concat(" select * from certificadoscoladas where lote='", lTblLotes.Rows[0][0].ToString(), "'");
+                                    lDts = lPx.ObtenerDatos(lSql);
+                                    if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                                    {
+                                        Dtg_Datos.Rows[i].Cells["UrlCertificado"].Value = lDts.Tables[0].Rows[0]["Url_Certificado"].ToString();
+                                        Dtg_Datos.Rows[i].Cells["UrlInforme"].Value = lDts.Tables[0].Rows[0]["Url_Informe"].ToString();
+                                    }
+                                }
+                                else
+                                {
+
+                                }
+
+                            }
+                               
 
                             if (lLotesPr.IndexOf(lLote) == -1)
                             {
@@ -354,12 +596,12 @@ namespace Gestor_OC_Gerdau.Calidad
                 {
 
                     if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["Id"].Value.ToString(), "E") == false)
-                    Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightSalmon;
-                else
-                    Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightGreen;
+                        Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightSalmon;
+                    else
+                        Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightGreen;
 
                     if (ExisteRegistro(Dtg_Datos.Rows[i].Cells["Id"].Value.ToString(), "CC") == false)
-                        Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.Yellow  ;
+                        Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.Yellow;
                     else
                         Dtg_Datos.Rows[i].Cells["Id"].Style.BackColor = Color.LightGreen;
 
@@ -1041,6 +1283,12 @@ namespace Gestor_OC_Gerdau.Calidad
                                                             lLot.PesisteDatos(iLote, lPartesColada[3].ToString(), lPartesColada[1].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString());
                                                             k = lPartesColada.Length;
                                                         }
+
+                                                        if (lPartesColada.Length == 10)
+                                                        {
+                                                            lLot.PesisteDatos(iLote, lPartesColada[6].ToString(), lPartesColada[2].ToString(), lPartesColada[4].ToString(), lPartesColada[8].ToString());
+                                                            k = lPartesColada.Length;
+                                                        }
                                                     }
 
                                                 }
@@ -1674,9 +1922,11 @@ namespace Gestor_OC_Gerdau.Calidad
 
         private void Btn_ObtenerLotesV2_Click(object sender, EventArgs e)
         {
-   
+
+            //new Clases.Cls_EnvioDoc().GeneraDocumentacionEnCarpeta_ReprocesoTosol(Tx_Codigo.Text);
             int Cont = 0;string iLote = ""; string lLotes = ""; string lMsg = "";
             Lbl_Msg.Text = "";
+            mSucursal = Dtg_Datos.Rows[0].Cells[0].Value.ToString();
 
             Btn_CP_Click(null, null);
 
@@ -1710,29 +1960,34 @@ namespace Gestor_OC_Gerdau.Calidad
             new Clases.Cls_EnvioDoc().GeneraDocumentacionEnCarpeta(Tx_Codigo.Text);
             Lbl_Msg.Text = string.Concat(" Revisando consistencia de Información  ");
             Lbl_Msg.Refresh(); this.Refresh();
-            lMsg = Revisa_ArchivosEnServidor(Tx_Codigo.Text, "");
-            if (lMsg == "S")
+            if (mSucursal.IndexOf("TOSOL") == -1)
             {
-                Lbl_Msg.Text = string.Concat(" Copiando archivos al servidor central  ");
-                Lbl_Msg.Refresh(); this.Refresh();
-                CopiaAlServer(Tx_Codigo.Text);
-                Lbl_Msg.Text = string.Concat("  Enviando correo al cliente con certificados ");
-                Lbl_Msg.Refresh(); this.Refresh();
-                EnviosAutomaticos lEnvio = new EnviosAutomaticos();
-                lMsg = new EnviosAutomaticos().EnviaMail_Doc_Calidad_ZIP(Tx_Codigo.Text, mIdObra);
-                if (lMsg.Trim().Length > 5)
-                    Lbl_Msg.Text = lMsg;
-                else
+                lMsg = Revisa_ArchivosEnServidor(Tx_Codigo.Text, "");
+                if (lMsg == "S")
                 {
-                    new Clases.Cls_EnvioDoc().GeneraDocumentacionExtra_EnCarpeta(Tx_Codigo.Text);
+                    Lbl_Msg.Text = string.Concat(" Copiando archivos al servidor central  ");
+                    Lbl_Msg.Refresh(); this.Refresh();
+                    CopiaAlServer(Tx_Codigo.Text);
+                    Lbl_Msg.Text = string.Concat("  Enviando correo al cliente con certificados ");
+                    Lbl_Msg.Refresh(); this.Refresh();
+                    EnviosAutomaticos lEnvio = new EnviosAutomaticos();
+                    lMsg = new EnviosAutomaticos().EnviaMail_Doc_Calidad_ZIP(Tx_Codigo.Text, mIdObra);
+                    if (lMsg.Trim().Length > 5)
+                        Lbl_Msg.Text = lMsg;
+                    else
+                    {
+                        new Clases.Cls_EnvioDoc().GeneraDocumentacionExtra_EnCarpeta(Tx_Codigo.Text);
                         Lbl_Msg.Text = string.Concat(" Finalizado OK.   ");
-                }
-                    
+                    }
 
-                Lbl_Msg.Refresh(); this.Refresh();
+
+                    Lbl_Msg.Refresh(); this.Refresh();
+                }
+                else
+                    Lbl_Msg.Text = lMsg;// string.Concat(" Error  al revisanr la información  ");
+
             }
-            else
-                Lbl_Msg.Text = lMsg;// string.Concat(" Error  al revisanr la información  ");
+
         }
 
         private void CopiaAlServer( string iViaje)

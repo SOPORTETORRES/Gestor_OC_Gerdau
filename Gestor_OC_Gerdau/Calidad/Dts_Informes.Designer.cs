@@ -433,6 +433,10 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             private global::System.Data.DataColumn columnNombreConstructora;
             
+            private global::System.Data.DataColumn columnFigura;
+            
+            private global::System.Data.DataColumn columnReferencia;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public Cabecera_CertManDataTable() {
@@ -524,6 +528,22 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn FiguraColumn {
+                get {
+                    return this.columnFigura;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ReferenciaColumn {
+                get {
+                    return this.columnReferencia;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -559,7 +579,7 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public Cabecera_CertManRow AddCabecera_CertManRow(string Viaje, string NroPedido, string Peso, string IdObra, string NombreObra, string Procedencia, string NombreConstructora) {
+            public Cabecera_CertManRow AddCabecera_CertManRow(string Viaje, string NroPedido, string Peso, string IdObra, string NombreObra, string Procedencia, string NombreConstructora, string Figura, string Referencia) {
                 Cabecera_CertManRow rowCabecera_CertManRow = ((Cabecera_CertManRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Viaje,
@@ -568,7 +588,9 @@ namespace Gestor_OC_Gerdau.Calidad {
                         IdObra,
                         NombreObra,
                         Procedencia,
-                        NombreConstructora};
+                        NombreConstructora,
+                        Figura,
+                        Referencia};
                 rowCabecera_CertManRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCabecera_CertManRow);
                 return rowCabecera_CertManRow;
@@ -598,6 +620,8 @@ namespace Gestor_OC_Gerdau.Calidad {
                 this.columnNombreObra = base.Columns["NombreObra"];
                 this.columnProcedencia = base.Columns["Procedencia"];
                 this.columnNombreConstructora = base.Columns["NombreConstructora"];
+                this.columnFigura = base.Columns["Figura"];
+                this.columnReferencia = base.Columns["Referencia"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -617,6 +641,10 @@ namespace Gestor_OC_Gerdau.Calidad {
                 base.Columns.Add(this.columnProcedencia);
                 this.columnNombreConstructora = new global::System.Data.DataColumn("NombreConstructora", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNombreConstructora);
+                this.columnFigura = new global::System.Data.DataColumn("Figura", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFigura);
+                this.columnReferencia = new global::System.Data.DataColumn("Referencia", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReferencia);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -760,8 +788,6 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             private global::System.Data.DataColumn columnColada;
             
-            private global::System.Data.DataColumn columnDataColumn6;
-            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public CertificadoManDataTable() {
@@ -837,14 +863,6 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn DataColumn6Column {
-                get {
-                    return this.columnDataColumn6;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -880,15 +898,14 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public CertificadoManRow AddCertificadoManRow(string Nro, string Viaje, string Diametro, string Kilos, string Colada, string DataColumn6) {
+            public CertificadoManRow AddCertificadoManRow(string Nro, string Viaje, string Diametro, string Kilos, string Colada) {
                 CertificadoManRow rowCertificadoManRow = ((CertificadoManRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Nro,
                         Viaje,
                         Diametro,
                         Kilos,
-                        Colada,
-                        DataColumn6};
+                        Colada};
                 rowCertificadoManRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowCertificadoManRow);
                 return rowCertificadoManRow;
@@ -916,7 +933,6 @@ namespace Gestor_OC_Gerdau.Calidad {
                 this.columnDiametro = base.Columns["Diametro"];
                 this.columnKilos = base.Columns["Kilos"];
                 this.columnColada = base.Columns["Colada"];
-                this.columnDataColumn6 = base.Columns["DataColumn6"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -932,8 +948,6 @@ namespace Gestor_OC_Gerdau.Calidad {
                 base.Columns.Add(this.columnKilos);
                 this.columnColada = new global::System.Data.DataColumn("Colada", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnColada);
-                this.columnDataColumn6 = new global::System.Data.DataColumn("DataColumn6", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDataColumn6);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2357,6 +2371,38 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Figura {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera_CertMan.FiguraColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Figura\' de la tabla \'Cabecera_CertMan\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera_CertMan.FiguraColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string Referencia {
+                get {
+                    try {
+                        return ((string)(this[this.tableCabecera_CertMan.ReferenciaColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("El valor de la columna \'Referencia\' de la tabla \'Cabecera_CertMan\' es DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableCabecera_CertMan.ReferenciaColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsViajeNull() {
                 return this.IsNull(this.tableCabecera_CertMan.ViajeColumn);
             }
@@ -2437,6 +2483,30 @@ namespace Gestor_OC_Gerdau.Calidad {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetNombreConstructoraNull() {
                 this[this.tableCabecera_CertMan.NombreConstructoraColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsFiguraNull() {
+                return this.IsNull(this.tableCabecera_CertMan.FiguraColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetFiguraNull() {
+                this[this.tableCabecera_CertMan.FiguraColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsReferenciaNull() {
+                return this.IsNull(this.tableCabecera_CertMan.ReferenciaColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetReferenciaNull() {
+                this[this.tableCabecera_CertMan.ReferenciaColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -2536,22 +2606,6 @@ namespace Gestor_OC_Gerdau.Calidad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string DataColumn6 {
-                get {
-                    try {
-                        return ((string)(this[this.tableCertificadoMan.DataColumn6Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("El valor de la columna \'DataColumn6\' de la tabla \'CertificadoMan\' es DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableCertificadoMan.DataColumn6Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsNroNull() {
                 return this.IsNull(this.tableCertificadoMan.NroColumn);
             }
@@ -2608,18 +2662,6 @@ namespace Gestor_OC_Gerdau.Calidad {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetColadaNull() {
                 this[this.tableCertificadoMan.ColadaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsDataColumn6Null() {
-                return this.IsNull(this.tableCertificadoMan.DataColumn6Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetDataColumn6Null() {
-                this[this.tableCertificadoMan.DataColumn6Column] = global::System.Convert.DBNull;
             }
         }
         

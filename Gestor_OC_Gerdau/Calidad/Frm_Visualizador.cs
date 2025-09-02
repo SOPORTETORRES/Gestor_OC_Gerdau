@@ -131,14 +131,29 @@ namespace Gestor_OC_Gerdau.Calidad
                         }
                         else
                         {
-                            Calidad.Rep_trazabilidadCol_v2 mReport = new Calidad.Rep_trazabilidadCol_v2();
-                            mReport.SetDataSource(mDtsInforme);
-                            this.crystalReportViewer1.ReportSource = mReport;
-                            mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
-                            this.crystalReportViewer1.Dispose();
-                            this.crystalReportViewer1 = null;
-                            mReport.Close();
-                            mReport.Dispose();
+                            if (iTipo.ToUpper().Equals("TOSOL"))
+                            {
+                                Calidad.Rep_TrazabilidadTosol  mReport = new Calidad.Rep_TrazabilidadTosol();
+                                mReport.SetDataSource(mDtsInforme);
+                                this.crystalReportViewer1.ReportSource = mReport;
+                                mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                                this.crystalReportViewer1.Dispose();
+                                this.crystalReportViewer1 = null;
+                                mReport.Close();
+                                mReport.Dispose();
+                            }
+                            else
+                            {
+                                Calidad.Rep_trazabilidadCol_v2 mReport = new Calidad.Rep_trazabilidadCol_v2();
+                                mReport.SetDataSource(mDtsInforme);
+                                this.crystalReportViewer1.ReportSource = mReport;
+                                mReport.ExportToDisk(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat, lArchivo);
+                                this.crystalReportViewer1.Dispose();
+                                this.crystalReportViewer1 = null;
+                                mReport.Close();
+                                mReport.Dispose();
+                            }
+                                
                         }
                     }                  
                 }

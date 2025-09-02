@@ -60,7 +60,7 @@
           <xs:complexType>
             <xs:sequence>
               <xs:element minOccurs="0" name="IdCabecera" type="xs:string" />
-              <xs:element msprop:Generator_UserColumnName="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" minOccurs="0" name="Item" type="xs:string" />
+              <xs:element msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" msprop:Generator_UserColumnName="Item" minOccurs="0" name="Item" type="xs:string" />
               <xs:element minOccurs="0" name="Pieza" type="xs:string" />
               <xs:element minOccurs="0" name="Cantidad" type="xs:string" />
               <xs:element minOccurs="0" name="Diametro" type="xs:string" />
@@ -82,7 +82,7 @@
               <xs:element minOccurs="0" name="Sector" type="xs:string" />
               <xs:element minOccurs="0" name="Ubicacion" type="xs:string" />
               <xs:element minOccurs="0" name="Plano" type="xs:string" />
-              <xs:element msprop:Generator_UserColumnName="Item" msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" minOccurs="0" name="Item" type="xs:string" />
+              <xs:element msprop:Generator_ColumnVarNameInTable="columnItem" msprop:Generator_ColumnPropNameInRow="Item" msprop:Generator_ColumnPropNameInTable="ItemColumn" msprop:Generator_UserColumnName="Item" minOccurs="0" name="Item" type="xs:string" />
               <xs:element minOccurs="0" name="Kilos" type="xs:string" />
               <xs:element minOccurs="0" name="Lamina" type="xs:string" />
               <xs:element minOccurs="0" name="Cantidad" type="xs:string" />

@@ -22,6 +22,8 @@
               <xs:element name="NombreObra" msprop:Generator_ColumnVarNameInTable="columnNombreObra" msprop:Generator_ColumnPropNameInRow="NombreObra" msprop:Generator_ColumnPropNameInTable="NombreObraColumn" msprop:Generator_UserColumnName="NombreObra" type="xs:string" minOccurs="0" />
               <xs:element name="Procedencia" msprop:Generator_ColumnVarNameInTable="columnProcedencia" msprop:Generator_ColumnPropNameInRow="Procedencia" msprop:Generator_ColumnPropNameInTable="ProcedenciaColumn" msprop:Generator_UserColumnName="Procedencia" type="xs:string" minOccurs="0" />
               <xs:element name="NombreConstructora" msprop:Generator_ColumnVarNameInTable="columnNombreConstructora" msprop:Generator_ColumnPropNameInRow="NombreConstructora" msprop:Generator_ColumnPropNameInTable="NombreConstructoraColumn" msprop:Generator_UserColumnName="NombreConstructora" type="xs:string" minOccurs="0" />
+              <xs:element name="Figura" msprop:Generator_ColumnVarNameInTable="columnFigura" msprop:Generator_ColumnPropNameInRow="Figura" msprop:Generator_ColumnPropNameInTable="FiguraColumn" msprop:Generator_UserColumnName="Figura" type="xs:string" minOccurs="0" />
+              <xs:element name="Referencia" msprop:Generator_ColumnVarNameInTable="columnReferencia" msprop:Generator_ColumnPropNameInRow="Referencia" msprop:Generator_ColumnPropNameInTable="ReferenciaColumn" msprop:Generator_UserColumnName="Referencia" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -33,7 +35,6 @@
               <xs:element name="Diametro" msprop:Generator_ColumnVarNameInTable="columnDiametro" msprop:Generator_ColumnPropNameInRow="Diametro" msprop:Generator_ColumnPropNameInTable="DiametroColumn" msprop:Generator_UserColumnName="Diametro" type="xs:string" minOccurs="0" />
               <xs:element name="Kilos" msprop:Generator_ColumnVarNameInTable="columnKilos" msprop:Generator_ColumnPropNameInRow="Kilos" msprop:Generator_ColumnPropNameInTable="KilosColumn" msprop:Generator_UserColumnName="Kilos" type="xs:string" minOccurs="0" />
               <xs:element name="Colada" msprop:Generator_ColumnVarNameInTable="columnColada" msprop:Generator_ColumnPropNameInRow="Colada" msprop:Generator_ColumnPropNameInTable="ColadaColumn" msprop:Generator_UserColumnName="Colada" type="xs:string" minOccurs="0" />
-              <xs:element name="DataColumn6" msprop:Generator_ColumnVarNameInTable="columnDataColumn6" msprop:Generator_ColumnPropNameInRow="DataColumn6" msprop:Generator_ColumnPropNameInTable="DataColumn6Column" msprop:Generator_UserColumnName="DataColumn6" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

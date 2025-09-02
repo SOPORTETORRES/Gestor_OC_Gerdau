@@ -215,26 +215,26 @@ namespace Gestor_OC_Gerdau.Calidad
                 lNombreArc = string.Concat(iLote, "_C.pdf");
                 lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
                 lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
-                if (File.Exists(lPathFin) == false)
-                    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
-                else
-                {
-                    FileInfo lInfoArch = new FileInfo(lPathFin);
-                    if ((lInfoArch.Length / 1000) < 50)
-                        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
-                }
+                //if (File.Exists(lPathFin) == false)
+                //    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
+                //else
+                //{
+                //    FileInfo lInfoArch = new FileInfo(lPathFin);
+                //    if ((lInfoArch.Length / 1000) < 50)
+                //        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
+                //}
 
                 lNombreArc = string.Concat(iLote, "_I.pdf");
                 lPathCertificados = ConfigurationManager.AppSettings["PathCertificados"].ToString();
                 lPathFin = System.IO.Path.Combine(lPathCertificados, lNombreArc);
-                if (File.Exists(lPathFin) == false)
-                    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
-                else
-                {
-                    FileInfo lInfoArch = new FileInfo(lPathFin);
-                    if ((lInfoArch.Length / 1000) < 50)
-                        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
-                }
+                //if (File.Exists(lPathFin) == false)
+                //    MessageBox.Show(string.Concat("No se creo archivo :", lPathFin));
+                //else
+                //{
+                //    FileInfo lInfoArch = new FileInfo(lPathFin);
+                //    if ((lInfoArch.Length / 1000) < 50)
+                //        MessageBox.Show(string.Concat("Parece que el archivo esta Malo:", lPathFin));
+                //}
 
                 //lTbl = lDts.Tables[0].Copy();
                 //MessageBox.Show(string.Concat("Comienza la descarga del certiticado:", iLote));

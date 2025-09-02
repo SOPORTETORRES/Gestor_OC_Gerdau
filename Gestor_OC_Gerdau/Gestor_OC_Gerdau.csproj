@@ -188,6 +188,12 @@
       <DependentUpon>Rep_TrazabilidadCol_TOSOL.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Calidad\Rep_TrazabilidadTosol.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Rep_TrazabilidadTosol.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Clases\Rep_TrazabilidadColada.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -400,6 +406,10 @@
     <EmbeddedResource Include="Calidad\Rep_TrazabilidadCol_TOSOL.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Rep_TrazabilidadCol_TOSOL.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Calidad\Rep_TrazabilidadTosol.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>Rep_TrazabilidadTosol.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Clases\Rep_TrazabilidadColada.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
@@ -626,6 +636,9 @@
     <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImagenOriginalResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImagenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.ObtenerImgResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -663,6 +676,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_Hd.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_IT.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\WS_TO\Gestor_OC_Gerdau.WS_TO.Tipo_Obra.datasource">

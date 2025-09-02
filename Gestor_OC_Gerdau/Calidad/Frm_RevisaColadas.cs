@@ -25,6 +25,41 @@ namespace Gestor_OC_Gerdau.Calidad
         }
 
 
+        public void ColadasPendientes()
+        {
+            DataSet lDts = new DataSet(); WS_Gerdau.WS_IntegracionGerdauSoapClient lPx = new WS_Gerdau.WS_IntegracionGerdauSoapClient();
+            DataTable lTbl = new DataTable(); int i = 0; int k = 0; string lRes = "";
+            DataTable lTblDos = new DataTable(); string lCodigo = "";
+            WS_TO.Ws_ToSoapClient lPx2 = new WS_TO.Ws_ToSoapClient(); string lSql = "";
+            lDts = lPx.ObtenerViajesCerificar_PorSucursal("14");
+            if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+            {
+                lTbl = lDts.Tables[0].Copy();               
+                for (i = 0; i < lTbl.Rows.Count; i++)
+                {
+                    Lbl_Avance.Text = string.Concat("Procesando registro ", i, "de ", lTbl.Rows.Count);
+                    Lbl_Avance.Refresh(); this.Refresh();
+                    lCodigo = lTbl.Rows[i]["codigo"].ToString();
+                    lSql = String.Concat("  SP_Consultas_WS  192,'", lCodigo, "','','','',',','',''");
+                    lDts = lPx2.ObtenerDatos(lSql);
+                    if ((lDts.Tables.Count > 0) && (lDts.Tables[0].Rows.Count > 0))
+                    {
+                        lTblDos = lDts.Tables[0].Copy();
+                        for (k = 0; k < lTblDos.Rows.Count; k++)
+                        {
+                            if (lTblDos.Rows[k]["UrlCertificado"].ToString().Trim().Length <5 )
+                            {
+                                //if (lRes .IndexOf (lTblDos.Rows[k]["LoteAza"].ToString())<0)
+                                    lRes = string.Concat(lRes, lCodigo, "  ", lTblDos.Rows[k]["LoteAza"].ToString()," ");
+                            }
+
+                        }
+                        lRes = string.Concat(lRes, Environment.NewLine); 
+                    }
+                }
+            }
+        }
+
         public void NotificarEtiquetasQR_NoCerradas(string iSucursal )
         {
             DataTable lTblDest = new DataTable(); string lMsg = ""; string lSql = "";
@@ -609,10 +644,10 @@ namespace Gestor_OC_Gerdau.Calidad
         private void Btn_CargaDatos_Click(object sender, EventArgs e)
         {
             // ObtenerRegistrosColadasCetificados();
-           // string iViaje = "TCC-9/1"; // Lbl_Viaje.Text;
-           //new Clases.Cls_EnvioDoc(). ImprimeResumenTrazabilidad_V2(@"C:\TMP\Calidad\Informes", iViaje);
+            // string iViaje = "TCC-9/1"; // Lbl_Viaje.Text;
+            //new Clases.Cls_EnvioDoc(). ImprimeResumenTrazabilidad_V2(@"C:\TMP\Calidad\Informes", iViaje);
 
-
+            ColadasPendientes();
         }
 
         private void Btn_Actualiza_Click(object sender, EventArgs e)
@@ -957,12 +992,99 @@ namespace Gestor_OC_Gerdau.Calidad
             CargaViajes();
         }
 
+        private void ReprocesaCertificacionesTOSOL()
+        {
+            int i = 0; string lViaje = ""; string lSql = ""; WS_TO.Ws_ToSoapClient lPx = new WS_TO.Ws_ToSoapClient();
+            string lPathDestino = ""; string[] Separador = { "-" };string lSiglaObra = ""; string lTmp = "";
+
+            //Los pasos son:
+            //1.- si los Kgs certificados son 0 ==> se procesa, doble click 
+            //2.- si los Kgs certificados son > 0  ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==>  click en cert. OK
+            //3.-  Sino  ==> se procesa, doble click 
+
+
+            for (i = 0; i < Dtg_Datos.RowCount; i++)
+            {
+                Lbl_Avance.Text = string.Concat("Procesando registro ", i + 1, " de ", Dtg_Datos.RowCount);
+                PB_Avance.Maximum = Dtg_Datos.RowCount;
+                PB_Avance.Minimum = 0;
+                PB_Avance.Value = i;
+                Lbl_Avance.Refresh();
+                PB_Avance.Refresh();
+                this.Refresh();
+                if (Dtg_Datos.Rows[i].Cells["Codigo"].Value != null)
+                { }
+                lViaje = Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString();
+                if (Dtg_Datos.Rows[i].Cells["Sucursal"].Value.ToString().IndexOf("TOSOL") > -1)
+                {
+                    string[] lpartes = lViaje.Split(Separador, System.StringSplitOptions.RemoveEmptyEntries);
+                    lSiglaObra = lpartes[0];                    
+                    if (Dtg_Datos.Rows[i].Cells["Sucursal"].Value.ToString().Equals("SANTIAGO TOSOL"))
+                        lPathDestino = Path.Combine(@"P:\SANTIAGO TOSOL\");
+
+                    if (Dtg_Datos.Rows[i].Cells["Sucursal"].Value.ToString().Equals("TOSOL en V.C"))
+                        lPathDestino = Path.Combine(@"P:\TOSOL en V.C\");
+
+                    Clases.Cls_EnvioDoc lLos = new Clases.Cls_EnvioDoc();
+                    lLos.Reprocesa_CertificadoManofacturacionTOSOL(lViaje,lPathDestino );
+                    System.Threading.Thread.Sleep(600);
+
+                    //Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                    //lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                    //// lFrm.ActualizaRegistros();
+                    //lFrm.ShowDialog();
+                    //System.Threading.Thread.Sleep(1000);
+
+                }
+
+                #region Se tiene que eliminar cuando funcione OK
+
+                //if (lViaje.Equals("PEL-52/1"))
+                //    this.Close();
+                //else
+                //if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == 0)
+                //{   //1.- si los Kgs certificados son 0 ==> se procesa, doble click 
+                //    Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                //    lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                //    // lFrm.ActualizaRegistros();
+                //    lFrm.ShowDialog();
+                //    System.Threading.Thread.Sleep(1000);
+
+                //}
+                //else
+                //{
+                //    if (Val(Dtg_Datos.Rows[i].Cells["KgsCertificados"].Value.ToString()) == Val(Dtg_Datos.Rows[i].Cells["KgsIT"].Value.ToString()))
+                //    {   //2.- si los Kgs certificados son > 0 ==> si son iguales a KgsIT, KgsProducidos y el color de KgsCertificados es Verde ==> click en cert. OK
+                //        //CambiaEstosCertificadosOK(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "O");
+                //        Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                //        lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                //        // lFrm.ActualizaRegistros();
+                //        lFrm.ShowDialog();
+                //        System.Threading.Thread.Sleep(1000);
+                //    }
+                //    else    //3.-  Sino  ==> se procesa, doble click
+                //    {
+                //        Frm_CertificacionViaje lFrm = new Frm_CertificacionViaje();
+                //        lFrm.Inicialida(Dtg_Datos.Rows[i].Cells["Codigo"].Value.ToString(), "N");
+                //        lFrm.ActualizaRegistros();
+                //        lFrm.Close();
+                //        lFrm.Dispose();
+                //        System.Threading.Thread.Sleep(1000);
+                //    }
+
+                //}
+                #endregion
+            }
+          
+        }
         private void Btn_Reprocesacol_Click(object sender, EventArgs e)
         {
-            if (Lbl_Viaje.Text.Trim().Length > 0)
-                ReprocesaColadas(Lbl_Viaje.Text);
-            else
-                ReprocesaColadas();
+            //if (Lbl_Viaje.Text.Trim().Length > 0)
+            //    ReprocesaColadas(Lbl_Viaje.Text);
+            //else
+            //    ReprocesaColadas();
+            ReprocesaCertificacionesTOSOL();
+
         }
 
         private void ReprocesaColadas( string iViaje )
